@@ -5,7 +5,6 @@ import 'package:textile_po/common_widgets/show_error_snackbar.dart';
 import 'package:textile_po/models/login_auth_model.dart';
 import 'package:textile_po/repository/api_exception.dart';
 import 'package:textile_po/repository/login_repo.dart';
-import 'package:textile_po/screens/auth_screens/login_screen.dart';
 import 'package:textile_po/screens/auth_screens/verify_otp_screen.dart';
 import 'package:textile_po/screens/home/home_screen.dart';
 import 'package:textile_po/utils/shared_pref.dart';
@@ -57,9 +56,10 @@ class LoginControllers extends GetxController implements GetxService {
     try {
       isLoading.value = true;
       AuthData data = await repo.verifyOTP(mobile: phone.value, otp: otp.value);
-      // print('access token : ${data.token.accessToken}');
       if (data.token.accessToken.isNotEmpty) {
         sp.userToken = data.token.accessToken;
+        print('access token : ${sp.userToken}');
+
         Get.offAll(() => HomeScreen());
       }
     } on ApiException catch (e) {

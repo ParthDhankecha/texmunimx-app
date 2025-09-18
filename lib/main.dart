@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: AppStrings.appName,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue),
       ),
       home: const SplashScreen(),
     );

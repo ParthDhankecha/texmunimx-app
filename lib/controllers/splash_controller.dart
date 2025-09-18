@@ -9,6 +9,7 @@ class SplashController extends GetxController implements GetxService {
 
   checkUser() {
     Future.delayed(Duration(seconds: 2), () {
+      print('${sp.userToken}');
       if (sp.userToken.isNotEmpty) {
         Get.offAll(() => HomeScreen());
       }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:textile_po/controllers/home_controller.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/screens/create_po_screen/create_po_screen.dart';
+import 'package:textile_po/screens/create_design/create_design_screen.dart';
+import 'package:textile_po/screens/create_design/design_list_screen.dart';
 import 'package:textile_po/utils/app_colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> widgetList = [
     Text('Home'),
     Text('PO List'),
-    CreatePoScreen(),
+    DesignListScreen(),
     Text('user Profile'),
   ];
 
@@ -29,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Dashboard')),
       body: Obx(() => widgetList.elementAt(homeController.selectedIndex.value)),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(

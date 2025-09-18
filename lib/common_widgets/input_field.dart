@@ -14,15 +14,19 @@ class InputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        hintText: 'Enter Design Name',
-        border: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black26),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black26),
+    return Container(
+      color: Color(0xffF9F9FA),
+      child: TextField(
+        controller: textEditingController,
+        keyboardType: textInputType,
+        decoration: InputDecoration(
+          hintText: hintText,
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.black26),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.black26),
+          ),
         ),
       ),
     );

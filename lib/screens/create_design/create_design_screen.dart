@@ -5,19 +5,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:textile_po/common_widgets/custom_btn.dart';
+import 'package:textile_po/common_widgets/custom_progress_btn_.dart';
+import 'package:textile_po/common_widgets/error_row.dart';
 import 'package:textile_po/common_widgets/input_field.dart';
+import 'package:textile_po/controllers/create_design_controller.dart';
 import 'package:textile_po/controllers/home_controller.dart';
 import 'package:textile_po/utils/app_colors.dart';
 
-class CreatePoScreen extends StatefulWidget {
-  const CreatePoScreen({super.key});
+class CreateDesignScreen extends StatefulWidget {
+  const CreateDesignScreen({super.key});
 
   @override
-  State<CreatePoScreen> createState() => _CreatePoScreenState();
+  State<CreateDesignScreen> createState() => _CreateDesignScreenState();
 }
 
-class _CreatePoScreenState extends State<CreatePoScreen> {
+class _CreateDesignScreenState extends State<CreateDesignScreen> {
   HomeController homeController = Get.find<HomeController>();
+  CreateDesignController controller = Get.find<CreateDesignController>();
 
   //select image from phone
   selectImage() async {
@@ -25,8 +29,13 @@ class _CreatePoScreenState extends State<CreatePoScreen> {
     // Pick an image.
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      homeController.setImage(image);
+      controller.setImage(image);
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -65,6 +74,11 @@ class _CreatePoScreenState extends State<CreatePoScreen> {
                     padding: const EdgeInsets.all(10.0),
                     child: Column(
                       children: [
+                        Obx(
+                          () => controller.err.value.isNotEmpty
+                              ? ErrorRow(title: controller.err.value)
+                              : SizedBox.shrink(),
+                        ),
                         Row(
                           children: [
                             Text(
@@ -81,6 +95,7 @@ class _CreatePoScreenState extends State<CreatePoScreen> {
                         InputField(
                           hintText: 'Enter Design Name',
                           textInputType: TextInputType.text,
+                          textEditingController: controller.designNameCont,
                         ),
                       ],
                     ),
@@ -106,6 +121,7 @@ class _CreatePoScreenState extends State<CreatePoScreen> {
                         InputField(
                           hintText: 'Enter Design Number (EX. WF-100)',
                           textInputType: TextInputType.text,
+                          textEditingController: controller.designNumberCont,
                         ),
                       ],
                     ),
@@ -137,7 +153,7 @@ class _CreatePoScreenState extends State<CreatePoScreen> {
                           child: InkWell(
                             onTap: () => selectImage(),
                             child: Obx(
-                              () => homeController.selectedImage.value != null
+                              () => controller.selectedImage.value != null
                                   ? Row(
                                       children: [
                                         Expanded(
@@ -145,7 +161,7 @@ class _CreatePoScreenState extends State<CreatePoScreen> {
                                             height: 140,
                                             child: Image.file(
                                               File(
-                                                homeController
+                                                controller
                                                         .selectedImage
                                                         .value
                                                         ?.path ??
@@ -167,6 +183,7 @@ class _CreatePoScreenState extends State<CreatePoScreen> {
                                             Icon(
                                               Icons.add_photo_alternate,
                                               size: 76,
+                                              color: Colors.grey,
                                             ),
                                             Text(
                                               'Tap to Upload a photo',
@@ -186,7 +203,16 @@ class _CreatePoScreenState extends State<CreatePoScreen> {
                       ],
                     ),
                   ),
-                  CustomBtn(title: 'Submit Design', onTap: () {}),
+                  Obx(
+                    () => controller.isLoading.value
+                        ? CustomProgressBtn()
+                        : CustomBtn(
+                            title: 'Submit Design',
+                            onTap: () {
+                              controller.onCreatePo();
+                            },
+                          ),
+                  ),
 
                   SizedBox(height: 12),
                 ],
