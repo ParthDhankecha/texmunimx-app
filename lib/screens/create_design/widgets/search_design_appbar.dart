@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:textile_po/common_widgets/search_field.dart';
+import 'package:textile_po/screens/create_design/create_design_screen.dart';
 import 'package:textile_po/utils/app_colors.dart';
 
 AppBar searchDesignAppBar() {
@@ -23,7 +25,9 @@ AppBar searchDesignAppBar() {
             ),
             SizedBox(width: 4),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.to(() => CreateDesignScreen());
+              },
               icon: Container(
                 padding: EdgeInsets.all(9),
                 decoration: BoxDecoration(

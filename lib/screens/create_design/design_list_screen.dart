@@ -27,7 +27,7 @@ class _DesignListScreenState extends State<DesignListScreen> {
       appBar: searchDesignAppBar(),
       body: Obx(
         () => controller.isLoading.value
-            ? CircularProgressIndicator()
+            ? Center(child: CircularProgressIndicator())
             : GridView.builder(
                 padding: const EdgeInsets.all(16.0),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
