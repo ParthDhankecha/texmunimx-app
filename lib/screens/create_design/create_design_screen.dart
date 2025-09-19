@@ -5,21 +5,26 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:textile_po/common_widgets/custom_btn.dart';
+import 'package:textile_po/common_widgets/custom_btn_red.dart';
 import 'package:textile_po/common_widgets/custom_progress_btn_.dart';
 import 'package:textile_po/common_widgets/error_row.dart';
 import 'package:textile_po/common_widgets/input_field.dart';
 import 'package:textile_po/controllers/create_design_controller.dart';
 import 'package:textile_po/controllers/home_controller.dart';
+import 'package:textile_po/models/design_list_response.dart';
+import 'package:textile_po/screens/create_design/widgets/delete_design_dialog.dart';
 import 'package:textile_po/utils/app_colors.dart';
 
 class CreateDesignScreen extends StatefulWidget {
-  const CreateDesignScreen({super.key});
+  final DesignModel? designModel;
+  const CreateDesignScreen({super.key, this.designModel});
 
   @override
   State<CreateDesignScreen> createState() => _CreateDesignScreenState();
 }
 
 class _CreateDesignScreenState extends State<CreateDesignScreen> {
+  DesignModel? designModel;
   HomeController homeController = Get.find<HomeController>();
   CreateDesignController controller = Get.find<CreateDesignController>();
 
@@ -34,8 +39,18 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    designModel = widget.designModel;
+    if (designModel != null) {
+      controller.setDefaultFields(designModel!);
+    }
+  }
+
+  @override
   void dispose() {
     super.dispose();
+    controller.resetInputs();
   }
 
   @override
@@ -162,20 +177,17 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
                             child: InkWell(
                               onTap: () => selectImage(),
                               child: Obx(
-                                () => controller.selectedImage.value != null
+                                () => controller.selectedDesignImage.isNotEmpty
                                     ? Row(
                                         children: [
                                           Expanded(
                                             child: SizedBox(
                                               height: 140,
-                                              child: Image.file(
-                                                File(
-                                                  controller
-                                                          .selectedImage
-                                                          .value
-                                                          ?.path ??
-                                                      '',
-                                                ),
+                                              child: Image.network(
+                                                controller.imageBasePath +
+                                                    controller
+                                                        .selectedDesignImage
+                                                        .value,
                                                 fit: BoxFit.contain,
                                               ),
                                             ),
@@ -183,31 +195,74 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
                                         ],
                                       )
                                     : SizedBox(
-                                        height: 140,
-                                        child: Center(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.add_photo_alternate,
-                                                size: 76,
-                                                color: Colors.grey,
-                                              ),
-                                              Text(
-                                                'Tap to Upload a photo',
-                                                style: TextStyle(
-                                                  fontSize: 14,
+                                        child:
+                                            controller.selectedImage.value !=
+                                                null
+                                            ? Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: SizedBox(
+                                                      height: 140,
+                                                      child: Image.file(
+                                                        File(
+                                                          controller
+                                                                  .selectedImage
+                                                                  .value
+                                                                  ?.path ??
+                                                              '',
+                                                        ),
+                                                        fit: BoxFit.contain,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            : SizedBox(
+                                                height: 140,
+                                                child: Center(
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Icon(
+                                                        Icons
+                                                            .add_photo_alternate,
+                                                        size: 76,
+                                                        color: Colors.grey,
+                                                      ),
+                                                      Text(
+                                                        'Tap to Upload a photo',
+                                                        style: TextStyle(
+                                                          fontSize: 14,
 
-                                                  color: AppColors.blackColor,
+                                                          color: AppColors
+                                                              .blackColor,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        ),
                                       ),
                               ),
                             ),
+                          ),
+                          Obx(
+                            () =>
+                                controller
+                                        .selectedDesignImage
+                                        .value
+                                        .isNotEmpty ||
+                                    controller.selectedImage.value != null
+                                ? TextButton(
+                                    onPressed: () {
+                                      controller.selectedDesignImage.value = '';
+                                      controller.selectedImage.value = null;
+                                    },
+                                    child: Text('Remove Image'),
+                                  )
+                                : SizedBox.shrink(),
                           ),
                         ],
                       ),
@@ -216,12 +271,28 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
                       () => controller.isLoading.value
                           ? CustomProgressBtn()
                           : CustomBtn(
-                              title: 'Submit Design',
+                              title: designModel != null
+                                  ? 'Update Design'
+                                  : 'Submit Design',
                               onTap: () {
-                                controller.onCreatePo();
+                                if (designModel != null) {
+                                  controller.updateDesign();
+                                } else {
+                                  controller.onCreatePo();
+                                }
                               },
                             ),
                     ),
+                    SizedBox(height: 12),
+
+                    if (designModel != null)
+                      CustomBtnRed(
+                        title: 'Delete',
+                        onTap: () {
+                          Get.dialog(DeleteDesignDialog());
+                        },
+                        isOutline: true,
+                      ),
 
                     SizedBox(height: 12),
                   ],

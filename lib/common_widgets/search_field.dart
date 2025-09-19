@@ -6,11 +6,13 @@ class SearchField extends StatelessWidget {
     required this.hintText,
     this.textEditingController,
     this.textInputType,
+    this.onChanged,
   });
 
   final String hintText;
   final TextEditingController? textEditingController;
   final TextInputType? textInputType;
+  final Function(String searchText)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class SearchField extends StatelessWidget {
             child: TextField(
               controller: textEditingController,
               keyboardType: textInputType,
-
+              onChanged: onChanged,
               decoration: InputDecoration(
                 hintText: hintText,
                 border: InputBorder.none,

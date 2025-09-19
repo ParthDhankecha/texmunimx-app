@@ -10,5 +10,7 @@ class AppConst {
 
   static String createDesign = 'design/create';
   static String listDesign = 'design/list';
-  //page, limit, search
+
+  static String listDelete = 'design/delete';
+  static String updateDesign = 'design/update'; //put
 }

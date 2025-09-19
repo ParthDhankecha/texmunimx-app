@@ -1,5 +1,3 @@
-import 'package:flutter/widgets.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:textile_po/utils/shared_pref.dart';
 import 'package:get/get.dart';
 

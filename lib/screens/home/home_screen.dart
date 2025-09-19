@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:textile_po/controllers/home_controller.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/screens/create_design/create_design_screen.dart';
 import 'package:textile_po/screens/create_design/design_list_screen.dart';
 import 'package:textile_po/utils/app_colors.dart';
 

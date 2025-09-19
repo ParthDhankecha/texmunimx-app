@@ -20,15 +20,47 @@ class CreateDesignController extends GetxController implements GetxService {
   TextEditingController designNameCont = TextEditingController();
   TextEditingController designNumberCont = TextEditingController();
 
+  String selectedDesignModelId = '';
+  RxString selectedDesignImage = ''.obs;
+
   RxString err = ''.obs;
 
   RxBool isLoading = false.obs;
 
-  RxInt currentPage = 1.obs;
-  RxInt limit = 1000.obs;
+  int currentPage = 1;
+  int totalPages = 0;
+  int limit = 10000;
+  RxBool hasMore = false.obs;
   String imageBasePath = '';
-
   RxList<DesignModel> designList = RxList();
+
+  setDefaultFields(DesignModel design) {
+    designNameCont.text = design.designName;
+    designNumberCont.text = design.designNumber;
+    selectedDesignModelId = design.id;
+
+    if (design.designImage.isNotEmpty) {
+      selectedDesignImage.value = design.designImage;
+    }
+  }
+
+  getTotalPage(int total, int limit) {
+    totalPages = (total / limit).ceil();
+    if (totalPages > 1) {
+      hasMore.value = true;
+    }
+  }
+
+  nextPage() {
+    if (currentPage == totalPages) {
+      showSuccessSnackbar('No More Design');
+      hasMore.value = false;
+    } else {
+      hasMore.value = true;
+      currentPage++;
+      getDesignList();
+    }
+  }
 
   @override
   void dispose() {
@@ -39,18 +71,38 @@ class CreateDesignController extends GetxController implements GetxService {
 
   void setImage(XFile? img) {
     selectedImage.value = img;
+    if (selectedDesignImage.isNotEmpty) {
+      selectedDesignImage.value = '';
+    }
   }
 
-  getDesignList() async {
+  getDesignList({String? search, bool isRefresh = false}) async {
     try {
       isLoading.value = true;
-      DesignListModel designListModel = await createDesignRepo.getDesignList();
-      currentPage.value = designListModel.totalCount;
+      DesignListModel designListModel;
+      if (isRefresh) {
+        designList.value = [];
+        currentPage = 1;
+      }
+      if (search != null && search.isNotEmpty) {
+        designList.value = [];
+
+        designListModel = await createDesignRepo.getDesignList(
+          searchText: search,
+        );
+      } else {
+        designListModel = await createDesignRepo.getDesignList(
+          searchText: search,
+          pageCount: '$currentPage',
+          limit: '$limit',
+        );
+      }
+
       imageBasePath = designListModel.imgBaseUrl;
       AppConst.imageBaseUrl = designListModel.imgBaseUrl;
-      designList.value = designListModel.list;
+      designList.addAll(designListModel.list);
+      getTotalPage(designListModel.totalCount, limit);
     } on ApiException catch (e) {
-      print('error : $e');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());
@@ -82,6 +134,7 @@ class CreateDesignController extends GetxController implements GetxService {
     designNameCont.text = '';
     designNumberCont.text = '';
     selectedImage.value = null;
+    selectedDesignImage.value = '';
   }
 
   //function to save design
@@ -98,7 +151,58 @@ class CreateDesignController extends GetxController implements GetxService {
       resetInputs();
       showSuccessSnackbar('New Design Create.');
     } on ApiException catch (e) {
-      print('error : $e');
+      switch (e.statusCode) {
+        case 401:
+          Get.offAll(() => LoginScreen());
+          break;
+        default:
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  deleteDesign() async {
+    try {
+      isLoading.value = true;
+      await createDesignRepo.deleteDesign(id: selectedDesignModelId);
+      resetInputs();
+      showSuccessSnackbar(
+        'Design Delete.',
+        decs: 'Design Deleted Successfully.',
+      );
+      getDesignList(isRefresh: true);
+    } on ApiException catch (e) {
+      switch (e.statusCode) {
+        case 401:
+          Get.offAll(() => LoginScreen());
+          break;
+        default:
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  updateDesign() async {
+    try {
+      isLoading.value = true;
+      await createDesignRepo.updateDesign(
+        id: selectedDesignModelId,
+        designName: designNameCont.text.trim(),
+        designNumber: designNumberCont.text.trim(),
+        isImageRemoved:
+            selectedDesignImage.isEmpty && selectedImage.value == null,
+        image: selectedImage.value != null
+            ? File(selectedImage.value!.path)
+            : null,
+      );
+      resetInputs();
+
+      Get.back();
+      showSuccessSnackbar('New Design Create.');
+      getDesignList(isRefresh: true);
+    } on ApiException catch (e) {
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());

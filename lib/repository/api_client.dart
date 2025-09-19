@@ -219,4 +219,69 @@ class ApiClient extends GetxService {
       );
     }
   }
+
+  Future<dynamic> requestMultipartPut(
+    String endPoint, {
+    String? filePath,
+    String? fileKey,
+    required Map<String, String> body,
+    Map<String, String>? headers,
+  }) async {
+    log('url : $baseUrl$endPoint');
+    final url = Uri.parse('$baseUrl$endPoint');
+
+    try {
+      var request = http.MultipartRequest('PUT', url);
+
+      // Add headers
+      if (headers != null) {
+        request.headers.addAll(headers);
+      }
+
+      // Add file to the request
+      if (filePath != null) {
+        var contentType = getMediaTypeFromFile(filePath);
+
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            fileKey!,
+            filePath,
+            contentType: contentType,
+          ),
+        );
+      }
+
+      // Add other form fields
+      request.fields.addAll(body);
+
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+
+      switch (response.statusCode) {
+        case 200:
+        case 201:
+          return json.decode(response.body);
+
+        case 401:
+          throw ApiException(statusCode: 401, message: 'Unauthorized');
+
+        case 404:
+          throw ApiException(statusCode: 404, message: 'Not Found');
+
+        default:
+          throw ApiException(
+            statusCode: response.statusCode,
+            message: response.reasonPhrase ?? '',
+          );
+      }
+    } catch (e) {
+      if (e is ApiException) {
+        rethrow;
+      }
+      throw ApiException(
+        statusCode: -1,
+        message: 'Network or Parsing error : $e',
+      );
+    }
+  }
 }

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:get/get.dart';
@@ -11,15 +10,23 @@ class CreateDesignRepo {
   final ApiClient apiClient = Get.find();
   Sharedprefs sp = Get.find();
 
-  Future<DesignListModel> getDesignList() async {
+  Future<DesignListModel> getDesignList({
+    String? searchText,
+    String? limit,
+    String? pageCount,
+  }) async {
     var endPoint = AppConst.listDesign;
+    var body = {
+      if (searchText != null) 'search': searchText,
+      if (limit != null) 'limit': limit,
+      if (pageCount != null) 'page': pageCount,
+    };
 
     var data = await apiClient.requestPost(
       endPoint,
-      body: {},
+      body: body,
       headers: {'authorization': sp.userToken},
     );
-    print('data: ${jsonDecode(data)['data']}');
     return designListResponseFromMap(data).designListModel;
   }
 
@@ -34,7 +41,6 @@ class CreateDesignRepo {
 
     if (image != null) {
       // Call the multipart request only if an image exists
-      print('image path = ${image.path}');
       data = await apiClient.requestMultipartPost(
         endPoint,
         filePath: image.path,
@@ -53,5 +59,43 @@ class CreateDesignRepo {
     return data;
   }
 
-  //list designs
+  updateDesign({
+    required String? designName,
+    required String? designNumber,
+    required String id,
+    required bool isImageRemoved,
+    File? image,
+  }) async {
+    var endPoint = AppConst.updateDesign;
+    var reqBody = {
+      if (designName != null) 'designName': designName,
+      if (designNumber != null) 'designNumber': designNumber,
+      if (isImageRemoved) 'designImage': 'remove',
+    };
+    dynamic data;
+
+    data = await apiClient.requestMultipartPut(
+      '$endPoint/$id', // Assuming your API uses a path parameter for ID
+      filePath: image?.path,
+      fileKey: 'file',
+      body: reqBody,
+      headers: {'authorization': sp.userToken},
+    );
+
+    return data;
+  }
+
+  //delete design
+  Future<dynamic> deleteDesign({required String id}) async {
+    var endPoint = '${AppConst.listDelete}/$id';
+
+    var data = await apiClient.request(
+      method: ApiType.delete,
+      endPoint,
+      body: {},
+      headers: {'authorization': sp.userToken},
+    );
+    //designImage:removed
+    return data;
+  }
 }

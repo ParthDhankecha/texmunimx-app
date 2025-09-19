@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/common_widgets/search_field.dart';
+import 'package:textile_po/controllers/create_design_controller.dart';
 import 'package:textile_po/screens/create_design/create_design_screen.dart';
 import 'package:textile_po/utils/app_colors.dart';
 
@@ -21,6 +22,11 @@ AppBar searchDesignAppBar() {
             Expanded(
               child: SearchField(
                 hintText: 'Search Designs by name or numbers..',
+                onChanged: (searchText) {
+                  Get.find<CreateDesignController>().getDesignList(
+                    search: searchText,
+                  );
+                },
               ),
             ),
             SizedBox(width: 4),

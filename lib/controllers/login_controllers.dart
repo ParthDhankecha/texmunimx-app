@@ -58,7 +58,6 @@ class LoginControllers extends GetxController implements GetxService {
       AuthData data = await repo.verifyOTP(mobile: phone.value, otp: otp.value);
       if (data.token.accessToken.isNotEmpty) {
         sp.userToken = data.token.accessToken;
-        print('access token : ${sp.userToken}');
 
         Get.offAll(() => HomeScreen());
       }

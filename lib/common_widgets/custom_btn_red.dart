@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:textile_po/utils/app_colors.dart';
 
-class CustomBtn extends StatelessWidget {
+class CustomBtnRed extends StatelessWidget {
   final String title;
   final Function()? onTap;
   final bool isOutline;
 
-  const CustomBtn({
+  const CustomBtnRed({
     super.key,
     required this.title,
     this.onTap,
@@ -21,9 +21,9 @@ class CustomBtn extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: isOutline ? null : AppColors.mainColor,
+          color: isOutline ? null : AppColors.errorColor,
           border: isOutline
-              ? Border.all(color: AppColors.mainColor, width: 2)
+              ? Border.all(color: AppColors.errorColor, width: 2)
               : null,
         ),
         child: Padding(
@@ -33,7 +33,7 @@ class CustomBtn extends StatelessWidget {
               title,
               style: TextStyle(
                 fontSize: 16,
-                color: isOutline ? AppColors.mainColor : AppColors.whiteColor,
+                color: isOutline ? AppColors.errorColor : AppColors.whiteColor,
                 fontWeight: FontWeight.w600,
               ),
             ),
