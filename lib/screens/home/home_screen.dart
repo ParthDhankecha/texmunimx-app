@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:textile_po/controllers/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/screens/create_design/design_list_screen.dart';
+import 'package:textile_po/screens/settings/settings_screen.dart';
 import 'package:textile_po/utils/app_colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Text('Home'),
     Text('PO List'),
     DesignListScreen(),
-    Text('user Profile'),
+    SettingsScreen(),
   ];
 
   @override
