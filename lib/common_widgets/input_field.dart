@@ -27,10 +27,12 @@ class InputField extends StatelessWidget {
           hintText: hintText,
           hintStyle: TextStyle(fontSize: 14),
           border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black26),
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.black38),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black26),
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.black38),
           ),
         ),
       ),

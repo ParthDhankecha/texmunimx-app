@@ -4,9 +4,14 @@ import 'package:textile_po/models/party_list_response.dart';
 import 'package:textile_po/screens/party/create_party.dart';
 
 class PartyCard extends StatelessWidget {
-  const PartyCard({super.key, required this.party});
+  const PartyCard({
+    super.key,
+    required this.party,
+    required this.onPartySelect,
+  });
 
   final PartyModel party;
+  final Function()? onPartySelect;
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +20,7 @@ class PartyCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: InkWell(
-        onTap: () {
-          Get.to(() => CreatePartyScreen(partyModel: party));
-        },
+        onTap: onPartySelect,
         borderRadius: BorderRadius.circular(10),
         child: Padding(
           padding: const EdgeInsets.only(
@@ -42,11 +45,15 @@ class PartyCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    _buildRow('Party No', party.partyNumber, Icons.numbers),
+                    _buildRow(
+                      'party_number'.tr,
+                      party.partyNumber,
+                      Icons.numbers,
+                    ),
                     const SizedBox(height: 8),
                     if ((party.gstNo ?? '').isNotEmpty)
                       _buildRow(
-                        'GST :',
+                        'gst_number'.tr,
                         party.gstNo ?? 'N/A',
                         Icons.article_outlined,
                       ),
@@ -54,7 +61,7 @@ class PartyCard extends StatelessWidget {
                     const SizedBox(height: 8),
                     if ((party.mobile ?? '').isNotEmpty)
                       _buildRow(
-                        'Mobile',
+                        'phone_number'.tr,
                         party.mobile ?? '',
                         Icons.call_outlined,
                       ),
@@ -62,7 +69,7 @@ class PartyCard extends StatelessWidget {
 
                     if ((party.email ?? '').isNotEmpty)
                       _buildRow(
-                        'Email',
+                        'email'.tr,
                         party.email ?? 'N/A',
                         Icons.email_outlined,
                       ),
@@ -70,14 +77,14 @@ class PartyCard extends StatelessWidget {
                     const SizedBox(height: 8),
                     if ((party.brokerName ?? '').isNotEmpty)
                       _buildRow(
-                        'Broker Name',
+                        'brokers_name'.tr,
                         party.brokerName ?? '',
                         Icons.person_outline,
                       ),
                     const SizedBox(height: 8),
                     if ((party.address ?? '').isNotEmpty)
                       _buildRow(
-                        'Address',
+                        'address'.tr,
                         party.address ?? '',
                         Icons.location_pin,
                       ),

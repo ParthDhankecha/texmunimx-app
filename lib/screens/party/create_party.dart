@@ -44,7 +44,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(partyModel != null ? 'Update Party' : 'Create Party'),
+        title: Text(partyModel != null ? 'update_party'.tr : 'create_party'.tr),
         leading: IconButton(
           onPressed: () {
             Get.back();
@@ -79,7 +79,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                             Row(
                               children: [
                                 Text(
-                                  'Party Name ',
+                                  'party_name'.tr,
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
@@ -91,7 +91,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                             ),
                             SizedBox(height: 10),
                             InputField(
-                              hintText: 'Enter Party Name',
+                              hintText: 'enter_party_name'.tr,
                               textInputType: TextInputType.text,
                               textEditingController: controller.partyNameCont,
                               onValidator: (value) {
@@ -110,7 +110,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                                 Row(
                                   children: [
                                     Text(
-                                      'Party Number ',
+                                      'party_number'.tr,
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
@@ -131,8 +131,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
 
                                     return null;
                                   },
-                                  hintText:
-                                      'Enter Unique Party Number (EX. WF-100)',
+                                  hintText: 'enter_party_number'.tr,
                                   textInputType: TextInputType.text,
                                   textEditingController:
                                       controller.partyNumberCont,
@@ -148,7 +147,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                                 Row(
                                   children: [
                                     Text(
-                                      'GST Number',
+                                      'gst_number'.tr,
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
@@ -159,7 +158,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                                 ),
                                 SizedBox(height: 10),
                                 InputField(
-                                  hintText: 'Enter GST Number',
+                                  hintText: 'enter_gst_number'.tr,
                                   textInputType: TextInputType.text,
                                   textEditingController: controller.gstCont,
                                 ),
@@ -174,7 +173,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                                 Row(
                                   children: [
                                     Text(
-                                      'Phone Number',
+                                      'phone_number'.tr,
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
@@ -185,7 +184,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                                 ),
                                 SizedBox(height: 10),
                                 InputField(
-                                  hintText: 'Enter Phone Number',
+                                  hintText: 'enter_phone_number'.tr,
                                   textInputType: TextInputType.phone,
                                   textEditingController:
                                       controller.phoneNumberCont,
@@ -201,7 +200,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                                 Row(
                                   children: [
                                     Text(
-                                      'Email',
+                                      'email'.tr,
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
@@ -212,7 +211,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                                 ),
                                 SizedBox(height: 10),
                                 InputField(
-                                  hintText: 'Enter Email address',
+                                  hintText: 'enter_email_address'.tr,
                                   textInputType: TextInputType.emailAddress,
                                   textEditingController: controller.emailCont,
                                 ),
@@ -227,7 +226,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                                 Row(
                                   children: [
                                     Text(
-                                      'Address',
+                                      'address'.tr,
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
@@ -238,7 +237,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                                 ),
                                 SizedBox(height: 10),
                                 AddressInputField(
-                                  hintText: 'Enter Full Address',
+                                  hintText: 'enter_full_address'.tr,
                                   textInputType: TextInputType.text,
                                   textEditingController: controller.addressCont,
                                 ),
@@ -253,7 +252,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                                 Row(
                                   children: [
                                     Text(
-                                      'Brokers\'s name',
+                                      'brokers_name'.tr,
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
@@ -277,27 +276,30 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                       Obx(
                         () => controller.isLoading.value
                             ? CustomProgressBtn()
-                            : CustomBtn(
-                                title: partyModel != null
-                                    ? 'Update Party'
-                                    : 'Submit Party',
-                                onTap: () {
-                                  controller.err.value = '';
-                                  if (formKey.currentState!.validate()) {
-                                    if (partyModel != null) {
-                                      controller.updateParty();
-                                    } else {
-                                      controller.createNewParty();
+                            : Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CustomBtn(
+                                  title: partyModel != null
+                                      ? 'update_party'.tr
+                                      : 'submit_party'.tr,
+                                  onTap: () {
+                                    controller.err.value = '';
+                                    if (formKey.currentState!.validate()) {
+                                      if (partyModel != null) {
+                                        controller.updateParty();
+                                      } else {
+                                        controller.createNewParty();
+                                      }
                                     }
-                                  }
-                                },
+                                  },
+                                ),
                               ),
                       ),
                       SizedBox(height: 12),
 
                       if (partyModel != null)
                         CustomBtnRed(
-                          title: 'Delete',
+                          title: 'delete'.tr,
                           onTap: () {
                             Get.dialog(DeletePartyDialog());
                           },
@@ -318,7 +320,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
 
   Text _mark() {
     return Text(
-      '*',
+      ' * ',
       style: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w600,

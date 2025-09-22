@@ -19,39 +19,38 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    splashController.checkUser();
+    splashController.getDEfaultConfig();
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: AppColors.mainColor,
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Welcome to ${AppStrings.appName}',
-                  style: TextStyle(color: AppColors.mainColor, fontSize: 24),
+            Center(
+              child: Text(
+                AppStrings.appName,
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white,
                 ),
-              ],
-            ),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  MainBtn(
-                    label: 'Continue',
-                    onTap: () {
-                      Get.to(() => LoginScreen());
-                    },
-                  ),
-                ],
               ),
             ),
-            SizedBox(height: 22),
+            Obx(
+              () => Center(
+                child: splashController.isLoading.value
+                    ? SizedBox(
+                        height: 30,
+                        width: 30,
+                        child: CircularProgressIndicator(),
+                      )
+                    : SizedBox.shrink(),
+              ),
+            ),
           ],
         ),
       ),

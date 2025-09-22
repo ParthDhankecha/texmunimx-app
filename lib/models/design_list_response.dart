@@ -38,26 +38,19 @@ class DesignListResponse {
 class DesignListModel {
   List<DesignModel> list;
   int totalCount;
-  String imgBaseUrl;
 
-  DesignListModel({
-    required this.list,
-    required this.totalCount,
-    required this.imgBaseUrl,
-  });
+  DesignListModel({required this.list, required this.totalCount});
 
   factory DesignListModel.fromMap(Map<String, dynamic> json) => DesignListModel(
     list: List<DesignModel>.from(
       json["list"].map((x) => DesignModel.fromMap(x)),
     ),
     totalCount: json["totalCount"],
-    imgBaseUrl: json["imgBaseUrl"],
   );
 
   Map<String, dynamic> toMap() => {
     "list": List<dynamic>.from(list.map((x) => x.toMap())),
     "totalCount": totalCount,
-    "imgBaseUrl": imgBaseUrl,
   };
 }
 

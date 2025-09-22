@@ -18,7 +18,6 @@ class CustomBtn extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: isOutline ? null : AppColors.mainColor,

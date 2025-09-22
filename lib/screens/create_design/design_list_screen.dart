@@ -1,11 +1,16 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/controllers/create_design_controller.dart';
+import 'package:textile_po/controllers/purchase_order_controller.dart';
+import 'package:textile_po/screens/create_design/create_design_screen.dart';
 import 'package:textile_po/screens/create_design/widgets/design_grid_card.dart';
 import 'package:textile_po/screens/create_design/widgets/search_design_appbar.dart';
 
 class DesignListScreen extends StatefulWidget {
-  const DesignListScreen({super.key});
+  final bool openForSelection;
+  const DesignListScreen({super.key, this.openForSelection = false});
 
   @override
   State<DesignListScreen> createState() => _DesignListScreenState();
@@ -66,7 +71,22 @@ class _DesignListScreenState extends State<DesignListScreen> {
                       itemCount: controller.designList.length,
                       itemBuilder: (context, index) {
                         var design = controller.designList[index];
-                        return DesignCard(design: design);
+                        print('main model : ${design.designImage}');
+                        return DesignCard(
+                          design: design,
+                          onDesignSelect: () {
+                            if (widget.openForSelection) {
+                              Get.find<PurchaseOrderController>().selectDesign(
+                                design,
+                              );
+                              Get.back();
+                            } else {
+                              Get.to(
+                                () => CreateDesignScreen(designModel: design),
+                              );
+                            }
+                          },
+                        );
                       },
                     ),
                   ),

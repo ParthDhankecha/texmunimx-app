@@ -82,6 +82,8 @@ class ApiClient extends GetxService {
     final url = Uri.parse('$baseUrl$endPoint');
     http.Response response;
 
+    log('body : $body');
+
     try {
       response = await http.post(url, body: body, headers: headers);
 

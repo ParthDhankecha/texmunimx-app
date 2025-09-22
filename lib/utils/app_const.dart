@@ -5,7 +5,7 @@ class AppConst {
   static String imageBaseUrl = '';
 
   //apis
-  static String defaultConfig = 'device/sync/'; // method  -get
+  static String defaultConfig = 'sync/'; // method  -get
   static String loginWithMobile = 'auth/sign-in-with-mobile/';
   static String verifyOTP = 'auth/verify-mobile-otp';
 
@@ -21,7 +21,17 @@ class AppConst {
   static String deleteParty = 'party/delete';
   static String updateParty = 'party/update';
 
+  //purchase orders
+  static String purchaseOrderCreate = 'purchase-order/create'; //post
+  // panna, process, designId, partyId, quantity, rate, optinal - deliveryDate, highPrority
+  static String purchaseOrderList = 'purchase-order/list'; // post
+  static String purchaseOrderUpdate = 'purchase-order/update'; // put - {id}
+  static String purchaseOrderDelete = 'purchase-order/delete'; // delete - {id}
+  static String purchaseOrder = 'purchase-order/delete'; // delete - {id}
+
   static String getAssetPng(String name) {
     return 'assets/images/$name.png';
   }
+
+  static String placeHolderImage = '';
 }

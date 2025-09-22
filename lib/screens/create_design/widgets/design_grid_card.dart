@@ -6,14 +6,17 @@ import 'package:textile_po/utils/app_const.dart';
 
 class DesignCard extends StatelessWidget {
   final DesignModel design;
-  const DesignCard({super.key, required this.design});
+  final Function()? onDesignSelect;
+  const DesignCard({
+    super.key,
+    required this.design,
+    required this.onDesignSelect,
+  });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Get.to(() => CreateDesignScreen(designModel: design));
-      },
+      onTap: onDesignSelect,
       child: Card(
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
@@ -27,16 +30,20 @@ class DesignCard extends StatelessWidget {
             FadeInImage(
               //placeholder: const AssetImage('assets/placeholder.png'),
               placeholder: AssetImage('assets/images/placeholder.png'),
-              image: NetworkImage(AppConst.imageBaseUrl + design.designImage),
+              image: NetworkImage(
+                design.designImage.isEmpty
+                    ? AppConst.imageBaseUrl + AppConst.placeHolderImage
+                    : AppConst.imageBaseUrl + design.designImage,
+              ),
               fit: BoxFit.cover,
-              imageErrorBuilder: (context, error, stackTrace) {
-                return Container(
-                  color: Colors.grey[200],
-                  child: Center(
-                    child: Icon(Icons.broken_image, color: Colors.grey[400]),
-                  ),
-                );
-              },
+              // imageErrorBuilder: (context, error, stackTrace) {
+              //   return Container(
+              //     color: Colors.grey[200],
+              //     child: Center(
+              //       child: Icon(Icons.broken_image, color: Colors.grey[400]),
+              //     ),
+              //   );
+              // },
             ),
             // Gradient Overlay to improve text readability
             Container(

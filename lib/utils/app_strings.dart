@@ -1,3 +1,3 @@
 class AppStrings {
-  static final String appName = 'Textile PO';
+  static final String appName = 'Taxmunimx';
 }

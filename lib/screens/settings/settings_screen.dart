@@ -22,7 +22,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             padding: const EdgeInsets.only(left: 10, right: 10, bottom: 8),
             child: SettingsCard(
               img: 'textile',
-              title: 'Design',
+              title: 'browse_design'.tr,
               onTap: () {
                 Get.to(() => DesignListScreen());
               },
@@ -32,7 +32,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             padding: const EdgeInsets.only(left: 10, right: 10, bottom: 8),
             child: SettingsCard(
               img: 'supplier',
-              title: 'Party',
+              title: 'browse_party'.tr,
               onTap: () {
                 Get.to(() => PartyListScreen());
               },

@@ -10,7 +10,7 @@ AppBar searchPartyAppbar() {
     centerTitle: true,
     elevation: 6,
     title: Text(
-      'Search Parties',
+      'search_parties'.tr,
       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
     ),
     bottom: PreferredSize(
@@ -21,7 +21,7 @@ AppBar searchPartyAppbar() {
           children: [
             Expanded(
               child: SearchField(
-                hintText: 'Search Designs by name or GST..',
+                hintText: 'search_party_by'.tr,
                 onChanged: (searchText) {
                   Get.find<PartyController>().getPartyList(search: searchText);
                 },

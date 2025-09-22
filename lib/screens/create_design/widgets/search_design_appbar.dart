@@ -10,7 +10,7 @@ AppBar searchDesignAppBar() {
     centerTitle: true,
     elevation: 6,
     title: Text(
-      'Search Design',
+      'search_design'.tr,
       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
     ),
     bottom: PreferredSize(
@@ -21,7 +21,7 @@ AppBar searchDesignAppBar() {
           children: [
             Expanded(
               child: SearchField(
-                hintText: 'Search Designs by name or numbers..',
+                hintText: 'search_design_by'.tr,
                 onChanged: (searchText) {
                   Get.find<CreateDesignController>().getDesignList(
                     search: searchText,

@@ -38,9 +38,12 @@ class CreateDesignController extends GetxController implements GetxService {
     designNameCont.text = design.designName;
     designNumberCont.text = design.designNumber;
     selectedDesignModelId = design.id;
+    print('desing imag =${design.designImage}');
 
     if (design.designImage.isNotEmpty) {
       selectedDesignImage.value = design.designImage;
+    } else {
+      selectedDesignImage.value = '';
     }
   }
 
@@ -98,8 +101,6 @@ class CreateDesignController extends GetxController implements GetxService {
         );
       }
 
-      imageBasePath = designListModel.imgBaseUrl;
-      AppConst.imageBaseUrl = designListModel.imgBaseUrl;
       designList.addAll(designListModel.list);
       getTotalPage(designListModel.totalCount, limit);
     } on ApiException catch (e) {

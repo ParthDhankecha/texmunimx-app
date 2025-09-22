@@ -82,7 +82,7 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
                       child: Row(
                         children: [
                           Text(
-                            'Design Details',
+                            'design_details'.tr,
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -106,7 +106,7 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
                           Row(
                             children: [
                               Text(
-                                'Design Name',
+                                'design_name'.tr,
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
@@ -117,7 +117,7 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
                           ),
                           SizedBox(height: 10),
                           InputField(
-                            hintText: 'Enter Design Name',
+                            hintText: 'enter_design_name'.tr,
                             textInputType: TextInputType.text,
                             textEditingController: controller.designNameCont,
                           ),
@@ -132,7 +132,7 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
                           Row(
                             children: [
                               Text(
-                                'Design Number',
+                                'design_number'.tr,
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
@@ -143,7 +143,7 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
                           ),
                           SizedBox(height: 10),
                           InputField(
-                            hintText: 'Enter Design Number (EX. WF-100)',
+                            hintText: 'enter_design_number'.tr,
                             textInputType: TextInputType.text,
                             textEditingController: controller.designNumberCont,
                           ),
@@ -158,7 +158,7 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
                           Row(
                             children: [
                               Text(
-                                'Design Image',
+                                'design_image'.tr,
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
@@ -232,7 +232,8 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
                                                         color: Colors.grey,
                                                       ),
                                                       Text(
-                                                        'Tap to Upload a photo',
+                                                        'tap_to_upload_photo'
+                                                            .tr,
                                                         style: TextStyle(
                                                           fontSize: 14,
 
@@ -270,17 +271,22 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
                     Obx(
                       () => controller.isLoading.value
                           ? CustomProgressBtn()
-                          : CustomBtn(
-                              title: designModel != null
-                                  ? 'Update Design'
-                                  : 'Submit Design',
-                              onTap: () {
-                                if (designModel != null) {
-                                  controller.updateDesign();
-                                } else {
-                                  controller.onCreatePo();
-                                }
-                              },
+                          : Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                              ),
+                              child: CustomBtn(
+                                title: designModel != null
+                                    ? 'update_design'.tr
+                                    : 'submit_design'.tr,
+                                onTap: () {
+                                  if (designModel != null) {
+                                    controller.updateDesign();
+                                  } else {
+                                    controller.onCreatePo();
+                                  }
+                                },
+                              ),
                             ),
                     ),
                     SizedBox(height: 12),
