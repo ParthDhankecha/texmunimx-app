@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:textile_po/common_widgets/my_text_field.dart';
 import 'package:textile_po/models/order_status_enum.dart';
 import 'package:textile_po/models/purchase_order_list_response.dart';
 import 'package:textile_po/screens/purchase_order/change_order_status/change_order_status_screen.dart';
@@ -74,8 +75,8 @@ class PurchaseOrderCard extends StatelessWidget {
                       horizontal: 8,
                       vertical: 4,
                     ),
-                    child: Text(
-                      order.isCompleted ? 'Completed' : 'Pending',
+                    child: MyText(
+                      'pending',
                       style: const TextStyle(color: Colors.white, fontSize: 12),
                     ),
                   ),
@@ -87,7 +88,7 @@ class PurchaseOrderCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Customer : '),
+                MyText('customer'),
                 Text(
                   order.partyId.isNotEmpty
                       ? order.partyId.first.partyName
@@ -101,7 +102,7 @@ class PurchaseOrderCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
               children: [
-                Text('Customer ID : '),
+                MyText('customer_id'),
                 Text(
                   order.partyId.isNotEmpty
                       ? order.partyId.first.partyNumber
@@ -113,7 +114,7 @@ class PurchaseOrderCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Panna : '),
+                MyText('panna'),
                 Text(
                   formatDouble(order.panna),
                   style: const TextStyle(fontSize: 14),
@@ -125,7 +126,7 @@ class PurchaseOrderCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Rate : '),
+                MyText('rate'),
                 Text(
                   formatDouble(order.rate),
                   style: const TextStyle(fontSize: 16),
@@ -139,10 +140,10 @@ class PurchaseOrderCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildProgressItem('Pending', '${order.pending}'),
-                _buildProgressItem('Quantity', '${order.quantity}'),
+                _buildProgressItem('pending', '${order.pending}'),
+                _buildProgressItem('quantity', '${order.quantity}'),
                 _buildProgressItem(
-                  'In Process',
+                  'in_progress',
                   '${order.inProcess?.quantity ?? 0}',
                 ),
               ],
@@ -177,9 +178,9 @@ class PurchaseOrderCard extends StatelessWidget {
                     //   ),
                     // );
                   },
-                  child: Text('In Process'),
+                  child: MyText('in_progress'),
                 ),
-                TextButton(onPressed: () {}, child: Text('Edit')),
+                TextButton(onPressed: () {}, child: MyText('edit')),
               ],
             ),
           ],
@@ -194,7 +195,10 @@ class PurchaseOrderCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(title, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+        MyText(
+          title,
+          style: const TextStyle(fontSize: 12, color: Colors.black),
+        ),
         const SizedBox(height: 4),
         Text(
           quantity.toString(),

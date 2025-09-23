@@ -45,22 +45,22 @@ class _HomeScreenState extends State<HomeScreen> {
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined),
-              label: 'Home',
+              label: 'home'.tr,
             ),
 
             BottomNavigationBarItem(
               icon: Icon(Icons.list_outlined),
-              label: 'PO List',
+              label: 'po_list'.tr,
             ),
 
             BottomNavigationBarItem(
               icon: Icon(Icons.add_circle_outline),
-              label: 'Create PO',
+              label: 'create_po'.tr,
             ),
 
             BottomNavigationBarItem(
               icon: Icon(Icons.person_2_outlined),
-              label: 'Profile',
+              label: 'profile'.tr,
             ),
           ],
         ),

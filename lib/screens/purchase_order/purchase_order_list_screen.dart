@@ -37,7 +37,7 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
     return Scaffold(
       appBar: AppBar(
         elevation: 6,
-        title: const Text('Purchase Orders'),
+        title: Text('purchase_order'.tr),
         bottom: TabBar(
           controller: tabController,
           indicatorColor: Colors.blue,

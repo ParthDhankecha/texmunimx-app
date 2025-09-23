@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:textile_po/common_widgets/my_text_field.dart';
 import 'package:textile_po/models/order_status_enum.dart';
 import 'package:textile_po/models/purchase_order_list_response.dart';
 import 'package:textile_po/screens/purchase_order/change_order_status/change_order_status_screen.dart';
@@ -73,8 +75,8 @@ class InProcessCard extends StatelessWidget {
                       horizontal: 8,
                       vertical: 4,
                     ),
-                    child: Text(
-                      'In Process',
+                    child: MyText(
+                      'in_progress',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,
@@ -90,7 +92,7 @@ class InProcessCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Customer : '),
+                MyText('customer', append: ' : '),
                 Text(
                   order.partyId.isNotEmpty
                       ? order.partyId.first.partyName
@@ -104,7 +106,7 @@ class InProcessCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
               children: [
-                Text('Customer ID : '),
+                MyText('customer_id', append: ' : '),
                 Text(
                   order.partyId.isNotEmpty
                       ? order.partyId.first.partyNumber
@@ -116,7 +118,7 @@ class InProcessCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Panna : '),
+                MyText('panna', append: ' : '),
                 Text(
                   formatDouble(order.panna),
                   style: const TextStyle(fontSize: 14),
@@ -128,7 +130,8 @@ class InProcessCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Rate : '),
+                MyText('rate', append: ' : '),
+
                 Text(
                   formatDouble(order.rate),
                   style: const TextStyle(fontSize: 16),
@@ -139,7 +142,7 @@ class InProcessCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Firm Name : '),
+                MyText('firm_name', append: ' : '),
                 Text(
                   order.inProcess?.firmId.first.firmName ?? 'N/A',
                   style: const TextStyle(fontSize: 16),
@@ -150,7 +153,7 @@ class InProcessCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Moved By : '),
+                MyText('moved_by', append: ' : '),
                 Text(
                   order.inProcess?.movedBy.first.fullname ?? 'N/A',
                   style: const TextStyle(fontSize: 16),
@@ -161,7 +164,7 @@ class InProcessCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Machine No: '),
+                MyText('machine_no', append: ' : '),
                 Text(
                   order.inProcess?.machineNo ?? 'N/A',
                   style: const TextStyle(fontSize: 16),
@@ -174,10 +177,10 @@ class InProcessCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildProgressItem('Pending', '${order.pending}'),
-                _buildProgressItem('Quantity', '${order.quantity}'),
+                _buildProgressItem('pending', '${order.pending}'),
+                _buildProgressItem('quantity', '${order.quantity}'),
                 _buildProgressItem(
-                  'In Process',
+                  'in_progress',
                   '${order.inProcess?.quantity ?? 0}',
                 ),
               ],
@@ -240,7 +243,10 @@ class InProcessCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
 
       children: [
-        Text(title, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+        Text(
+          title.tr,
+          style: const TextStyle(fontSize: 12, color: Colors.black),
+        ),
         const SizedBox(height: 4),
         Text(
           quantity.toString(),

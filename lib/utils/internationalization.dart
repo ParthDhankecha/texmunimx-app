@@ -69,6 +69,22 @@ class AppTranslations extends Translations {
       'select_delivery_date': 'Select delivery date',
       'high_priority': 'High Priority',
       'save_order': 'Save Order',
+
+      'pending': 'Pending',
+      'in_progress': 'In Process',
+      'ready_to_dispatch': 'Ready to Dispatch',
+      'completed': 'Completed',
+      'customer': 'Customer',
+      'customer_id': 'Customer Id',
+
+      'edit': 'Edit',
+      'home': 'Home',
+      'po_list': 'PO List',
+      'create_po': 'Create PO',
+      'profile': 'Profile',
+      'firm_name': 'Firm Name',
+      'moved_by': 'Moved By',
+      'machine_no': 'Machine No',
     },
     'hi_IN': {
       'language_change': 'भाषा बदलें',
@@ -136,6 +152,23 @@ class AppTranslations extends Translations {
       'select_delivery_date': 'डिलीवरी की तारीख चुनें',
       'high_priority': 'उच्च प्राथमिकता',
       'save_order': 'ऑर्डर सहेजें',
+
+      'pending': 'लंबित',
+      'in_progress': 'प्रगति पर',
+      'ready_to_dispatch': 'डिस्पैच के लिए तैयार',
+      'completed': 'पूर्ण',
+      'customer': 'ग्राहक',
+      'customer_id': 'ग्राहक आईडी',
+
+      'edit': 'संपादित करें',
+      'home': 'होम',
+      'po_list': 'पीओ सूची',
+      'create_po': 'पीओ बनाएं',
+      'profile': 'प्रोफ़ाइल',
+
+      'firm_name': 'फर्म का नाम',
+      'moved_by': 'द्वारा ले जाया गया',
+      'machine_no': 'मशीन नंबर',
     },
     'gu_IN': {
       'language_change': 'ભાષા બદલો',
@@ -203,6 +236,23 @@ class AppTranslations extends Translations {
       'select_delivery_date': 'ડિલિવરી તારીખ પસંદ કરો',
       'high_priority': 'ઉચ્ચ અગ્રતા',
       'save_order': 'ઓર્ડર સાચવો',
+
+      'pending': 'બાકી',
+      'in_progress': 'પ્રગતિમાં',
+      'ready_to_dispatch': 'રવાના થવા માટે તૈયાર',
+      'completed': 'પૂર્ણ',
+      'customer': 'ગ્રાહક',
+      'customer_id': 'ગ્રાહક આઈડી',
+
+      'edit': 'સંપાદિત કરો',
+      'home': 'હોમ',
+      'po_list': 'પીઓ યાદી',
+      'create_po': 'પીઓ બનાવો',
+      'profile': 'પ્રોફાઇલ',
+
+      'firm_name': 'પેઢીનું નામ',
+      'moved_by': 'દ્વારા ખસેડાયું',
+      'machine_no': 'મશીન નંબર',
     },
   };
 }
