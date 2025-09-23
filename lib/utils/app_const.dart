@@ -28,6 +28,9 @@ class AppConst {
   static String purchaseOrderUpdate = 'purchase-order/update'; // put - {id}
   static String purchaseOrderDelete = 'purchase-order/delete'; // delete - {id}
   static String purchaseOrder = 'purchase-order/delete'; // delete - {id}
+  static String purchaseOrderGetOptions = 'purchase-order/get-options'; //get
+  static String purchaseOrderChangeStatus =
+      'purchase-order/change-status'; //put with id
 
   static String getAssetPng(String name) {
     return 'assets/images/$name.png';

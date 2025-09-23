@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:textile_po/models/order_status_enum.dart';
 import 'package:textile_po/models/purchase_order_list_response.dart';
 import 'package:textile_po/screens/purchase_order/change_order_status/change_order_status_screen.dart';
 import 'package:textile_po/utils/app_const.dart';
 import 'package:textile_po/utils/formate_double.dart';
 
-class PurchaseOrderCard extends StatelessWidget {
+class InProcessCard extends StatelessWidget {
   final PurchaseOrderModel order;
 
-  const PurchaseOrderCard({super.key, required this.order});
+  const InProcessCard({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +32,12 @@ class PurchaseOrderCard extends StatelessWidget {
                         ? AppConst.imageBaseUrl +
                               order.designId.first.designImage
                         : 'https://placehold.co/100x100',
-                    width: 50,
-                    height: 50,
+                    width: 42,
+                    height: 42,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) => Container(
-                      width: 60,
-                      height: 60,
+                      width: 42,
+                      height: 42,
                       color: Colors.grey[200],
                       child: const Icon(Icons.broken_image, color: Colors.grey),
                     ),
@@ -66,7 +65,7 @@ class PurchaseOrderCard extends StatelessWidget {
                 // Status tag
                 Container(
                   decoration: BoxDecoration(
-                    color: order.isCompleted ? Colors.green : Colors.red,
+                    color: Colors.orange,
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Padding(
@@ -75,8 +74,12 @@ class PurchaseOrderCard extends StatelessWidget {
                       vertical: 4,
                     ),
                     child: Text(
-                      order.isCompleted ? 'Completed' : 'Pending',
-                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                      'In Process',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -132,9 +135,41 @@ class PurchaseOrderCard extends StatelessWidget {
                 ),
               ],
             ),
-
             const SizedBox(height: 4),
-            Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Firm Name : '),
+                Text(
+                  order.inProcess?.firmId.first.firmName ?? 'N/A',
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Moved By : '),
+                Text(
+                  order.inProcess?.movedBy.first.fullname ?? 'N/A',
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Machine No: '),
+                Text(
+                  order.inProcess?.machineNo ?? 'N/A',
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+
             // Bottom section with progress details
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -147,7 +182,6 @@ class PurchaseOrderCard extends StatelessWidget {
                 ),
               ],
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -156,30 +190,42 @@ class PurchaseOrderCard extends StatelessWidget {
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
-                      useSafeArea: true,
+
                       builder: (context) => UpdateStatusBottomSheet(
                         orderQuantity: order.quantity,
-                        pendingQuantity: order.pending,
-                        moveTo: OrderStatus.inProcess,
-                        currentStatus: OrderStatus.pending,
+                        pendingQuantity: order.inProcess?.quantity ?? 0,
+                        moveTo: OrderStatus.pending,
+                        currentStatus: OrderStatus.inProcess,
                         purchaseId: order.id,
-                        firmId: '',
-                        userId: '',
+                        quantityTitle: 'In Progress',
+                        firmId: order.inProcess?.firmId.first.id ?? '',
+                        userId: order.inProcess?.userId.first.id ?? '',
+                        machineNo: order.inProcess?.machineNo ?? '',
                       ),
                     );
-                    // Get.bottomSheet(
-                    //   UpdateStatusBottomSheet(
-                    //     orderQuantity: order.quantity,
-                    //     pendingQuantity: order.pending,
-                    //     moveTo: 'In Progress',
-                    //     firms: [],
-                    //     users: [],
-                    //   ),
-                    // );
                   },
-                  child: Text('In Process'),
+                  child: Text('Pending'),
                 ),
-                TextButton(onPressed: () {}, child: Text('Edit')),
+                TextButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) => UpdateStatusBottomSheet(
+                        orderQuantity: order.quantity,
+                        pendingQuantity: order.inProcess?.quantity ?? 0,
+                        moveTo: OrderStatus.readyToDispatch,
+                        currentStatus: OrderStatus.inProcess,
+                        purchaseId: order.id,
+                        quantityTitle: 'In Progress',
+                        firmId: order.inProcess?.firmId.first.id ?? '',
+                        userId: order.inProcess?.userId.first.id ?? '',
+                        machineNo: order.inProcess?.machineNo ?? '',
+                      ),
+                    );
+                  },
+                  child: Text('Ready To Dispatch'),
+                ),
               ],
             ),
           ],
@@ -192,13 +238,12 @@ class PurchaseOrderCard extends StatelessWidget {
   Widget _buildProgressItem(String title, String quantity) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
+
       children: [
         Text(title, style: const TextStyle(fontSize: 12, color: Colors.grey)),
         const SizedBox(height: 4),
         Text(
           quantity.toString(),
-          textAlign: TextAlign.center,
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ],

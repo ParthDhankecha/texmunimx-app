@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/controllers/purchase_order_controller.dart';
+import 'package:textile_po/screens/purchase_order/widgets/delivered_card.dart';
+import 'package:textile_po/screens/purchase_order/widgets/in_process_card.dart';
 import 'package:textile_po/screens/purchase_order/widgets/purchase_order_card.dart';
+import 'package:textile_po/screens/purchase_order/widgets/ready_to_dispatch_card.dart';
 
 class PurchaseOrderListPage extends StatefulWidget {
   const PurchaseOrderListPage({super.key});
@@ -11,7 +14,7 @@ class PurchaseOrderListPage extends StatefulWidget {
 }
 
 class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   final PurchaseOrderController controller = Get.find();
   late final TabController tabController;
 
@@ -19,7 +22,7 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
   void initState() {
     super.initState();
     controller.getPurchaseList();
-    tabController = TabController(length: 4, vsync: this);
+    tabController = TabController(initialIndex: 0, length: 4, vsync: this);
     tabController.addListener(onTabChanging);
   }
 
@@ -31,90 +34,101 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Purchase Orders'),
-          bottom: TabBar(
-            controller: tabController,
-            indicatorColor: Colors.blue,
-            labelColor: Colors.blue,
-            unselectedLabelColor: Colors.grey,
-            tabs: [
-              Tab(text: 'Pending'),
-              Tab(text: 'In Process'),
-              Tab(text: 'Ready to Dispatch'),
-              Tab(text: 'Completed'),
-            ],
-            onTap: (value) {
-              print('myTab = $value');
-            },
-          ),
-        ),
-        body: TabBarView(
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 6,
+        title: const Text('Purchase Orders'),
+        bottom: TabBar(
           controller: tabController,
-          children: [
-            Obx(
-              () => ListView.builder(
-                itemCount: controller.purchaseOrdersList.length,
-                itemBuilder: (context, index) {
-                  return PurchaseOrderCard(
-                    order: controller.purchaseOrdersList[index],
-                  );
-                },
-              ),
-            ),
-            Obx(
-              () => ListView.builder(
-                itemCount: controller.purchaseOrdersList.length,
-                itemBuilder: (context, index) {
-                  return PurchaseOrderCard(
-                    order: controller.purchaseOrdersList[index],
-                  );
-                },
-              ),
-            ),
-            Obx(
-              () => ListView.builder(
-                itemCount: controller.purchaseOrdersList.length,
-                itemBuilder: (context, index) {
-                  return PurchaseOrderCard(
-                    order: controller.purchaseOrdersList[index],
-                  );
-                },
-              ),
-            ),
-            Obx(
-              () => ListView.builder(
-                itemCount: controller.purchaseOrdersList.length,
-                itemBuilder: (context, index) {
-                  return PurchaseOrderCard(
-                    order: controller.purchaseOrdersList[index],
-                  );
-                },
-              ),
-            ),
+          indicatorColor: Colors.blue,
+          labelColor: Colors.blue,
+          unselectedLabelColor: Colors.grey,
+          onFocusChange: (value, index) {
+            print('i am tab $index');
+          },
+          tabs: [
+            Tab(text: 'Pending'),
+            Tab(text: 'In Process'),
+            Tab(text: 'Ready to Dispatch'),
+            Tab(text: 'Completed'),
           ],
+          onTap: (value) {
+            print('myTab = $value');
+          },
         ),
+      ),
+      body: TabBarView(
+        controller: tabController,
+        children: [
+          //pending
+          Obx(
+            () => ListView.builder(
+              itemCount: controller.purchaseOrdersList.length,
+              itemBuilder: (context, index) {
+                return PurchaseOrderCard(
+                  order: controller.purchaseOrdersList[index],
+                );
+              },
+            ),
+          ),
+
+          //In Process
+          Obx(
+            () => ListView.builder(
+              itemCount: controller.inProcessList.length,
+              itemBuilder: (context, index) {
+                return InProcessCard(order: controller.inProcessList[index]);
+              },
+            ),
+          ),
+
+          //Ready to dispatch
+          Obx(
+            () => controller.readyToDispatchList.isEmpty
+                ? Center(child: Text('No records found!'))
+                : ListView.builder(
+                    itemCount: controller.readyToDispatchList.length,
+                    itemBuilder: (context, index) {
+                      return ReadyToDispatchCard(
+                        order: controller.readyToDispatchList[index],
+                      );
+                    },
+                  ),
+          ),
+
+          //Completed
+          Obx(
+            () => ListView.builder(
+              itemCount: controller.deliveredList.length,
+              itemBuilder: (context, index) {
+                return DeliveredCard(order: controller.deliveredList[index]);
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
 
   void onTabChanging() {
-    if (tabController.indexIsChanging) {
-      print('i am changing');
+    if (!tabController.indexIsChanging) {
       switch (tabController.index) {
         case 0:
           controller.getPurchaseList(status: 'pending', isRefresh: true);
 
           break;
         case 1:
-          controller.getPurchaseList(status: 'inProcess', isRefresh: true);
+          controller.getInProcessList(status: 'inProcess', isRefresh: true);
 
           break;
+        case 2:
+          controller.getInProcessList(
+            status: 'readyToDispatch',
+            isRefresh: true,
+          );
+          break;
         default:
-          controller.getPurchaseList(status: 'pending', isRefresh: true);
+          controller.getInProcessList(status: 'delivered', isRefresh: true);
       }
     }
   }

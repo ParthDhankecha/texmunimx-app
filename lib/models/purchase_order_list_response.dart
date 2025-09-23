@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:textile_po/models/in_process_model.dart';
+
 PurchaseOrderListResponse purchaseOrderListResponseFromMap(String str) =>
     PurchaseOrderListResponse.fromMap(json.decode(str));
 
@@ -70,6 +72,14 @@ class PurchaseOrderModel {
   dynamic completedAt;
   DateTime? deliveryDate;
   bool? isHighPriority;
+
+  //in process
+  InProcess? inProcess;
+  //ready to dispatch
+  ReadyToDispatch? readyToDispatch;
+
+  //delivered
+  Delivered? delivered;
   String createdBy;
   String workspaceId;
   DateTime createdAt;
@@ -94,6 +104,9 @@ class PurchaseOrderModel {
     required this.workspaceId,
     required this.createdAt,
     required this.updatedAt,
+    this.inProcess,
+    this.readyToDispatch,
+    this.delivered,
   });
 
   factory PurchaseOrderModel.fromMap(Map<String, dynamic> json) =>
@@ -122,6 +135,16 @@ class PurchaseOrderModel {
         workspaceId: json["workspaceId"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
+        inProcess: json["inProcess"] == null
+            ? null
+            : InProcess.fromMap(json["inProcess"]),
+        readyToDispatch: json["readyToDispatch"] == null
+            ? null
+            : ReadyToDispatch.fromMap(json["readyToDispatch"]),
+
+        delivered: json["delivered"] == null
+            ? null
+            : Delivered.fromMap(json["delivered"]),
       );
 
   Map<String, dynamic> toMap() => {
@@ -166,7 +189,7 @@ class DesignId {
     designName: json["designName"],
     designNumber: json["designNumber"],
     designImage: json["designImage"],
-    workspaceId: json["workspaceId"],
+    workspaceId: json["workspaceId"] ?? '',
   );
 
   Map<String, dynamic> toMap() => {

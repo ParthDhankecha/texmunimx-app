@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/common_widgets/show_success_snackbar.dart';
 import 'package:textile_po/models/design_list_response.dart';
+import 'package:textile_po/models/in_process_model.dart';
+import 'package:textile_po/models/order_status_enum.dart';
 import 'package:textile_po/models/party_list_response.dart';
 import 'package:textile_po/models/purchase_order_list_response.dart';
 import 'package:textile_po/repository/api_exception.dart';
@@ -30,8 +32,14 @@ class PurchaseOrderController extends GetxController implements GetxService {
   Rx<PartyModel?> selectedParty = Rx(null);
 
   RxList<PurchaseOrderModel> purchaseOrdersList = RxList();
+  RxList<PurchaseOrderModel> inProcessList = RxList();
+  RxList<PurchaseOrderModel> readyToDispatchList = RxList();
+  RxList<PurchaseOrderModel> deliveredList = RxList();
 
   PurchaseOrderRepository repository = Get.find<PurchaseOrderRepository>();
+
+  RxList<FirmId> firmList = RxList();
+  RxList<MovedBy> userList = RxList();
 
   int currentPage = 1;
   int totalPages = 0;
@@ -80,6 +88,55 @@ class PurchaseOrderController extends GetxController implements GetxService {
     }
   }
 
+  //update order status
+  updateOrderStatus({
+    required String id,
+    required OrderStatus status,
+    required OrderStatus current,
+    required int quantity,
+    String? fId,
+    String? uId,
+    String? machineNo,
+    String? remarks,
+  }) async {
+    try {
+      isLoading.value = true;
+      var data = await repository.changeStatus(
+        id: id,
+        status: status.name,
+        quantity: quantity,
+        firmId: fId,
+        userId: uId,
+        machineNo: machineNo,
+        remarks: remarks,
+      );
+      print('data : $data');
+      if (data) {
+        showSuccessSnackbar('Status Changed to ${status.displayValue}');
+
+        switch (current) {
+          case OrderStatus.pending:
+            getPurchaseList(isRefresh: true);
+
+            break;
+
+          default:
+            getInProcessList(status: current.name, isRefresh: true);
+        }
+      }
+    } on ApiException catch (e) {
+      print('error : $e');
+      switch (e.statusCode) {
+        case 401:
+          Get.offAll(() => LoginScreen());
+          break;
+        default:
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   getPurchaseList({
     String status = 'pending',
     String? search,
@@ -100,16 +157,72 @@ class PurchaseOrderController extends GetxController implements GetxService {
         );
       } else {
         purchaseOrderListModel = await repository.getPurchaseOrderList(
+          status: 'pending',
           searchText: search,
           pageCount: '$currentPage',
           limit: '$limit',
         );
       }
 
+      var data = await repository.getOptionsList();
+      firmList.value = data.firms;
+      userList.value = data.users;
+
       purchaseOrdersList.addAll(purchaseOrderListModel.list);
       getTotalPage(purchaseOrderListModel.totalCount, limit);
     } on ApiException catch (e) {
       print('error : $e');
+      switch (e.statusCode) {
+        case 401:
+          Get.offAll(() => LoginScreen());
+          break;
+        default:
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  //get in process list
+  getInProcessList({
+    String status = 'inProcess',
+    String? search,
+    bool isRefresh = false,
+  }) async {
+    try {
+      isLoading.value = true;
+      PurchaseOrderListModel purchaseOrderListModel;
+      if (isRefresh) {
+        inProcessList.value = [];
+        readyToDispatchList.value = [];
+        deliveredList.value = [];
+        currentPage = 1;
+      }
+      if (search != null && search.isNotEmpty) {
+        inProcessList.value = [];
+
+        purchaseOrderListModel = await repository.getPurchaseOrderList(
+          searchText: search,
+          status: status,
+        );
+      } else {
+        purchaseOrderListModel = await repository.getPurchaseOrderList(
+          status: status,
+          searchText: search,
+          pageCount: '$currentPage',
+          limit: '$limit',
+        );
+      }
+      if (status == 'inProcess') {
+        inProcessList.addAll(purchaseOrderListModel.list);
+      } else if (status == 'delivered') {
+        deliveredList.addAll(purchaseOrderListModel.list);
+      } else {
+        readyToDispatchList.addAll(purchaseOrderListModel.list);
+      }
+      getTotalPage(purchaseOrderListModel.totalCount, limit);
+    } on ApiException catch (e) {
+      print('$status error : $e');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());

@@ -185,7 +185,7 @@ class ApiClient extends GetxService {
   Future<dynamic> requestPut(
     String endPoint, {
     Map<String, String>? headers,
-    Map<String, String>? body,
+    Map<String, dynamic>? body,
   }) async {
     log('url : $baseUrl$endPoint');
     final url = Uri.parse('$baseUrl$endPoint');
