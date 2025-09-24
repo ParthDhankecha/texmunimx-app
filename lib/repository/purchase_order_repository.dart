@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/models/purchase_order_list_response.dart';
@@ -15,16 +17,16 @@ class PurchaseOrderRepository {
   Future<PurchaseOptionsModel> getOptionsList() async {
     var endPoint = AppConst.purchaseOrderGetOptions;
 
-    if (kDebugMode) {
-      print('token : ${sp.userToken}');
-    }
     var data = await apiClient.request(
       endPoint,
       body: {},
       headers: {'authorization': sp.userToken},
     );
 
-    print('data : $data');
+    if (kDebugMode) {
+      print('token : ${sp.userToken}');
+      print('data : $data');
+    }
     return purchaseOrderOptionsResponseFromMap(data).data;
   }
 
@@ -52,7 +54,7 @@ class PurchaseOrderRepository {
       headers: {'authorization': sp.userToken},
     );
 
-    print('data : $data');
+    log('data : $data');
     return purchaseOrderListResponseFromMap(data).data;
   }
 
@@ -69,14 +71,14 @@ class PurchaseOrderRepository {
   }) async {
     var endPoint = AppConst.purchaseOrderCreate;
     var reqBody = {
-      "panna": '$panna',
+      "panna": panna,
       "process": process,
       "designId": designId,
       "partyId": partyId,
-      "quantity": '$quantity',
-      "rate": '$rate',
+      "quantity": quantity,
+      "rate": rate,
       if (deliveryDate != null) "deliveryDate": deliveryDate,
-      if (highPriority != null) "isHighPriority": '$highPriority',
+      if (highPriority != null) "isHighPriority": highPriority,
       if (partyPo != null) "partyPoNumber": partyPo,
     };
 
@@ -89,10 +91,7 @@ class PurchaseOrderRepository {
     data = await apiClient.requestPost(
       endPoint,
       body: reqBody,
-      headers: {
-        'authorization': sp.userToken,
-        //  'content-type': "application/json",
-      },
+      headers: {'authorization': sp.userToken},
     );
 
     return data;
@@ -111,7 +110,7 @@ class PurchaseOrderRepository {
     var endPoint = AppConst.purchaseOrderChangeStatus;
     var body = {
       'status': status,
-      'quantity': '$quantity',
+      'quantity': quantity,
       if (firmId != null) 'firmId': firmId,
       if (userId != null) 'userId': userId,
       if (machineNo != null) 'machineNo': machineNo,
@@ -120,7 +119,7 @@ class PurchaseOrderRepository {
 
     if (kDebugMode) {
       print('token : ${sp.userToken}');
-      print('body : ${body}');
+      print('body : $body');
     }
     var data = await apiClient.requestPut(
       '$endPoint/$id',
@@ -128,7 +127,7 @@ class PurchaseOrderRepository {
       headers: {'authorization': sp.userToken},
     );
 
-    print('data : $data');
+    log('data : $data');
     return baseModelFromMap(data).code == "OK";
   }
 }

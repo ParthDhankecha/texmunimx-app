@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/common_widgets/app_text_styles.dart';
@@ -23,6 +21,18 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
   PurchaseOrderController controller = Get.find<PurchaseOrderController>();
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.selectDesign(null);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.selectDesign(null);
+  }
 
   @override
   Widget build(BuildContext context) {

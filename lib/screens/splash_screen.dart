@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:textile_po/common_widgets/main_btn.dart';
 import 'package:textile_po/controllers/splash_controller.dart';
-import 'package:textile_po/screens/auth_screens/login_screen.dart';
 import 'package:textile_po/utils/app_colors.dart';
 import 'package:textile_po/utils/app_strings.dart';
 import 'package:get/get.dart';

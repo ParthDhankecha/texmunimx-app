@@ -41,7 +41,9 @@ class ReadyToDispatchCard extends StatelessWidget {
                       width: 42,
                       height: 42,
                       color: Colors.grey[200],
-                      child: const Icon(Icons.broken_image, color: Colors.grey),
+                      child: Image.network(
+                        AppConst.imageBaseUrl + AppConst.placeHolderImage,
+                      ),
                     ),
                   ),
                 ),

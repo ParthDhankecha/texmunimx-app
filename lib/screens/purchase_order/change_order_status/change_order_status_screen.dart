@@ -63,17 +63,6 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
         context,
       ).showSnackBar(const SnackBar(content: Text('Processing Data')));
 
-      // Here you would typically call an API or update the state in your app.
-      // For this example, we'll just print the data.
-      print('--- Form Data ---');
-      print('Move To: ${widget.moveTo}');
-      print('Quantity: $quantity');
-      print('Firm: ${_selectedFirm?.firmName}');
-      print('User: ${_selectedUser?.fullname}');
-      print('Machine No: ${_machineNoController.text}');
-      print('Remarks: ${_remarksController.text}');
-      print('-----------------');
-
       controller.updateOrderStatus(
         id: widget.purchaseId,
         status: widget.moveTo,
@@ -242,7 +231,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                               border: OutlineInputBorder(),
                             ),
                             hint: const Text('Select User'),
-                            value: _selectedUser,
+                            initialValue: _selectedUser,
                             items: controller.userList.map((user) {
                               return DropdownMenuItem<MovedBy>(
                                 value: user,

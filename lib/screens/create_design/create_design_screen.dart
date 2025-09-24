@@ -14,6 +14,7 @@ import 'package:textile_po/controllers/home_controller.dart';
 import 'package:textile_po/models/design_list_response.dart';
 import 'package:textile_po/screens/create_design/widgets/delete_design_dialog.dart';
 import 'package:textile_po/utils/app_colors.dart';
+import 'package:textile_po/utils/app_const.dart';
 
 class CreateDesignScreen extends StatefulWidget {
   final DesignModel? designModel;
@@ -184,7 +185,7 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
                                             child: SizedBox(
                                               height: 140,
                                               child: Image.network(
-                                                controller.imageBasePath +
+                                                AppConst.imageBaseUrl +
                                                     controller
                                                         .selectedDesignImage
                                                         .value,

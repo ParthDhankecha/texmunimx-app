@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -52,7 +54,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
     highPriority.value = value;
   }
 
-  selectDesign(DesignModel model) {
+  selectDesign(DesignModel? model) {
     selectedDesign.value = model;
   }
 
@@ -110,7 +112,6 @@ class PurchaseOrderController extends GetxController implements GetxService {
         machineNo: machineNo,
         remarks: remarks,
       );
-      print('data : $data');
       if (data) {
         showSuccessSnackbar('Status Changed to ${status.displayValue}');
 
@@ -125,7 +126,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
         }
       }
     } on ApiException catch (e) {
-      print('error : $e');
+      log('error : $e');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());
@@ -171,7 +172,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
       purchaseOrdersList.addAll(purchaseOrderListModel.list);
       getTotalPage(purchaseOrderListModel.totalCount, limit);
     } on ApiException catch (e) {
-      print('error : $e');
+      log('error : $e');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());
@@ -222,7 +223,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
       }
       getTotalPage(purchaseOrderListModel.totalCount, limit);
     } on ApiException catch (e) {
-      print('$status error : $e');
+      log('$status error : $e');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());

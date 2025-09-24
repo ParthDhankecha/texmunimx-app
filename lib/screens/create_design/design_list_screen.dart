@@ -1,7 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:textile_po/controllers/calculator_controller.dart';
 import 'package:textile_po/controllers/create_design_controller.dart';
 import 'package:textile_po/controllers/purchase_order_controller.dart';
 import 'package:textile_po/screens/create_design/create_design_screen.dart';
@@ -71,7 +70,6 @@ class _DesignListScreenState extends State<DesignListScreen> {
                       itemCount: controller.designList.length,
                       itemBuilder: (context, index) {
                         var design = controller.designList[index];
-                        print('main model : ${design.designImage}');
                         return DesignCard(
                           design: design,
                           onDesignSelect: () {
@@ -79,6 +77,10 @@ class _DesignListScreenState extends State<DesignListScreen> {
                               Get.find<PurchaseOrderController>().selectDesign(
                                 design,
                               );
+
+                              Get.find<CalculatorController>().setDesign =
+                                  design;
+
                               Get.back();
                             } else {
                               Get.to(

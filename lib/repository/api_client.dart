@@ -82,10 +82,16 @@ class ApiClient extends GetxService {
     final url = Uri.parse('$baseUrl$endPoint');
     http.Response response;
 
-    log('body : $body');
+    final Map<String, String> finalHeaders = {
+      'Content-Type': 'application/json',
+      ...?headers,
+    };
+
+    final String? jsonBody = body != null ? json.encode(body) : null;
+    log('body : $jsonBody');
 
     try {
-      response = await http.post(url, body: body, headers: headers);
+      response = await http.post(url, body: jsonBody, headers: finalHeaders);
 
       switch (response.statusCode) {
         case 200:
@@ -191,8 +197,16 @@ class ApiClient extends GetxService {
     final url = Uri.parse('$baseUrl$endPoint');
     http.Response response;
 
+    final Map<String, String> finalHeaders = {
+      'Content-Type': 'application/json',
+      ...?headers,
+    };
+
+    final String? jsonBody = body != null ? json.encode(body) : null;
+    log('body : $jsonBody');
+
     try {
-      response = await http.put(url, body: body, headers: headers);
+      response = await http.put(url, body: jsonBody, headers: finalHeaders);
       switch (response.statusCode) {
         case 200:
         case 201:

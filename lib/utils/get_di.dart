@@ -1,3 +1,4 @@
+import 'package:textile_po/controllers/calculator_controller.dart';
 import 'package:textile_po/controllers/create_design_controller.dart';
 import 'package:textile_po/controllers/home_controller.dart';
 import 'package:textile_po/controllers/localization_controller.dart';
@@ -42,4 +43,5 @@ Future<void> init() async {
   Get.lazyPut(() => CreateDesignController());
   Get.lazyPut(() => PartyController());
   Get.lazyPut(() => PurchaseOrderController());
+  Get.lazyPut(() => CalculatorController());
 }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:textile_po/models/design_list_response.dart';
-import 'package:textile_po/screens/create_design/create_design_screen.dart';
 import 'package:textile_po/utils/app_const.dart';
 
 class DesignCard extends StatelessWidget {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/get_utils.dart';
+import 'package:textile_po/common_widgets/my_text_field.dart';
 import 'package:textile_po/models/purchase_order_list_response.dart';
 import 'package:textile_po/utils/app_const.dart';
 import 'package:textile_po/utils/formate_double.dart';
@@ -29,7 +31,7 @@ class DeliveredCard extends StatelessWidget {
                     order.designId.isNotEmpty
                         ? AppConst.imageBaseUrl +
                               order.designId.first.designImage
-                        : 'https://placehold.co/100x100',
+                        : AppConst.imageBaseUrl + AppConst.placeHolderImage,
                     width: 42,
                     height: 42,
                     fit: BoxFit.cover,
@@ -37,7 +39,9 @@ class DeliveredCard extends StatelessWidget {
                       width: 42,
                       height: 42,
                       color: Colors.grey[200],
-                      child: const Icon(Icons.broken_image, color: Colors.grey),
+                      child: Image.network(
+                        AppConst.imageBaseUrl + AppConst.placeHolderImage,
+                      ),
                     ),
                   ),
                 ),
@@ -71,8 +75,8 @@ class DeliveredCard extends StatelessWidget {
                       horizontal: 8,
                       vertical: 4,
                     ),
-                    child: Text(
-                      'Completed',
+                    child: MyText(
+                      'completed',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,
@@ -88,7 +92,7 @@ class DeliveredCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Customer : '),
+                MyText('customer', append: ' : '),
                 Text(
                   order.partyId.isNotEmpty
                       ? order.partyId.first.partyName
@@ -102,7 +106,7 @@ class DeliveredCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
               children: [
-                Text('Customer ID : '),
+                MyText('customer_id', append: ' : '),
                 Text(
                   order.partyId.isNotEmpty
                       ? order.partyId.first.partyNumber
@@ -114,7 +118,7 @@ class DeliveredCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Panna : '),
+                MyText('panna', append: ' : '),
                 Text(
                   formatDouble(order.panna),
                   style: const TextStyle(fontSize: 14),
@@ -126,7 +130,7 @@ class DeliveredCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Rate : '),
+                MyText('rate', append: ' : '),
                 Text(
                   formatDouble(order.rate),
                   style: const TextStyle(fontSize: 16),
@@ -137,7 +141,7 @@ class DeliveredCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Firm Name : '),
+                MyText('firm_name', append: ' : '),
                 Text(
                   order.delivered?.firmId.first.firmName ?? 'N/A',
                   style: const TextStyle(fontSize: 16),
@@ -148,7 +152,7 @@ class DeliveredCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Moved By : '),
+                MyText('moved_by', append: ' : '),
                 Text(
                   order.delivered?.movedBy.first.fullname ?? 'N/A',
                   style: const TextStyle(fontSize: 16),
@@ -159,7 +163,7 @@ class DeliveredCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Machine No: '),
+                MyText('machine_no', append: ' : '),
                 Text(
                   order.delivered?.machineNo ?? 'N/A',
                   style: const TextStyle(fontSize: 16),
@@ -172,10 +176,10 @@ class DeliveredCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildProgressItem('Pending', '${order.pending}'),
-                _buildProgressItem('Quantity', '${order.quantity}'),
+                _buildProgressItem('pending'.tr, '${order.pending}'),
+                _buildProgressItem('quantity'.tr, '${order.quantity}'),
                 _buildProgressItem(
-                  'Delivered',
+                  'delivered'.tr,
                   '${order.delivered?.quantity ?? 0}',
                 ),
               ],
@@ -192,7 +196,7 @@ class DeliveredCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
 
       children: [
-        Text(title, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+        Text(title, style: const TextStyle(fontSize: 12, color: Colors.black)),
         const SizedBox(height: 4),
         Text(
           quantity.toString(),

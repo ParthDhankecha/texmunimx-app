@@ -8,7 +8,6 @@ import 'package:textile_po/models/design_list_response.dart';
 import 'package:textile_po/repository/api_exception.dart';
 import 'package:textile_po/repository/create_design_repo.dart';
 import 'package:textile_po/screens/auth_screens/login_screen.dart';
-import 'package:textile_po/utils/app_const.dart';
 import 'package:textile_po/utils/shared_pref.dart';
 
 class CreateDesignController extends GetxController implements GetxService {
@@ -38,7 +37,6 @@ class CreateDesignController extends GetxController implements GetxService {
     designNameCont.text = design.designName;
     designNumberCont.text = design.designNumber;
     selectedDesignModelId = design.id;
-    print('desing imag =${design.designImage}');
 
     if (design.designImage.isNotEmpty) {
       selectedDesignImage.value = design.designImage;
@@ -151,6 +149,7 @@ class CreateDesignController extends GetxController implements GetxService {
       );
       resetInputs();
       showSuccessSnackbar('New Design Create.');
+      getDesignList(isRefresh: true);
     } on ApiException catch (e) {
       switch (e.statusCode) {
         case 401:

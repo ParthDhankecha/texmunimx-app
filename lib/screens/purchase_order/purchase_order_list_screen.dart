@@ -42,19 +42,14 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
           controller: tabController,
           indicatorColor: Colors.blue,
           labelColor: Colors.blue,
-          unselectedLabelColor: Colors.grey,
-          onFocusChange: (value, index) {
-            print('i am tab $index');
-          },
+          unselectedLabelColor: Colors.black,
+
           tabs: [
-            Tab(text: 'Pending'),
-            Tab(text: 'In Process'),
-            Tab(text: 'Ready to Dispatch'),
-            Tab(text: 'Completed'),
+            Tab(text: 'pending'.tr),
+            Tab(text: 'in_progress'.tr),
+            Tab(text: 'ready_to_dispatch'.tr),
+            Tab(text: 'completed'.tr),
           ],
-          onTap: (value) {
-            print('myTab = $value');
-          },
         ),
       ),
       body: TabBarView(

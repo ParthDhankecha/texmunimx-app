@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:textile_po/common_widgets/my_text_field.dart';
 import 'package:textile_po/models/order_status_enum.dart';
 import 'package:textile_po/models/purchase_order_list_response.dart';
@@ -41,7 +40,9 @@ class PurchaseOrderCard extends StatelessWidget {
                       width: 60,
                       height: 60,
                       color: Colors.grey[200],
-                      child: const Icon(Icons.broken_image, color: Colors.grey),
+                      child: Image.network(
+                        AppConst.imageBaseUrl + AppConst.placeHolderImage,
+                      ),
                     ),
                   ),
                 ),
