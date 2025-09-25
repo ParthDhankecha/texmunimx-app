@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:textile_po/common_widgets/app_text_styles.dart';
 import 'package:textile_po/common_widgets/input_field.dart';
+import 'package:textile_po/common_widgets/my_text_field.dart';
 import 'package:textile_po/models/cal_weft_model.dart';
 import 'package:textile_po/utils/app_colors.dart';
 
@@ -40,7 +42,7 @@ class WeftItemCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Feeder ${index + 1}', style: bodyStyle),
+                  MyText('feeder', append: ' ${index + 1}', style: bodyStyle),
                   IconButton(
                     onPressed: onRemove,
                     icon: Icon(
@@ -57,53 +59,110 @@ class WeftItemCard extends StatelessWidget {
                   Expanded(
                     child: Column(
                       children: [
-                        Text('Quality', style: normalTextStyle),
-                        InputField(hintText: '', onTextChange: onChangeQuality),
+                        Text('quality'.tr, style: normalTextStyle),
+                        InputField(
+                          hintText: '',
+                          textAlign: TextAlign.center,
+                          onTextChange: onChangeQuality,
+                          textEditingController: TextEditingController(
+                            text: model.quality ?? '',
+                          ),
+                        ),
                       ],
                     ),
                   ),
+                  SizedBox(width: 8),
                   Expanded(
                     child: Column(
                       children: [
-                        Text('Denier', style: normalTextStyle),
-                        InputField(hintText: '', onTextChange: onDenierChange),
+                        Text('denier'.tr, style: normalTextStyle),
+                        InputField(
+                          hintText: '',
+                          textAlign: TextAlign.center,
+
+                          onTextChange: onDenierChange,
+                          textInputType: TextInputType.number,
+                          textEditingController: TextEditingController(
+                            text: model.denier?.toString() ?? '',
+                          ),
+                        ),
                       ],
                     ),
                   ),
+                  SizedBox(width: 8),
                   Expanded(
                     child: Column(
                       children: [
-                        Text('Pick', style: normalTextStyle),
-                        InputField(hintText: '', onTextChange: onPickChange),
+                        Text('pick'.tr, style: normalTextStyle),
+                        InputField(
+                          hintText: '',
+                          textAlign: TextAlign.center,
+
+                          onTextChange: onPickChange,
+                          textInputType: TextInputType.number,
+                          textEditingController: TextEditingController(
+                            text: model.pick?.toString() ?? '',
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ],
               ),
+              SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                     child: Column(
                       children: [
-                        Text('Panno', style: normalTextStyle),
-                        InputField(hintText: '', onTextChange: onPannoChange),
+                        Text('panno'.tr, style: normalTextStyle),
+                        InputField(
+                          hintText: '',
+                          textAlign: TextAlign.center,
+
+                          onTextChange: onPannoChange,
+                          textInputType: TextInputType.number,
+                          textEditingController: TextEditingController(
+                            text: model.panno?.toString() ?? '',
+                          ),
+                        ),
                       ],
                     ),
                   ),
+                  SizedBox(width: 8),
                   Expanded(
                     child: Column(
                       children: [
-                        Text('Rate', style: normalTextStyle),
-                        InputField(hintText: '', onTextChange: onRateChange),
+                        Text('rate'.tr, style: normalTextStyle),
+                        InputField(
+                          hintText: '',
+                          textAlign: TextAlign.center,
+
+                          onTextChange: onRateChange,
+                          textInputType: TextInputType.number,
+                          textEditingController: TextEditingController(
+                            text: model.rate?.toString() ?? '',
+                          ),
+                        ),
                       ],
                     ),
                   ),
+                  SizedBox(width: 8),
                   Expanded(
                     child: Column(
                       children: [
-                        Text('Meter', style: normalTextStyle),
-                        InputField(hintText: '', onTextChange: onMeterChange),
+                        Text('meter'.tr, style: normalTextStyle),
+                        InputField(
+                          hintText: '',
+                          textAlign: TextAlign.center,
+
+                          onTextChange: onMeterChange,
+                          textInputType: TextInputType.number,
+                          textEditingController: TextEditingController(
+                            text: model.meter?.toString() ?? '',
+                          ),
+                        ),
                       ],
                     ),
                   ),

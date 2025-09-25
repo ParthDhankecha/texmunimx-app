@@ -237,6 +237,7 @@ class _WarpScreenState extends State<WarpScreen> {
                   title: 'save_and_next'.tr,
                   onTap: () {
                     if (formKey.currentState!.validate()) {
+                      controller.onSaveWarp();
                     } else {}
                   },
                 ),

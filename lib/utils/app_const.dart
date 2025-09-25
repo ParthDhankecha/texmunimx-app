@@ -32,6 +32,12 @@ class AppConst {
   static String purchaseOrderChangeStatus =
       'purchase-order/change-status'; //put with id
 
+  //calculator
+  //design/design-details/{id}  - get
+  static String designDetails = 'design-detail'; // get with id
+  static String calculatorSave = 'design-detail/upsert'; // get with id
+  //designId,
+
   static String getAssetPng(String name) {
     return 'assets/images/$name.png';
   }

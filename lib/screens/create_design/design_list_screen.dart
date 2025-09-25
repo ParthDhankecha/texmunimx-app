@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/controllers/calculator_controller.dart';
 import 'package:textile_po/controllers/create_design_controller.dart';
 import 'package:textile_po/controllers/purchase_order_controller.dart';
 import 'package:textile_po/screens/create_design/create_design_screen.dart';
@@ -9,7 +8,12 @@ import 'package:textile_po/screens/create_design/widgets/search_design_appbar.da
 
 class DesignListScreen extends StatefulWidget {
   final bool openForSelection;
-  const DesignListScreen({super.key, this.openForSelection = false});
+  final bool isFromCalculator;
+  const DesignListScreen({
+    super.key,
+    this.openForSelection = false,
+    this.isFromCalculator = false,
+  });
 
   @override
   State<DesignListScreen> createState() => _DesignListScreenState();
@@ -78,10 +82,9 @@ class _DesignListScreenState extends State<DesignListScreen> {
                                 design,
                               );
 
-                              Get.find<CalculatorController>().setDesign =
-                                  design;
-
                               Get.back();
+                            } else if (widget.isFromCalculator) {
+                              Get.back(result: design);
                             } else {
                               Get.to(
                                 () => CreateDesignScreen(designModel: design),

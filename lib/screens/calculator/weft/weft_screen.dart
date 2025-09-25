@@ -61,7 +61,9 @@ class _WeftScreenState extends State<WeftScreen> {
                 onRemove: () {
                   controller.removeBox(index);
                 },
-                onChangeQuality: (value) {},
+                onChangeQuality: (value) {
+                  controller.weftList[index].quality = value;
+                },
                 onDenierChange: (value) {
                   controller.weftList[index].denier =
                       double.tryParse(value) ?? 0.0;
@@ -100,6 +102,13 @@ class _WeftScreenState extends State<WeftScreen> {
                 title: 'Add New',
                 onTap: () {
                   controller.addNewWeft();
+                },
+              ),
+              SizedBox(width: 20),
+              CustomBtn(
+                title: 'save_and_next'.tr,
+                onTap: () {
+                  controller.onSaveWeft();
                 },
               ),
             ],

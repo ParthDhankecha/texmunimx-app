@@ -17,54 +17,79 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Settings')),
+      backgroundColor: Color(0xFFF5F5F5),
+      appBar: AppBar(centerTitle: true, title: Text('Settings')),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 8),
-            child: SettingsCard(
-              img: 'textile',
-              title: 'browse_design'.tr,
-              onTap: () {
-                Get.to(() => DesignListScreen());
-              },
+          const SizedBox(height: 20),
+          // First Group
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16.0),
+
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 8),
-            child: SettingsCard(
-              img: 'supplier',
-              title: 'browse_party'.tr,
-              onTap: () {
-                Get.to(() => PartyListScreen());
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 8),
-            child: SettingsCard(
-              img: 'calculator',
-              title: 'calculator'.tr,
-              onTap: () {
-                Get.to(() => CalculatorScreen());
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 8),
-            child: SettingsCard(
-              img: 'languages',
-              title: 'language_change'.tr,
-              onTap: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) => LanguageBottomSheet(),
-                );
-              },
+            child: Column(
+              children: [
+                SettingsCard(
+                  icon: Icons.design_services,
+                  iconColor: Colors.blue,
+                  title: 'browse_design'.tr,
+                  onTap: () {
+                    Get.to(() => const DesignListScreen());
+                  },
+                ),
+                _buildDivider(),
+                SettingsCard(
+                  icon: Icons.people,
+                  iconColor: Colors.blueGrey,
+                  title: 'browse_party'.tr,
+                  onTap: () {
+                    Get.to(() => const PartyListScreen());
+                  },
+                ),
+
+                _buildDivider(),
+                SettingsCard(
+                  icon: Icons.calculate,
+                  iconColor: Colors.orange,
+                  title: 'calculator'.tr,
+                  onTap: () {
+                    Get.to(() => const CalculatorScreen());
+                  },
+                ),
+
+                _buildDivider(),
+                SettingsCard(
+                  icon: Icons.language,
+                  iconColor: Colors.green,
+                  title: 'language_change'.tr,
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) => LanguageBottomSheet(),
+                    );
+                  },
+                ),
+              ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildDivider() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.only(left: 52.0),
+            child: Divider(color: Colors.grey[300], height: 1),
+          ),
+        ),
+      ],
     );
   }
 }

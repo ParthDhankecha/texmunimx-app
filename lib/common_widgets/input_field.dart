@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:textile_po/utils/app_colors.dart';
 
 class InputField extends StatelessWidget {
   const InputField({
@@ -8,6 +9,7 @@ class InputField extends StatelessWidget {
     this.textInputType,
     this.onValidator,
     this.onTextChange,
+    this.textAlign,
   });
 
   final String hintText;
@@ -15,17 +17,19 @@ class InputField extends StatelessWidget {
   final TextInputType? textInputType;
   final String? Function(String? value)? onValidator;
   final Function(String value)? onTextChange;
+  final TextAlign? textAlign;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Color.fromARGB(255, 245, 245, 245),
-
+        color: Colors.white,
+        border: Border.all(color: Colors.black12),
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextFormField(
         validator: onValidator,
+        textAlign: textAlign ?? TextAlign.start,
         controller: textEditingController,
         keyboardType: textInputType,
         style: TextStyle(fontSize: 14),
@@ -39,7 +43,7 @@ class InputField extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: Colors.black38),
+            borderSide: BorderSide(color: AppColors.mainColor),
           ),
         ),
       ),

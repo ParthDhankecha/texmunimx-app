@@ -7,6 +7,7 @@ import 'package:textile_po/controllers/party_controller.dart';
 import 'package:textile_po/controllers/purchase_order_controller.dart';
 import 'package:textile_po/controllers/splash_controller.dart';
 import 'package:textile_po/repository/api_client.dart';
+import 'package:textile_po/repository/calculator_repo.dart';
 import 'package:textile_po/repository/create_design_repo.dart';
 import 'package:textile_po/repository/login_repo.dart';
 import 'package:textile_po/repository/party_repo.dart';
@@ -27,6 +28,7 @@ Future<void> init() async {
   Get.lazyPut(() => CreateDesignRepo());
   Get.lazyPut(() => PartyRepo());
   Get.lazyPut(() => PurchaseOrderRepository());
+  Get.lazyPut(() => CalculatorRepo());
 
   //language
   Get.lazyPut(() => LocalizationController());

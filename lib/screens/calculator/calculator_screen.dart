@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/controllers/calculator_controller.dart';
+import 'package:textile_po/screens/calculator/labour/labour_cost_list.dart';
 import 'package:textile_po/screens/calculator/warp_screen.dart';
 import 'package:textile_po/screens/calculator/weft/weft_screen.dart';
 import 'package:textile_po/screens/calculator/widgets/custom_tabs.dart';
@@ -23,7 +24,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     controller.setDesign = null;
     controller.setIndex = 0;
     controller.warpCost.value = 0;
-    controller.generateDefaultBoxes();
+    controller.enterPaisa.value = 0.0;
+    // controller.generateDefaultBoxes();
+    controller.loadCalculatorData();
   }
 
   @override
@@ -51,6 +54,17 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  //show loading indicator
+                  Obx(() {
+                    if (controller.isLoading.value) {
+                      return const Padding(
+                        padding: EdgeInsets.all(20.0),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  }),
                   Obx(
                     () => Visibility(
                       visible: controller.selectedTab.value == 0,
@@ -66,7 +80,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                   Obx(
                     () => Visibility(
                       visible: controller.selectedTab.value == 2,
-                      child: Container(),
+                      child: LabourCostList(),
                     ),
                   ),
                 ],

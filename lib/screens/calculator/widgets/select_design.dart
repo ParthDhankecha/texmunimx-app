@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:textile_po/common_widgets/app_text_styles.dart';
 import 'package:textile_po/common_widgets/custom_btn.dart';
 import 'package:textile_po/controllers/calculator_controller.dart';
+import 'package:textile_po/models/design_list_response.dart';
 import 'package:textile_po/screens/create_design/design_list_screen.dart';
 import 'package:textile_po/utils/app_colors.dart';
 import 'package:textile_po/utils/app_const.dart';
@@ -55,14 +56,17 @@ class SelectDesign extends StatelessWidget {
                             ),
                             SizedBox(width: 10),
                             IconButton(
-                              onPressed: () {
-                                Get.to(
+                              onPressed: () async {
+                                var result = await Get.to(
                                   () =>
-                                      DesignListScreen(openForSelection: true),
+                                      DesignListScreen(isFromCalculator: true),
                                 );
+                                if (result != null && result is DesignModel) {
+                                  controller.setSelectedDesign(result);
+                                }
                               },
                               icon: Icon(
-                                Icons.refresh_rounded,
+                                Icons.edit,
                                 color: AppColors.mainColor,
                               ),
                             ),
@@ -71,10 +75,13 @@ class SelectDesign extends StatelessWidget {
                       )
                     : CustomBtn(
                         title: 'select_design'.tr,
-                        onTap: () {
-                          Get.to(
-                            () => DesignListScreen(openForSelection: true),
+                        onTap: () async {
+                          var result = await Get.to(
+                            () => DesignListScreen(isFromCalculator: true),
                           );
+                          if (result != null && result is DesignModel) {
+                            controller.setSelectedDesign(result);
+                          }
                         },
                       ),
               ],

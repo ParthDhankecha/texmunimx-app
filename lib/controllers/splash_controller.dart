@@ -19,7 +19,6 @@ class SplashController extends GetxController implements GetxService {
   final ApiClient apiClient = Get.find<ApiClient>();
 
   checkUser() {
-    // print('token - ${sp.userToken}');
     Future.delayed(Duration(seconds: 2), () {
       if (sp.userToken.isNotEmpty) {
         Get.offAll(() => HomeScreen());

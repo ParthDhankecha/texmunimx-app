@@ -1,41 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:textile_po/utils/app_colors.dart';
-import 'package:textile_po/utils/app_const.dart';
 
 class SettingsCard extends StatelessWidget {
-  final String img;
+  final IconData icon;
+  final Color iconColor;
   final String title;
-  final Function() onTap;
+  final VoidCallback? onTap;
+
   const SettingsCard({
     super.key,
-    required this.img,
+    required this.icon,
+    required this.iconColor,
     required this.title,
-    required this.onTap,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Card(
-        color: AppColors.mainColor,
-        elevation: 6,
-        child: ListTile(
-          title: Text(
-            title,
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: InkWell(
+        onTap: onTap,
+
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12.0),
+          decoration: BoxDecoration(color: Colors.white),
+          child: Row(
+            children: [
+              // Icon Container
+              Container(
+                padding: const EdgeInsets.all(4.0),
+                decoration: BoxDecoration(
+                  color: iconColor,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Icon(icon, color: Colors.white, size: 20),
+              ),
+              const SizedBox(width: 12.0),
+              // Title
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(fontSize: 16, color: Colors.black),
+                ),
+              ),
+              // Chevron icon
+              Icon(Icons.chevron_right, color: Colors.grey[400]),
+            ],
           ),
-          leading: Image.asset(
-            AppConst.getAssetPng(img),
-            height: 36,
-            width: 36,
-            color: Colors.white,
-          ),
-          trailing: Icon(Icons.arrow_forward_ios, color: Colors.white),
         ),
       ),
     );
