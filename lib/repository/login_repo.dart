@@ -7,29 +7,18 @@ class LoginRepo {
 
   LoginRepo({required this.apiClient});
   //api to send otp
-  Future<dynamic> sendOtp({required String mobile}) async {
-    var reqBody = {'mobile': mobile};
-
-    final data = await apiClient.request(
-      AppConst.loginWithMobile,
-      method: ApiType.post,
-      body: reqBody,
-    );
-
-    return data;
-  }
-
-  Future<AuthData> verifyOTP({
-    required String mobile,
-    required String otp,
+  Future<LoginModel> loginWithEmailPassword({
+    required String email,
+    required String password,
   }) async {
-    var reqBody = {'mobile': mobile, 'otp': otp};
+    final reqBody = {'userName': email, 'password': password};
 
-    final data = await apiClient.request(
-      AppConst.verifyOTP,
+    var data = await apiClient.requestPost(
+      AppConst.loginWithMobile,
       body: reqBody,
-      method: ApiType.post,
     );
-    return loginAuthFromMap(data).data;
+
+    LoginModel loginModel = loginResponseFromMap(data).data;
+    return loginModel;
   }
 }

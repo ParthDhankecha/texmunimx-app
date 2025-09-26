@@ -113,6 +113,16 @@ class AppTranslations extends Translations {
       'panno': 'Panno',
       'atleast_one_feeder_is_required': 'At least one feeder is required.',
       'only_12_feeders_are_allowed': 'Only 12 Feeders are Allowed',
+      'users': 'Users',
+      'add_user': 'Add User',
+      'edit_user': 'Edit User',
+
+      'logout': 'Logout',
+      'confirm_logout': 'Are you sure you want to logout?',
+      'cancel': 'Cancel',
+      'password': 'Password',
+      'enter_password': 'Enter your password',
+      'login_with_username_and_password': 'Login with User Name and Password.',
     },
     'hi_IN': {
       'language_change': 'भाषा बदलें',
@@ -226,6 +236,17 @@ class AppTranslations extends Translations {
       'panno': 'पन्नो',
       'atleast_one_feeder_is_required': 'कम से कम एक फीडर आवश्यक है।',
       'only_12_feeders_are_allowed': 'केवल 12 फीडर की अनुमति है।',
+      'users': 'उपयोगकर्ता',
+      'add_user': 'उपयोगकर्ता जोड़ें',
+      'edit_user': 'उपयोगकर्ता संपादित करें',
+
+      'logout': 'लॉग आउट',
+      'confirm_logout': 'क्या आप वाकई लॉग आउट करना चाहते हैं?',
+      'cancel': 'रद्द करें',
+      'password': 'पासवर्ड',
+      'enter_password': 'अपना पासवर्ड दर्ज करें',
+      'login_with_username_and_password':
+          'उपयोगकर्ता नाम और पासवर्ड के साथ लॉगिन करें।',
     },
     'gu_IN': {
       'language_change': 'ભાષા બદલો',
@@ -341,6 +362,17 @@ class AppTranslations extends Translations {
       'panno': 'પન્નો',
       'atleast_one_feeder_is_required': 'કમ સે કમ એક ફીડર જરૂરી છે.',
       'only_12_feeders_are_allowed': 'ફક્ત 12 ફીડર્સની મંજૂરી છે.',
+      'users': 'વપરાશકર્તાઓ',
+      'add_user': 'વપરાશકર્તા ઉમેરો',
+      'edit_user': 'વપરાશકર્તા સંપાદિત કરો',
+
+      'logout': 'લૉગ આઉટ',
+      'confirm_logout': 'શું તમે ખરેખર લૉગ આઉટ કરવા માંગો છો?',
+      'cancel': 'રદ કરો',
+      'password': 'પાસવર્ડ',
+      'enter_password': 'તમારો પાસવર્ડ દાખલ કરો',
+      'login_with_username_and_password':
+          'વપરાશકર્તા નામ અને પાસવર્ડ સાથે લૉગિન કરો.',
     },
   };
 }

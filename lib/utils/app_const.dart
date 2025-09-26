@@ -6,8 +6,11 @@ class AppConst {
 
   //apis
   static String defaultConfig = 'sync/'; // method  -get
-  static String loginWithMobile = 'auth/sign-in-with-mobile/';
+  static String loginWithMobile = 'auth/sign-in';
   static String verifyOTP = 'auth/verify-mobile-otp';
+
+  //users
+  static String users = 'users/pagination'; // post
 
   // design
   static String createDesign = 'design/create';
@@ -43,4 +46,13 @@ class AppConst {
   }
 
   static String placeHolderImage = '';
+
+  //Roles
+  static const String superAdmin = 'SUPER_ADMIN'; //0
+  static const String owner = 'OWNER'; //1
+  static const String admin = 'ADMIN'; // 2
+  static const String manager = 'MANAGER'; //3
+
+  //UaserRoles List
+  static List<String> userRoles = [superAdmin, owner, admin, manager];
 }

@@ -8,4 +8,6 @@ class AppColors {
   static final blackColor = Colors.black;
 
   static final errorColor = Colors.redAccent;
+
+  static final appBg = Color(0xffF8F6F2);
 }

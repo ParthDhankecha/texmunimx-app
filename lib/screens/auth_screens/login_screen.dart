@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:textile_po/common_widgets/app_text_styles.dart';
+import 'package:textile_po/common_widgets/custom_progress_btn_.dart';
+import 'package:textile_po/common_widgets/input_field.dart';
 import 'package:textile_po/common_widgets/main_btn.dart';
+import 'package:textile_po/common_widgets/password_input.dart';
 import 'package:textile_po/controllers/login_controllers.dart';
 import 'package:textile_po/screens/auth_screens/widgets/privacy_bar.dart';
 import 'package:textile_po/utils/app_colors.dart';
 import 'package:get/get.dart';
+import 'package:textile_po/utils/app_strings.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,11 +18,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  GlobalKey formKey = GlobalKey<FormState>();
-
-  TextEditingController phoneInputCont = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   LoginControllers loginController = Get.find<LoginControllers>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,27 +32,72 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Welcome'),
-                Text('Please Enter your 10 digit phone number.'),
+                Text(
+                  AppStrings.appName,
+                  style: titleStyle.copyWith(fontSize: 20),
+                ),
+                SizedBox(height: 56),
+
+                Text(
+                  'login_with_username_and_password'.tr,
+                  style: headingStyle,
+                ),
                 Padding(
                   padding: const EdgeInsets.all(14.0),
-                  child: Row(children: [Expanded(child: _buildPhoneInput())]),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('email'.tr, style: bodyStyle),
+                      SizedBox(height: 8),
+                      InputField(
+                        textEditingController: loginController.emailCont,
+
+                        hintText: 'Enter your email',
+                        textInputType: TextInputType.emailAddress,
+                        onValidator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your email';
+                          }
+                          // // Simple email validation
+                          // if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                          //   return 'Please enter a valid email address';
+                          // }
+                          return null;
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('password'.tr, style: bodyStyle),
+                      SizedBox(height: 8),
+                      PasswordTextField(
+                        controller: loginController.passwordCont,
+                      ),
+                    ],
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(14.0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Obx(
-                        () => MainBtn(
-                          label: 'Get OTP',
-                          onTap: loginController.phone.value.isEmpty
-                              ? null
-                              : () {
-                                  FocusManager.instance.primaryFocus?.unfocus();
-                                  //Get.to(() => VerifyOtpScreen());
-                                  loginController.sendOtp();
+                        () => loginController.isLoading.value
+                            ? CustomProgressBtn()
+                            : MainBtn(
+                                label: 'Login',
+                                onTap: () {
+                                  if (formKey.currentState!.validate()) {
+                                    // Call login function
+                                    loginController.loginWithEmailPassword();
+                                  }
                                 },
-                        ),
+                              ),
                       ),
                     ],
                   ),
@@ -56,44 +105,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
           ),
-
           Positioned(bottom: 16, left: 0, right: 0, child: PrivacyBar()),
         ],
-      ),
-    );
-  }
-
-  TextFormField _buildPhoneInput() {
-    return TextFormField(
-      controller: phoneInputCont,
-      onChanged: (value) {
-        if (value.trim().length == 10) {
-          loginController.setPhoneNumber(phoneInputCont.text.trim());
-        } else {
-          loginController.setPhoneNumber('');
-        }
-      },
-      validator: (value) {
-        if (value.toString().isEmpty) {
-          return 'Enter Valid Phone Number.';
-        }
-
-        if (value.toString().length != 10) {
-          return 'Enter valid 10 digit phone number.';
-        }
-
-        return null;
-      },
-      keyboardType: TextInputType.phone,
-      decoration: InputDecoration(
-        hintText: 'Enter 10 digit number',
-        labelText: 'Phone Number',
-        hintStyle: TextStyle(color: AppColors.blackColor),
-        labelStyle: TextStyle(color: AppColors.blackColor),
-        border: OutlineInputBorder(),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black),
-        ),
       ),
     );
   }

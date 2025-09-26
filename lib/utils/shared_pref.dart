@@ -37,6 +37,18 @@ class Sharedprefs {
   set userToken(String value) => _saveData('USER_TOKEN', value);
   String get userToken => _getData('USER_TOKEN') ?? '';
 
+  //get and set user role
+  set userRole(String value) => _saveData('USER_ROLE', value);
+  String get userRole => _getData('USER_ROLE') ?? '';
+
+  set userRoleInt(int value) => _saveData('USER_ROLE_INT', value);
+  int get userRoleInt => _getData('USER_ROLE_INT') ?? 0;
+
   set currentLanguage(String value) => _saveData('USER_LAN', value);
   String get currentLanguage => _getData('USER_LAN') ?? 'en';
+
+  // Clear all data from shared preferences
+  void clearAll() {
+    pref.clear();
+  }
 }

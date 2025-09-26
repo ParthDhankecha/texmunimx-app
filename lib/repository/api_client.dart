@@ -92,7 +92,7 @@ class ApiClient extends GetxService {
 
     try {
       response = await http.post(url, body: jsonBody, headers: finalHeaders);
-
+      print('response : ${response.body}');
       switch (response.statusCode) {
         case 200:
         case 201:
@@ -102,12 +102,15 @@ class ApiClient extends GetxService {
           throw ApiException(statusCode: 401, message: 'Unauthorized');
 
         case 404:
-          throw ApiException(statusCode: 404, message: 'Not Found');
+          throw ApiException(
+            statusCode: 404,
+            message: jsonDecode(response.body)['message'] ?? 'Not Found',
+          );
 
         default:
           throw ApiException(
             statusCode: response.statusCode,
-            message: response.reasonPhrase ?? '',
+            message: jsonDecode(response.body)['message'] ?? '',
           );
       }
     } catch (e) {

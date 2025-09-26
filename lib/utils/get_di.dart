@@ -6,18 +6,23 @@ import 'package:textile_po/controllers/login_controllers.dart';
 import 'package:textile_po/controllers/party_controller.dart';
 import 'package:textile_po/controllers/purchase_order_controller.dart';
 import 'package:textile_po/controllers/splash_controller.dart';
+import 'package:textile_po/controllers/user_controller.dart';
 import 'package:textile_po/repository/api_client.dart';
 import 'package:textile_po/repository/calculator_repo.dart';
 import 'package:textile_po/repository/create_design_repo.dart';
 import 'package:textile_po/repository/login_repo.dart';
 import 'package:textile_po/repository/party_repo.dart';
 import 'package:textile_po/repository/purchase_order_repository.dart';
+import 'package:textile_po/repository/users_repository.dart';
 import 'package:textile_po/utils/app_const.dart';
+import 'package:textile_po/utils/my_theme_controller.dart';
 import 'package:textile_po/utils/shared_pref.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> init() async {
+  Get.lazyPut(() => ThemeController());
+
   SharedPreferences preferences = await SharedPreferences.getInstance();
   Get.lazyPut(() => Sharedprefs(pref: preferences));
 
@@ -29,6 +34,7 @@ Future<void> init() async {
   Get.lazyPut(() => PartyRepo());
   Get.lazyPut(() => PurchaseOrderRepository());
   Get.lazyPut(() => CalculatorRepo());
+  Get.lazyPut(() => UsersRepository());
 
   //language
   Get.lazyPut(() => LocalizationController());
@@ -46,4 +52,5 @@ Future<void> init() async {
   Get.lazyPut(() => PartyController());
   Get.lazyPut(() => PurchaseOrderController());
   Get.lazyPut(() => CalculatorController());
+  Get.lazyPut(() => UserController());
 }

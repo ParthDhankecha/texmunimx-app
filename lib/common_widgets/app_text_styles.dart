@@ -8,6 +8,12 @@ final appbarStyle = TextStyle(
   fontWeight: FontWeight.w800,
 );
 
+final headingStyle = TextStyle(
+  fontSize: 18,
+  color: AppColors.blackColor,
+  fontWeight: FontWeight.w800,
+);
+
 final titleStyle = TextStyle(
   fontSize: 16,
   color: AppColors.blackColor,

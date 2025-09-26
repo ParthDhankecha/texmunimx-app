@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:textile_po/common_widgets/show_error_snackbar.dart';
-import 'package:textile_po/models/login_auth_model.dart';
+import 'package:flutter/material.dart';
+import 'package:textile_po/models/user_role_enum.dart';
 import 'package:textile_po/repository/api_exception.dart';
 import 'package:textile_po/repository/login_repo.dart';
-import 'package:textile_po/screens/auth_screens/verify_otp_screen.dart';
+import 'package:textile_po/screens/auth_screens/login_screen.dart';
 import 'package:textile_po/screens/home/home_screen.dart';
 import 'package:textile_po/utils/shared_pref.dart';
 import 'package:get/get.dart';
@@ -24,71 +24,62 @@ class LoginControllers extends GetxController implements GetxService {
 
   final Sharedprefs sp;
 
+  RxInt selectedRole = 3.obs;
+
+  //input controllers
+  TextEditingController emailCont = TextEditingController();
+  TextEditingController passwordCont = TextEditingController();
+
   LoginControllers({required this.sp, required this.repo});
-
-  void setPhoneNumber(String num) {
-    phone.value = num;
-  }
-
-  void setOtp(String num) {
-    otp.value = num;
-  }
 
   void setLoading(bool load) {
     isLoading.value = load;
   }
 
-  sendOtp() async {
+  loginWithEmailPassword() async {
     try {
       isLoading.value = true;
-      startTimer();
-      otp.value = '';
-      await repo.sendOtp(mobile: phone.value);
-      Get.to(() => VerifyOtpScreen());
-    } catch (e) {
-      //print('send otp error : $e');
-    } finally {
-      isLoading.value = false;
-    }
-  }
+      String userEmail = emailCont.text.trim();
+      String userPassword = passwordCont.text.trim();
 
-  verifyOTP() async {
-    try {
-      isLoading.value = true;
-      AuthData data = await repo.verifyOTP(mobile: phone.value, otp: otp.value);
+      var data = await repo.loginWithEmailPassword(
+        email: userEmail,
+        password: userPassword,
+      );
+
+      log('login response :::');
+
+      log(data.token.accessToken);
       if (data.token.accessToken.isNotEmpty) {
         sp.userToken = data.token.accessToken;
+        sp.userRole = UserRole.fromValue(data.user.type).apiName;
+        sp.userRoleInt = data.user.type;
+        selectedRole.value = data.user.type;
 
-        Get.offAll(() => HomeScreen());
-      }
+        log('User Role : ${sp.userRole}');
+        log('User Role Int : ${sp.userRoleInt}');
+        Get.to(() => HomeScreen());
+      } else {}
     } on ApiException catch (e) {
-      log('Error : $e');
-      showErrorSnackbar(
-        'Invalid OTP code.',
-        decs: 'Please check your Number and OTP code.',
-      );
+      log('Login Error : $e');
+      if (e.message.isNotEmpty) {
+        Get.snackbar(
+          e.message,
+          '',
+
+          messageText: Container(),
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       isLoading.value = false;
     }
   }
 
-  void startTimer() {
-    canResend.value = false;
-    timerSeconds = 60; // Reset timer
-    remainingTimer.value = 'in ${timerSeconds}s';
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (timerSeconds == 0) {
-        canResend.value = true;
-        remainingTimer.value = '';
-        _timer?.cancel();
-      } else {
-        timerSeconds--;
-        remainingTimer.value = 'in ${timerSeconds}s';
-      }
-    });
-  }
-
-  void timerDispose() {
-    _timer?.cancel();
+  void logout() {
+    sp.clearAll();
+    Get.offAll(() => LoginScreen());
   }
 }

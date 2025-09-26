@@ -9,7 +9,13 @@ class ThemeController extends GetxController {
   final ThemeData lightTheme = ThemeData(
     primaryColor: AppColors.mainColor,
     textTheme: GoogleFonts.poppinsTextTheme(),
-
+    scaffoldBackgroundColor: AppColors.appBg,
+    appBarTheme: AppBarTheme(backgroundColor: AppColors.appBg, elevation: 0),
+    cardTheme: CardThemeData(
+      color: Colors.white,
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.white,

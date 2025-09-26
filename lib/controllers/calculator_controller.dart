@@ -378,6 +378,7 @@ class CalculatorController extends GetxController implements GetxService {
           isLoading.value = false;
           if (success) {
             showSuccessSnackbar('Weft data saved successfully');
+            selectedTab.value = 2; // move to labour tab
           } else {
             showErrorSnackbar('Failed to save weft data');
           }
@@ -400,6 +401,11 @@ class CalculatorController extends GetxController implements GetxService {
   onSaveLabour() {
     if (getDesign == null) {
       showErrorSnackbar('Please select a design first');
+      return;
+    }
+
+    if (designCardCont.text.isEmpty || designCard.value <= 0) {
+      showErrorSnackbar('design_card_required'.tr);
       return;
     }
 

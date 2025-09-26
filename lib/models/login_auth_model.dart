@@ -1,24 +1,29 @@
 // To parse this JSON data, do
 //
-//     final loginAuth = loginAuthFromMap(jsonString);
+//     final loginResponse = loginResponseFromMap(jsonString);
 
 import 'dart:convert';
 
-LoginAuth loginAuthFromMap(String str) => LoginAuth.fromMap(json.decode(str));
+LoginResponse loginResponseFromMap(String str) =>
+    LoginResponse.fromMap(json.decode(str));
 
-String loginAuthToMap(LoginAuth data) => json.encode(data.toMap());
+String loginResponseToMap(LoginResponse data) => json.encode(data.toMap());
 
-class LoginAuth {
+class LoginResponse {
   String code;
   String message;
-  AuthData data;
+  LoginModel data;
 
-  LoginAuth({required this.code, required this.message, required this.data});
+  LoginResponse({
+    required this.code,
+    required this.message,
+    required this.data,
+  });
 
-  factory LoginAuth.fromMap(Map<String, dynamic> json) => LoginAuth(
+  factory LoginResponse.fromMap(Map<String, dynamic> json) => LoginResponse(
     code: json["code"],
     message: json["message"],
-    data: AuthData.fromMap(json["data"]),
+    data: LoginModel.fromMap(json["data"]),
   );
 
   Map<String, dynamic> toMap() => {
@@ -28,13 +33,13 @@ class LoginAuth {
   };
 }
 
-class AuthData {
+class LoginModel {
   Token token;
   User user;
 
-  AuthData({required this.token, required this.user});
+  LoginModel({required this.token, required this.user});
 
-  factory AuthData.fromMap(Map<String, dynamic> json) => AuthData(
+  factory LoginModel.fromMap(Map<String, dynamic> json) => LoginModel(
     token: Token.fromMap(json["token"]),
     user: User.fromMap(json["user"]),
   );
@@ -63,11 +68,12 @@ class Token {
 class User {
   String id;
   int type;
+  String email;
 
-  User({required this.id, required this.type});
+  User({required this.id, required this.type, required this.email});
 
   factory User.fromMap(Map<String, dynamic> json) =>
-      User(id: json["_id"], type: json["type"]);
+      User(id: json["_id"], type: json["type"], email: json["email"]);
 
-  Map<String, dynamic> toMap() => {"_id": id, "type": type};
+  Map<String, dynamic> toMap() => {"_id": id, "type": type, "email": email};
 }
