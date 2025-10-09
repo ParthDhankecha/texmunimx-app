@@ -4,8 +4,8 @@ import 'package:textile_po/controllers/calculator_controller.dart';
 import 'package:textile_po/screens/calculator/labour/labour_cost_list.dart';
 import 'package:textile_po/screens/calculator/warp_screen.dart';
 import 'package:textile_po/screens/calculator/weft/weft_screen.dart';
-import 'package:textile_po/screens/calculator/widgets/custom_tabs.dart';
 import 'package:textile_po/screens/calculator/widgets/select_design.dart';
+import 'package:textile_po/screens/calculator/widgets/text_separator_widget.dart';
 
 class CalculatorScreen extends StatefulWidget {
   const CalculatorScreen({super.key});
@@ -43,11 +43,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         children: [
           //select design
           SelectDesign(controller: controller),
-          //tabs
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, top: 8),
-            child: CustomTabs(),
-          ),
 
           //tab wise form
           Expanded(
@@ -65,23 +60,16 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       return const SizedBox.shrink();
                     }
                   }),
-                  Obx(
-                    () => Visibility(
-                      visible: controller.selectedTab.value == 0,
-                      child: WarpScreen(),
-                    ),
-                  ),
-                  Obx(
-                    () => Visibility(
-                      visible: controller.selectedTab.value == 1,
-                      child: WeftScreen(),
-                    ),
-                  ),
-                  Obx(
-                    () => Visibility(
-                      visible: controller.selectedTab.value == 2,
-                      child: LabourCostList(),
-                    ),
+                  Divider(),
+                  Column(
+                    children: [
+                      WarpScreen(),
+                      TextSeparator(color: Colors.black),
+                      WeftScreen(),
+                      TextSeparator(color: Colors.black),
+
+                      LabourCostList(),
+                    ],
                   ),
                 ],
               ),

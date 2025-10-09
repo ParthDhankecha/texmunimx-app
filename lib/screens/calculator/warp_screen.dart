@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/common_widgets/app_text_styles.dart';
-import 'package:textile_po/common_widgets/custom_btn.dart';
 import 'package:textile_po/common_widgets/input_field.dart';
 import 'package:textile_po/controllers/calculator_controller.dart';
 import 'package:textile_po/utils/app_colors.dart';
@@ -27,17 +26,14 @@ class _WarpScreenState extends State<WarpScreen> {
           children: [
             Row(
               children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      Text('total_warp_cost'.tr, style: bodyStyle),
-                      Text(' (₹)'),
-                    ],
-                  ),
+                Row(
+                  children: [
+                    Text('total_warp_cost'.tr, style: bodyStyle),
+                    Text(' (₹)'),
+                  ],
                 ),
 
                 Expanded(
-                  flex: 2,
                   child: Container(
                     padding: EdgeInsets.all(10),
                     child: Obx(
@@ -230,19 +226,19 @@ class _WarpScreenState extends State<WarpScreen> {
               ],
             ),
             SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomBtn(
-                  title: 'save_and_next'.tr,
-                  onTap: () {
-                    if (formKey.currentState!.validate()) {
-                      controller.onSaveWarp();
-                    } else {}
-                  },
-                ),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     CustomBtn(
+            //       title: 'save_and_next'.tr,
+            //       onTap: () {
+            //         if (formKey.currentState!.validate()) {
+            //           controller.onSaveWarp();
+            //         } else {}
+            //       },
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ),

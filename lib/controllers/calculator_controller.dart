@@ -323,6 +323,7 @@ class CalculatorController extends GetxController implements GetxService {
       // "weft": [],
       // "labour": {"designCard": designCard.value}
     };
+
     isLoading.value = true;
     repository
         .saveCalculatorData(body: body, id: getDesign!.id)
@@ -411,6 +412,67 @@ class CalculatorController extends GetxController implements GetxService {
 
     Map<String, dynamic> body = {
       "designId": getDesign!.id,
+      "labour": {"designCard": designCard.value},
+    };
+    isLoading.value = true;
+    repository
+        .saveCalculatorData(body: body, id: getDesign!.id)
+        .then((success) {
+          isLoading.value = false;
+          if (success) {
+            showSuccessSnackbar('Labour data saved successfully');
+          } else {
+            showErrorSnackbar('Failed to save labour data');
+          }
+        })
+        .catchError((error) {
+          log('Error saving labour data: $error');
+          isLoading.value = false;
+          showErrorSnackbar('An error occurred while saving labour data');
+
+          switch ((error as ApiException).statusCode) {
+            case 401:
+              Get.offAll(() => LoginScreen());
+              break;
+
+            default:
+          }
+        });
+  }
+
+  onMainSave() {
+    if (getDesign == null) {
+      showErrorSnackbar('Please select a design first');
+      return;
+    }
+
+    if (designCardCont.text.isEmpty || designCard.value <= 0) {
+      showErrorSnackbar('design_card_required'.tr);
+      return;
+    }
+
+    Map<String, dynamic> body = {
+      "designId": getDesign!.id,
+      "warp": {
+        "quality": qualityCont.text,
+        "denier": denier.value,
+        "tar": tar.value,
+        "meter": meter.value,
+        "ratePerKg": ratePerKg.value,
+      },
+
+      "weft": weftList
+          .map(
+            (weft) => {
+              "quality": weft.quality,
+              "denier": weft.denier,
+              "pick": weft.pick,
+              "panno": weft.panno,
+              "rate": weft.rate,
+              "meter": weft.meter,
+            },
+          )
+          .toList(),
       "labour": {"designCard": designCard.value},
     };
     isLoading.value = true;

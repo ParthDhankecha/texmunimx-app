@@ -5,6 +5,7 @@ import 'package:textile_po/screens/purchase_order/widgets/delivered_card.dart';
 import 'package:textile_po/screens/purchase_order/widgets/in_process_card.dart';
 import 'package:textile_po/screens/purchase_order/widgets/purchase_order_card.dart';
 import 'package:textile_po/screens/purchase_order/widgets/ready_to_dispatch_card.dart';
+import 'package:textile_po/utils/app_colors.dart';
 
 class PurchaseOrderListPage extends StatefulWidget {
   const PurchaseOrderListPage({super.key});
@@ -40,8 +41,8 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
         title: Text('purchase_order'.tr),
         bottom: TabBar(
           controller: tabController,
-          indicatorColor: Colors.blue,
-          labelColor: Colors.blue,
+          indicatorColor: AppColors.mainColor,
+          labelColor: AppColors.mainColor,
           unselectedLabelColor: Colors.black,
 
           tabs: [

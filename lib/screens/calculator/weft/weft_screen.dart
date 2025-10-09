@@ -104,17 +104,17 @@ class _WeftScreenState extends State<WeftScreen> {
                   controller.addNewWeft();
                 },
               ),
-              SizedBox(width: 20),
-              CustomBtn(
-                title: 'save_and_next'.tr,
-                onTap: () {
-                  controller.onSaveWeft();
-                },
-              ),
+              // SizedBox(width: 20),
+              // CustomBtn(
+              //   title: 'save_and_next'.tr,
+              //   onTap: () {
+              //     controller.onSaveWeft();
+              //   },
+              // ),
             ],
           ),
         ),
-        SizedBox(height: 60),
+        SizedBox(height: 10),
       ],
     );
   }

@@ -132,14 +132,14 @@ class _LabourCostListState extends State<LabourCostList> {
                     child: CustomBtn(
                       title: 'save'.tr,
                       onTap: () {
-                        controller.onSaveLabour();
+                        controller.onMainSave();
                       },
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 60),
+            SizedBox(height: 20),
           ],
         ),
       ),

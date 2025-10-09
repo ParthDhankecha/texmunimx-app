@@ -1,8 +1,6 @@
-import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:textile_po/models/user_role_enum.dart';
 import 'package:textile_po/repository/api_exception.dart';
 import 'package:textile_po/repository/login_repo.dart';
 import 'package:textile_po/screens/auth_screens/login_screen.dart';
@@ -14,11 +12,6 @@ class LoginControllers extends GetxController implements GetxService {
   RxString phone = ''.obs;
   RxString otp = ''.obs;
   RxBool isLoading = false.obs;
-
-  Timer? _timer;
-  int timerSeconds = 60; // Initial countdown duration
-  RxBool canResend = false.obs;
-  RxString remainingTimer = ''.obs;
 
   final LoginRepo repo;
 
@@ -52,13 +45,11 @@ class LoginControllers extends GetxController implements GetxService {
       log(data.token.accessToken);
       if (data.token.accessToken.isNotEmpty) {
         sp.userToken = data.token.accessToken;
-        sp.userRole = UserRole.fromValue(data.user.type).apiName;
-        sp.userRoleInt = data.user.type;
+        sp.userRole = data.user.type;
         selectedRole.value = data.user.type;
 
         log('User Role : ${sp.userRole}');
-        log('User Role Int : ${sp.userRoleInt}');
-        Get.to(() => HomeScreen());
+        Get.offAll(() => HomeScreen());
       } else {}
     } on ApiException catch (e) {
       log('Login Error : $e');

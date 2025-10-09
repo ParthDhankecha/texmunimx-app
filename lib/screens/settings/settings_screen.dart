@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/models/user_role_enum.dart';
 import 'package:textile_po/screens/calculator/calculator_screen.dart';
 import 'package:textile_po/screens/create_design/design_list_screen.dart';
 import 'package:textile_po/screens/party/party_list_screen.dart';
@@ -66,7 +65,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
 
                 _buildDivider(),
-                if (sp.userRoleInt == UserRole.owner.value)
+                if (sp.userRole == sp.owner)
                   Column(
                     children: [
                       SettingsCard(

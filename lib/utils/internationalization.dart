@@ -113,9 +113,27 @@ class AppTranslations extends Translations {
       'panno': 'Panno',
       'atleast_one_feeder_is_required': 'At least one feeder is required.',
       'only_12_feeders_are_allowed': 'Only 12 Feeders are Allowed',
+
+      //users
       'users': 'Users',
       'add_user': 'Add User',
       'edit_user': 'Edit User',
+      'user_name': 'User Name',
+      'enter_name': 'Enter Name',
+      'name_is_mandatory': 'Name is Mandatory',
+      'user_created_successfully': 'User created successfully.',
+      'user_updated_successfully': 'User updated successfully.',
+      'mobile_number': 'Mobile Number',
+      'enter_mobile_number': 'Enter Mobile Number',
+      'mobile_number_is_mandatory': 'Mobile Number is Mandatory',
+      'invalid_mobile_number': 'Invalid Mobile Number',
+      'email_address': 'Email Address',
+      'enter_email': 'Enter Email',
+      'invalid_email_address': 'Invalid Email Address',
+      'user_deleted_successfully': 'User deleted successfully.',
+      'are_you_sure_you_want_to_delete_user':
+          'Are you sure you want to delete user?',
+      'no_users_found': 'No users found',
 
       'logout': 'Logout',
       'confirm_logout': 'Are you sure you want to logout?',
@@ -123,6 +141,17 @@ class AppTranslations extends Translations {
       'password': 'Password',
       'enter_password': 'Enter your password',
       'login_with_username_and_password': 'Login with User Name and Password.',
+
+      'is_active': 'Is Active',
+      'name': 'Name',
+      'phone': 'Phone',
+      'create': 'Create',
+      'update': 'Update',
+      'edit_user_details': 'Edit User Details',
+      'select_role': 'Select Role',
+      'user_role': 'User Role',
+      'confirm': 'Confirm',
+      'no': 'No',
     },
     'hi_IN': {
       'language_change': 'भाषा बदलें',
@@ -247,6 +276,17 @@ class AppTranslations extends Translations {
       'enter_password': 'अपना पासवर्ड दर्ज करें',
       'login_with_username_and_password':
           'उपयोगकर्ता नाम और पासवर्ड के साथ लॉगिन करें।',
+
+      'is_active': 'सक्रिय है',
+      'name': 'नाम',
+      'phone': 'फोन',
+      'create': 'बनाएं',
+      'update': 'अपडेट करें',
+      'edit_user_details': 'उपयोगकर्ता विवरण संपादित करें',
+      'select_role': 'भूमिका चुनें',
+      'user_role': 'उपयोगकर्ता भूमिका',
+      'confirm': 'पुष्टि करें',
+      'no': 'नहीं',
     },
     'gu_IN': {
       'language_change': 'ભાષા બદલો',
@@ -373,6 +413,16 @@ class AppTranslations extends Translations {
       'enter_password': 'તમારો પાસવર્ડ દાખલ કરો',
       'login_with_username_and_password':
           'વપરાશકર્તા નામ અને પાસવર્ડ સાથે લૉગિન કરો.',
+      'is_active': 'સક્રિય છે',
+      'name': 'નામ',
+      'phone': 'ફોન',
+      'create': 'બનાવો',
+      'update': 'અપડેટ કરો',
+      'edit_user_details': 'વપરાશકર્તા વિગતો સંપાદિત કરો',
+      'select_role': 'ભૂમિકા પસંદ કરો',
+      'user_role': 'વપરાશકર્તા ભૂમિકા',
+      'confirm': 'પુષ્ટિ કરો',
+      'no': 'ના',
     },
   };
 }

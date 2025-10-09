@@ -11,6 +11,7 @@ class AppConst {
 
   //users
   static String users = 'users/pagination'; // post
+  static String usersCreate = 'users'; // post
 
   // design
   static String createDesign = 'design/create';

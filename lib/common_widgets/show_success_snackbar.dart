@@ -10,5 +10,16 @@ void showSuccessSnackbar(String title, {String decs = ''}) {
     colorText: Colors.white, // Text color
     icon: const Icon(Icons.error, color: Colors.white), // Optional icon
     duration: const Duration(seconds: 3), // Duration the SnackBar is visible
+    messageText: decs.isEmpty
+        ? SizedBox.shrink()
+        : Text(decs, style: TextStyle(color: Colors.white)),
+    titleText: Text(
+      title,
+      style: TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+        fontSize: 14,
+      ),
+    ),
   );
 }

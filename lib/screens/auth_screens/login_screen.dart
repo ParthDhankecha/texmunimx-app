@@ -6,7 +6,6 @@ import 'package:textile_po/common_widgets/main_btn.dart';
 import 'package:textile_po/common_widgets/password_input.dart';
 import 'package:textile_po/controllers/login_controllers.dart';
 import 'package:textile_po/screens/auth_screens/widgets/privacy_bar.dart';
-import 'package:textile_po/utils/app_colors.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/utils/app_strings.dart';
 
@@ -77,6 +76,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: 8),
                       PasswordTextField(
                         controller: loginController.passwordCont,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a password';
+                          }
+                          if (value.length < 6) {
+                            return 'Password must be at least 6 characters long';
+                          }
+                          return null;
+                        },
                       ),
                     ],
                   ),

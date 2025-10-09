@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/controllers/user_controller.dart';
+import 'package:textile_po/screens/users/create_users_screen.dart';
 import 'package:textile_po/screens/users/widgets/user_list_card.dart';
+import 'package:textile_po/utils/app_colors.dart';
 
 class UsersListScreen extends StatefulWidget {
   const UsersListScreen({super.key});
@@ -23,8 +25,18 @@ class _UsersListScreenState extends State<UsersListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('users'.tr)),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
+        foregroundColor: AppColors.mainColor,
+        onPressed: () {
+          // Navigate to add user screen
+          Get.to(() => CreateUsersScreen());
+        },
+        child: const Icon(Icons.add),
+      ),
       body: Column(
         children: [
+          Divider(color: Colors.grey.shade500, thickness: 1),
           Obx(() {
             if (userController.isLoading.value) {
               return const Center(child: CircularProgressIndicator());
@@ -36,7 +48,22 @@ class _UsersListScreenState extends State<UsersListScreen> {
                   itemCount: userController.users.length,
                   itemBuilder: (context, index) {
                     final user = userController.users[index];
-                    return UserListCard(user: user);
+                    final role = userController.getUserRolesById(user.userType);
+                    return UserListCard(
+                      user: user,
+                      role: role,
+                      index: index,
+                      onEdit: () {
+                        Get.to(() => CreateUsersScreen(user: user));
+                      },
+                      onStatusChange: (status) {
+                        userController.updateUserActiveStatus(
+                          userId: user.id.toString(),
+                          isActive: status,
+                          intdex: index,
+                        );
+                      },
+                    );
                   },
                 ),
               );

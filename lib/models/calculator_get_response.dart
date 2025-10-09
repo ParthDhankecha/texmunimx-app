@@ -25,7 +25,24 @@ class CalculatorGetResponse {
       CalculatorGetResponse(
         code: json["code"],
         message: json["message"],
-        data: CalculatorModel.fromMap(json["data"]),
+        data: json["data"] != null || json["data"] != {}
+            ? CalculatorModel.fromMap(json["data"])
+            : CalculatorModel(
+                id: '',
+                designId: '',
+                warp: Warp(
+                  quality: '',
+                  denier: 0.0,
+                  tar: 0.0,
+                  meter: 0.0,
+                  ratePerKg: 0.0,
+                  id: '',
+                ),
+                weft: [],
+                labour: null,
+                createdAt: DateTime.now(),
+                updatedAt: DateTime.now(),
+              ),
       );
 
   Map<String, dynamic> toMap() => {

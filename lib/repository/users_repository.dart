@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:textile_po/models/user_list_response.dart';
 import 'package:textile_po/repository/api_client.dart';
@@ -23,5 +25,58 @@ class UsersRepository {
     }
 
     return usersList;
+  }
+
+  //create user
+  Future<bool> createUser({required Map<String, dynamic> body}) async {
+    var response = await apiClient.requestPost(
+      AppConst.usersCreate,
+      headers: {'authorization': sp.userToken},
+      body: body,
+    );
+
+    var data = jsonDecode(response);
+
+    return data['code'] == 'OK';
+  }
+
+  Future<bool> updateUser({
+    required String userId,
+    required Map<String, dynamic> body,
+  }) async {
+    var response = await apiClient.requestPut(
+      '${AppConst.usersCreate}/$userId',
+      headers: {'authorization': sp.userToken},
+      body: body,
+    );
+
+    var data = jsonDecode(response);
+
+    return data['code'] == 'OK';
+  }
+
+  Future<bool> updateUserActiveStatus({
+    required String userId,
+    required bool isActive,
+  }) async {
+    var response = await apiClient.requestPut(
+      '${AppConst.usersCreate}/$userId',
+      headers: {'authorization': sp.userToken},
+      body: {'isActive': isActive},
+    );
+    var data = jsonDecode(response);
+    return data['code'] == 'OK';
+  }
+
+  Future<bool> deleteUser({required String userId}) async {
+    var response = await apiClient.request(
+      '${AppConst.usersCreate}/$userId',
+      headers: {'authorization': sp.userToken},
+      method: ApiType.delete,
+    );
+
+    var data = jsonDecode(response);
+
+    return data['code'] == 'OK';
   }
 }

@@ -32,12 +32,14 @@ class SplashController extends GetxController implements GetxService {
     try {
       var response = await apiClient.request(AppConst.defaultConfig);
       var data = jsonDecode(response);
-
-      log('default config  $data');
       String placeHolderImg = data['data']['placeHolderImg'] ?? '';
       String publicUrl = data['data']['publicUrl'] ?? '';
 
       Map<String, dynamic> userRoles = data['data']['roles'] ?? {};
+      sp.owner = userRoles['OWNER'] ?? 1;
+      sp.admin = userRoles['ADMIN'] ?? 2;
+      sp.manager = userRoles['MANAGER'] ?? 3;
+      sp.job = userRoles['JOB'] ?? 4;
 
       AppConst.placeHolderImage = placeHolderImg;
       AppConst.imageBaseUrl = publicUrl;

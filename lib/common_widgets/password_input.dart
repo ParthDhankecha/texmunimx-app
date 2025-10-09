@@ -5,11 +5,13 @@ import 'package:textile_po/utils/app_colors.dart';
 class PasswordTextField extends StatefulWidget {
   final TextEditingController controller;
   final String labelText;
+  final String? Function(String?)? validator;
 
   const PasswordTextField({
     super.key,
     required this.controller,
     this.labelText = 'Password',
+    this.validator,
   });
 
   @override
@@ -58,15 +60,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
               },
             ),
           ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter a password';
-            }
-            if (value.length < 6) {
-              return 'Password must be at least 6 characters long';
-            }
-            return null;
-          },
+          validator: widget.validator,
         ),
       ),
     );
