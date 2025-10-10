@@ -27,6 +27,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     controller.enterPaisa.value = 0.0;
     // controller.generateDefaultBoxes();
     controller.loadCalculatorData();
+    controller.generateDefaultBoxes();
   }
 
   @override

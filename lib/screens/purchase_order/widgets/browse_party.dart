@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/common_widgets/app_text_styles.dart';
 import 'package:textile_po/common_widgets/custom_btn.dart';
+import 'package:textile_po/common_widgets/red_mark.dart';
 import 'package:textile_po/controllers/purchase_order_controller.dart';
 import 'package:textile_po/screens/party/party_list_screen.dart';
 
@@ -18,7 +19,13 @@ class BrowseParty extends StatelessWidget {
       child: Obx(
         () => Column(
           children: [
-            Row(children: [Text('Party  Details', style: bodyStyle)]),
+            Row(
+              children: [
+                Text('Party  Details', style: bodyStyle),
+                SizedBox(width: 6),
+                RedMark(),
+              ],
+            ),
             Row(
               children: [
                 Text(

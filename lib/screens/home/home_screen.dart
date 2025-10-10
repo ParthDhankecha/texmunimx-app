@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:textile_po/controllers/home_controller.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/screens/purchase_order/create_purchase_order.dart';
+import 'package:textile_po/screens/purchase_order/create_po/create_purchase_order.dart';
 import 'package:textile_po/screens/purchase_order/purchase_order_list_screen.dart';
 import 'package:textile_po/screens/settings/settings_screen.dart';
 import 'package:textile_po/utils/app_colors.dart';

@@ -300,6 +300,8 @@ class CalculatorController extends GetxController implements GetxService {
           break;
         default:
       }
+    } catch (e) {
+      log('Error loading calculator data: $e');
     } finally {
       isLoading.value = false;
     }

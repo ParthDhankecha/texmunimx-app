@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:textile_po/common_widgets/red_mark.dart';
 
 /// A reusable, generic dropdown widget for any data type (T).
 ///
@@ -53,7 +54,10 @@ class CustomDropdown<T> extends StatelessWidget {
                 ),
               ),
               if (isRequired)
-                Text(' *', style: TextStyle(color: Colors.red, fontSize: 14)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 6),
+                  child: RedMark(),
+                ),
             ],
           ),
         ),

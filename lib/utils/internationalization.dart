@@ -152,6 +152,14 @@ class AppTranslations extends Translations {
       'user_role': 'User Role',
       'confirm': 'Confirm',
       'no': 'No',
+
+      'order_type': 'Order Type',
+      'select_order_type': 'Select Order Type',
+      'job_po': 'Job PO',
+      'matching': 'Matching',
+      'remarks': 'Remarks',
+      'firm': 'Firm',
+      'job_user': 'Job User',
     },
     'hi_IN': {
       'language_change': 'भाषा बदलें',
@@ -287,6 +295,8 @@ class AppTranslations extends Translations {
       'user_role': 'उपयोगकर्ता भूमिका',
       'confirm': 'पुष्टि करें',
       'no': 'नहीं',
+      'order_type': 'ऑर्डर प्रकार',
+      'job_po': 'जॉब पीओ',
     },
     'gu_IN': {
       'language_change': 'ભાષા બદલો',
@@ -423,6 +433,8 @@ class AppTranslations extends Translations {
       'user_role': 'વપરાશકર્તા ભૂમિકા',
       'confirm': 'પુષ્ટિ કરો',
       'no': 'ના',
+      'order_type': 'ઓર્ડર પ્રકાર',
+      'job_po': 'જોબ પીઓ',
     },
   };
 }

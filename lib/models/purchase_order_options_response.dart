@@ -41,13 +41,15 @@ class PurchaseOptionsModel {
   List<Design> designs;
   List<Party> parties;
   List<FirmId> firms;
-  List<MovedBy> users;
+  List<User> users;
+  List<User> jobUsers;
 
   PurchaseOptionsModel({
     required this.designs,
     required this.parties,
     required this.firms,
     required this.users,
+    required this.jobUsers,
   });
 
   factory PurchaseOptionsModel.fromMap(Map<String, dynamic> json) =>
@@ -57,14 +59,16 @@ class PurchaseOptionsModel {
         ),
         parties: List<Party>.from(json["parties"].map((x) => Party.fromMap(x))),
         firms: List<FirmId>.from(json["firms"].map((x) => FirmId.fromMap(x))),
-        users: List<MovedBy>.from(json["users"].map((x) => MovedBy.fromMap(x))),
+        users: List<User>.from(json["users"].map((x) => User.fromMap(x))),
+        jobUsers: List<User>.from(json["jobUsers"].map((x) => User.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
     "designs": List<dynamic>.from(designs.map((x) => x.toMap())),
     "parties": List<dynamic>.from(parties.map((x) => x.toMap())),
-    "firms": List<dynamic>.from(firms.map((x) => x.toMap())),
+    "firms": List<dynamic>.from(firms.map((x) => x)),
     "users": List<dynamic>.from(users.map((x) => x.toMap())),
+    "jobUsers": List<dynamic>.from(jobUsers.map((x) => x.toMap())),
   };
 }
 
@@ -96,11 +100,23 @@ class Design {
   };
 }
 
+class User {
+  String id;
+  String fullname;
+
+  User({required this.id, required this.fullname});
+
+  factory User.fromMap(Map<String, dynamic> json) =>
+      User(id: json["_id"], fullname: json["fullname"]);
+
+  Map<String, dynamic> toMap() => {"_id": id, "fullname": fullname};
+}
+
 class Party {
   String id;
   String partyName;
   String partyNumber;
-  String? mobile;
+  String mobile;
 
   Party({
     required this.id,

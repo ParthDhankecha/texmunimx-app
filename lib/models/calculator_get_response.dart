@@ -13,42 +13,23 @@ String calculatorGetResponseToMap(CalculatorGetResponse data) =>
 class CalculatorGetResponse {
   String code;
   String message;
-  CalculatorModel data;
+  CalculatorModel? data;
 
-  CalculatorGetResponse({
-    required this.code,
-    required this.message,
-    required this.data,
-  });
+  CalculatorGetResponse({required this.code, required this.message, this.data});
 
   factory CalculatorGetResponse.fromMap(Map<String, dynamic> json) =>
       CalculatorGetResponse(
         code: json["code"],
         message: json["message"],
-        data: json["data"] != null || json["data"] != {}
+        data: json["data"] != null && json["data"].isNotEmpty
             ? CalculatorModel.fromMap(json["data"])
-            : CalculatorModel(
-                id: '',
-                designId: '',
-                warp: Warp(
-                  quality: '',
-                  denier: 0.0,
-                  tar: 0.0,
-                  meter: 0.0,
-                  ratePerKg: 0.0,
-                  id: '',
-                ),
-                weft: [],
-                labour: null,
-                createdAt: DateTime.now(),
-                updatedAt: DateTime.now(),
-              ),
+            : null,
       );
 
   Map<String, dynamic> toMap() => {
     "code": code,
     "message": message,
-    "data": data.toMap(),
+    "data": data?.toMap(),
   };
 }
 

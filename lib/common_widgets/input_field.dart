@@ -10,6 +10,7 @@ class InputField extends StatelessWidget {
     this.onValidator,
     this.onTextChange,
     this.textAlign,
+    this.initialValue,
   });
 
   final String hintText;
@@ -18,6 +19,7 @@ class InputField extends StatelessWidget {
   final String? Function(String? value)? onValidator;
   final Function(String value)? onTextChange;
   final TextAlign? textAlign;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class InputField extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextFormField(
+        initialValue: initialValue,
         validator: onValidator,
         textAlign: textAlign ?? TextAlign.start,
         controller: textEditingController,

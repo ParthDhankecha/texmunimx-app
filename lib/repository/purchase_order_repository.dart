@@ -58,42 +58,16 @@ class PurchaseOrderRepository {
     return purchaseOrderListResponseFromMap(data).data;
   }
 
-  Future<dynamic> createPurchaseOrder({
-    required double panna,
-    required String process,
-    required String designId,
-    required String partyId,
-    required int quantity,
-    required double rate,
-    String? deliveryDate,
-    bool? highPriority,
-    String? partyPo,
-  }) async {
+  Future<dynamic> createPurchaseOrder({Map<String, dynamic>? reqBody}) async {
     var endPoint = AppConst.purchaseOrderCreate;
-    var reqBody = {
-      "panna": panna,
-      "process": process,
-      "designId": designId,
-      "partyId": partyId,
-      "quantity": quantity,
-      "rate": rate,
-      if (deliveryDate != null) "deliveryDate": deliveryDate,
-      if (highPriority != null) "isHighPriority": highPriority,
-      if (partyPo != null) "partyPoNumber": partyPo,
-    };
-
     if (kDebugMode) {
       print('reqBody - $reqBody');
     }
-
-    dynamic data;
-
-    data = await apiClient.requestPost(
+    dynamic data = await apiClient.requestPost(
       endPoint,
       body: reqBody,
       headers: {'authorization': sp.userToken},
     );
-
     return data;
   }
 

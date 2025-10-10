@@ -24,7 +24,10 @@ class CalculatorRepo {
 
     log('Response from design details: $response');
     var data = calculatorGetResponseFromMap(response);
-    return data.data;
+    if (data.data == null) {
+      throw Exception('No data found');
+    }
+    return data.data!;
   }
 
   //update data post method

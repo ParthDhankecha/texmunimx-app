@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:textile_po/controllers/purchase_order_controller.dart';
 import 'package:textile_po/models/in_process_model.dart';
 import 'package:textile_po/models/order_status_enum.dart';
+import 'package:textile_po/models/purchase_order_options_response.dart';
 
 class UpdateStatusBottomSheet extends StatefulWidget {
   final int orderQuantity;
@@ -41,7 +42,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
   final _remarksController = TextEditingController();
 
   FirmId? _selectedFirm;
-  MovedBy? _selectedUser;
+  User? _selectedUser;
 
   PurchaseOrderController controller = Get.find();
 
@@ -226,19 +227,19 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                             style: TextStyle(color: Colors.grey[700]),
                           ),
                           const SizedBox(height: 8),
-                          DropdownButtonFormField<MovedBy>(
+                          DropdownButtonFormField<User>(
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                             ),
                             hint: const Text('Select User'),
                             initialValue: _selectedUser,
                             items: controller.userList.map((user) {
-                              return DropdownMenuItem<MovedBy>(
+                              return DropdownMenuItem<User>(
                                 value: user,
                                 child: Text(user.fullname),
                               );
                             }).toList(),
-                            onChanged: (MovedBy? newValue) {
+                            onChanged: (User? newValue) {
                               setState(() {
                                 _selectedUser = newValue;
                               });
