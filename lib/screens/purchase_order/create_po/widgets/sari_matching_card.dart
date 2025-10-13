@@ -4,7 +4,6 @@ import 'package:textile_po/common_widgets/app_text_styles.dart';
 import 'package:textile_po/common_widgets/input_field.dart';
 import 'package:textile_po/common_widgets/my_text_field.dart';
 import 'package:textile_po/common_widgets/red_mark.dart';
-import 'package:textile_po/models/cal_weft_model.dart';
 import 'package:textile_po/models/sari_matching_model.dart';
 import 'package:textile_po/utils/app_colors.dart';
 

@@ -1,8 +1,8 @@
 class Delivered {
   int quantity;
-  List<FirmId> firmId;
-  List<MovedBy> userId;
-  List<MovedBy> movedBy;
+  String firmId;
+  String userId;
+  String movedBy;
   String machineNo;
   String remarks;
 
@@ -17,18 +17,18 @@ class Delivered {
 
   factory Delivered.fromMap(Map<String, dynamic> json) => Delivered(
     quantity: json["quantity"],
-    firmId: List<FirmId>.from(json["firmId"].map((x) => FirmId.fromMap(x))),
-    userId: List<MovedBy>.from(json["userId"].map((x) => MovedBy.fromMap(x))),
-    movedBy: List<MovedBy>.from(json["movedBy"].map((x) => MovedBy.fromMap(x))),
-    machineNo: json["machineNo"],
-    remarks: json["remarks"],
+    firmId: json["firmId"] ?? '',
+    userId: json["userId"] ?? '',
+    movedBy: json["movedBy"] ?? '',
+    machineNo: json["machineNo"] ?? '',
+    remarks: json["remarks"] ?? '',
   );
 
   Map<String, dynamic> toMap() => {
     "quantity": quantity,
-    "firmId": List<dynamic>.from(firmId.map((x) => x.toMap())),
-    "userId": List<dynamic>.from(userId.map((x) => x.toMap())),
-    "movedBy": List<dynamic>.from(movedBy.map((x) => x.toMap())),
+    "firmId": firmId,
+    "userId": userId,
+    "movedBy": movedBy,
     "machineNo": machineNo,
     "remarks": remarks,
   };
@@ -36,9 +36,9 @@ class Delivered {
 
 class ReadyToDispatch {
   int quantity;
-  List<FirmId> firmId;
-  List<MovedBy> userId;
-  List<MovedBy> movedBy;
+  String? firmId;
+  String? userId;
+  String? movedBy;
   String machineNo;
   String remarks;
 
@@ -53,18 +53,18 @@ class ReadyToDispatch {
 
   factory ReadyToDispatch.fromMap(Map<String, dynamic> json) => ReadyToDispatch(
     quantity: json["quantity"],
-    firmId: List<FirmId>.from(json["firmId"].map((x) => FirmId.fromMap(x))),
-    userId: List<MovedBy>.from(json["userId"].map((x) => MovedBy.fromMap(x))),
-    movedBy: List<MovedBy>.from(json["movedBy"].map((x) => MovedBy.fromMap(x))),
-    machineNo: json["machineNo"],
-    remarks: json["remarks"],
+    firmId: json["firmId"] ?? '',
+    userId: json["userId"] ?? '',
+    movedBy: json["movedBy"] ?? '',
+    machineNo: json["machineNo"] ?? '',
+    remarks: json["remarks"] ?? '',
   );
 
   Map<String, dynamic> toMap() => {
     "quantity": quantity,
-    "firmId": List<dynamic>.from(firmId.map((x) => x.toMap())),
-    "userId": List<dynamic>.from(userId.map((x) => x.toMap())),
-    "movedBy": List<dynamic>.from(movedBy.map((x) => x.toMap())),
+    "firmId": firmId,
+    "userId": userId,
+    "movedBy": movedBy,
     "machineNo": machineNo,
     "remarks": remarks,
   };
@@ -72,9 +72,9 @@ class ReadyToDispatch {
 
 class InProcess {
   int quantity;
-  List<FirmId> firmId;
-  List<MovedBy> userId;
-  List<MovedBy> movedBy;
+  String firmId;
+  String userId;
+  String movedBy;
   String machineNo;
   String remarks;
 
@@ -89,18 +89,18 @@ class InProcess {
 
   factory InProcess.fromMap(Map<String, dynamic> json) => InProcess(
     quantity: json["quantity"],
-    firmId: List<FirmId>.from(json["firmId"].map((x) => FirmId.fromMap(x))),
-    userId: List<MovedBy>.from(json["userId"].map((x) => MovedBy.fromMap(x))),
-    movedBy: List<MovedBy>.from(json["movedBy"].map((x) => MovedBy.fromMap(x))),
-    machineNo: json["machineNo"],
-    remarks: json["remarks"],
+    firmId: json["firmId"] ?? '',
+    userId: json["userId"] ?? '',
+    movedBy: json["movedBy"] ?? '',
+    machineNo: json["machineNo"] ?? '',
+    remarks: json["remarks"] ?? '',
   );
 
   Map<String, dynamic> toMap() => {
     "quantity": quantity,
-    "firmId": List<dynamic>.from(firmId.map((x) => x.toMap())),
-    "userId": List<dynamic>.from(userId.map((x) => x.toMap())),
-    "movedBy": List<dynamic>.from(movedBy.map((x) => x.toMap())),
+    "firmId": firmId,
+    "userId": userId,
+    "movedBy": movedBy,
     "machineNo": machineNo,
     "remarks": remarks,
   };

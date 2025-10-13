@@ -5,7 +5,6 @@ import 'package:textile_po/common_widgets/custom_dropdown.dart';
 import 'package:textile_po/common_widgets/input_field.dart';
 import 'package:textile_po/common_widgets/my_text_field.dart';
 import 'package:textile_po/common_widgets/red_mark.dart';
-import 'package:textile_po/models/cal_weft_model.dart';
 import 'package:textile_po/models/in_process_model.dart';
 import 'package:textile_po/models/job_po_model.dart';
 import 'package:textile_po/models/purchase_order_options_response.dart';

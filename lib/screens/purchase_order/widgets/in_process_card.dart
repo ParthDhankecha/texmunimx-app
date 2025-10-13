@@ -1,16 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:get/get.dart';
 import 'package:textile_po/common_widgets/my_text_field.dart';
+import 'package:textile_po/controllers/purchase_order_controller.dart';
 import 'package:textile_po/models/order_status_enum.dart';
 import 'package:textile_po/models/purchase_order_list_response.dart';
+import 'package:textile_po/models/purchase_order_options_response.dart';
 import 'package:textile_po/screens/purchase_order/change_order_status/change_order_status_screen.dart';
+import 'package:textile_po/screens/purchase_order/widgets/status_tag_row.dart';
+import 'package:textile_po/utils/app_colors.dart';
 import 'package:textile_po/utils/app_const.dart';
 import 'package:textile_po/utils/formate_double.dart';
 
-class InProcessCard extends StatelessWidget {
+class InProcessCard extends StatefulWidget {
   final PurchaseOrderModel order;
+  final Design design;
+  final Party party;
 
-  const InProcessCard({super.key, required this.order});
+  const InProcessCard({
+    super.key,
+    required this.order,
+    required this.design,
+    required this.party,
+  });
+
+  @override
+  State<InProcessCard> createState() => _InProcessCardState();
+}
+
+class _InProcessCardState extends State<InProcessCard> {
+  final PurchaseOrderController controller =
+      Get.find<PurchaseOrderController>();
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +41,7 @@ class InProcessCard extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
+            StatusTagRow(order: widget.order, type: 'in_progress'),
             // Top section of the card
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -30,9 +50,8 @@ class InProcessCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: Image.network(
-                    order.designId.isNotEmpty
-                        ? AppConst.imageBaseUrl +
-                              order.designId.first.designImage
+                    widget.order.designId.isNotEmpty
+                        ? AppConst.imageBaseUrl + widget.design.designImage
                         : 'https://placehold.co/100x100',
                     width: 42,
                     height: 42,
@@ -53,8 +72,8 @@ class InProcessCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        order.designId.isNotEmpty
-                            ? order.designId.first.designName
+                        widget.order.designId.isNotEmpty
+                            ? widget.design.designName
                             : 'N/A',
                         style: const TextStyle(
                           fontSize: 14,
@@ -64,52 +83,31 @@ class InProcessCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                // Status tag
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.orange,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
-                    child: MyText(
-                      'in_progress',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 10),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 MyText('customer', append: ' : '),
                 Text(
-                  order.partyId.isNotEmpty
-                      ? order.partyId.first.partyName
+                  widget.order.partyId.isNotEmpty
+                      ? widget.party.partyName
                       : 'N/A',
                   style: const TextStyle(fontSize: 14),
                 ),
               ],
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 6),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
               children: [
                 MyText('customer_id', append: ' : '),
                 Text(
-                  order.partyId.isNotEmpty
-                      ? order.partyId.first.partyNumber
+                  widget.order.partyId.isNotEmpty
+                      ? widget.party.partyNumber
                       : 'N/A',
                   style: const TextStyle(fontSize: 14, color: Colors.black),
                 ),
@@ -120,71 +118,93 @@ class InProcessCard extends StatelessWidget {
               children: [
                 MyText('panna', append: ' : '),
                 Text(
-                  formatDouble(order.panna),
+                  formatDouble(widget.order.panna),
                   style: const TextStyle(fontSize: 14),
                 ),
               ],
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 6),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyText('rate', append: ' : '),
-
-                Text(
-                  formatDouble(order.rate),
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ],
-            ),
-            const SizedBox(height: 4),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 MyText('firm_name', append: ' : '),
                 Text(
-                  order.inProcess?.firmId.first.firmName ?? 'N/A',
+                  controller.firmNameById(widget.order.inProcess?.firmId ?? ''),
                   style: const TextStyle(fontSize: 16),
                 ),
               ],
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 6),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 MyText('moved_by', append: ' : '),
                 Text(
-                  order.inProcess?.movedBy.first.fullname ?? 'N/A',
+                  controller
+                      .getMovedUserById(widget.order.inProcess?.movedBy ?? '')
+                      .capitalizeFirst!,
                   style: const TextStyle(fontSize: 16),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 6),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 MyText('machine_no', append: ' : '),
                 Text(
-                  order.inProcess?.machineNo ?? 'N/A',
+                  widget.order.inProcess?.machineNo ?? 'N/A',
                   style: const TextStyle(fontSize: 16),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 6),
 
-            // Bottom section with progress details
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildProgressItem('pending', '${order.pending}'),
-                _buildProgressItem('quantity', '${order.quantity}'),
-                _buildProgressItem(
-                  'in_progress',
-                  '${order.inProcess?.quantity ?? 0}',
+                MyText('order_quantity'),
+                Text(
+                  '${widget.order.matching?.quantity ?? "0"}',
+                  style: TextStyle(fontSize: 14),
                 ),
               ],
             ),
+            const SizedBox(height: 6),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                MyText('pending_quantity'),
+                Text(
+                  '${widget.order.matching?.pending ?? "0"}',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: AppColors.mainColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                MyText('in_process_quantity'),
+                Text(
+                  '${widget.order.inProcess?.quantity ?? 0}',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: AppColors.mainColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -195,15 +215,15 @@ class InProcessCard extends StatelessWidget {
                       isScrollControlled: true,
 
                       builder: (context) => UpdateStatusBottomSheet(
-                        orderQuantity: order.quantity,
-                        pendingQuantity: order.inProcess?.quantity ?? 0,
+                        orderQuantity: widget.order.quantity,
+                        pendingQuantity: widget.order.inProcess?.quantity ?? 0,
                         moveTo: OrderStatus.pending,
                         currentStatus: OrderStatus.inProcess,
-                        purchaseId: order.id,
+                        purchaseId: widget.order.id,
                         quantityTitle: 'In Progress',
-                        firmId: order.inProcess?.firmId.first.id ?? '',
-                        userId: order.inProcess?.userId.first.id ?? '',
-                        machineNo: order.inProcess?.machineNo ?? '',
+                        firmId: widget.order.inProcess?.firmId ?? '',
+                        userId: widget.order.inProcess?.userId ?? '',
+                        machineNo: widget.order.inProcess?.machineNo ?? '',
                       ),
                     );
                   },
@@ -215,15 +235,15 @@ class InProcessCard extends StatelessWidget {
                       context: context,
                       isScrollControlled: true,
                       builder: (context) => UpdateStatusBottomSheet(
-                        orderQuantity: order.quantity,
-                        pendingQuantity: order.inProcess?.quantity ?? 0,
+                        orderQuantity: widget.order.quantity,
+                        pendingQuantity: widget.order.inProcess?.quantity ?? 0,
                         moveTo: OrderStatus.readyToDispatch,
                         currentStatus: OrderStatus.inProcess,
-                        purchaseId: order.id,
+                        purchaseId: widget.order.id,
                         quantityTitle: 'In Progress',
-                        firmId: order.inProcess?.firmId.first.id ?? '',
-                        userId: order.inProcess?.userId.first.id ?? '',
-                        machineNo: order.inProcess?.machineNo ?? '',
+                        firmId: widget.order.inProcess?.firmId ?? '',
+                        userId: widget.order.inProcess?.userId ?? '',
+                        machineNo: widget.order.inProcess?.machineNo ?? '',
                       ),
                     );
                   },

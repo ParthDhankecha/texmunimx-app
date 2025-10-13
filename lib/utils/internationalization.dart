@@ -160,6 +160,13 @@ class AppTranslations extends Translations {
       'remarks': 'Remarks',
       'firm': 'Firm',
       'job_user': 'Job User',
+
+      'order_quantity': 'Order Quantity',
+      'pending_quantity': 'Pending Quantity',
+      'in_process_quantity': 'In Process Quantity',
+      'ready_to_dispatch_quantity': 'Ready to Dispatch Quantity',
+      'completed_quantity': 'Completed Quantity',
+      'delivered_quantity': 'Delivered Quantity',
     },
     'hi_IN': {
       'language_change': 'भाषा बदलें',
@@ -297,6 +304,13 @@ class AppTranslations extends Translations {
       'no': 'नहीं',
       'order_type': 'ऑर्डर प्रकार',
       'job_po': 'जॉब पीओ',
+      'order_quantity': 'ऑर्डर मात्रा',
+      'pending_quantity': 'लंबित मात्रा',
+      'in_process_quantity': 'प्रगति में मात्रा',
+
+      'ready_to_dispatch_quantity': 'डिस्पैच के लिए तैयार मात्रा',
+      'completed_quantity': 'पूर्ण मात्रा',
+      'delivered_quantity': 'वितरित मात्रा',
     },
     'gu_IN': {
       'language_change': 'ભાષા બદલો',
@@ -435,6 +449,12 @@ class AppTranslations extends Translations {
       'no': 'ના',
       'order_type': 'ઓર્ડર પ્રકાર',
       'job_po': 'જોબ પીઓ',
+      'order_quantity': 'ઓર્ડર જથ્થો',
+      'pending_quantity': 'બાકી જથ્થો',
+      'in_process_quantity': 'પ્રગતિમાં જથ્થો',
+      'ready_to_dispatch_quantity': 'રવાના થવા માટે તૈયાર જથ્થો',
+      'completed_quantity': 'પૂર્ણ જથ્થો',
+      'delivered_quantity': 'પહોંચાડાયેલું જથ્થો',
     },
   };
 }

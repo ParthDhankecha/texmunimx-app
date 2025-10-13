@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/common_widgets/app_text_styles.dart';
@@ -83,13 +85,17 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                       items: controller.orderTypes,
                       isRequired: true,
                       onChanged: (value) {
-                        print('Dropdown changed: $value');
+                        log('Dropdown changed: $value');
                         if (value != null) {
                           controller.selectedOrderType.value = value;
                           controller.jobPoList.value = [];
                           controller.generateJobPoDefaultBoxes();
 
-                          print(
+                          if (value == controller.orderTypes[1]) {
+                            controller.generateDefaultBoxes();
+                          }
+
+                          log(
                             'Selected Order Type: ${controller.selectedOrderType.value}',
                           );
                         } else {
@@ -178,7 +184,7 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                           () => Switch(
                             value: controller.isJobPoEnabled.value,
                             onChanged: (value) {
-                              print(
+                              log(
                                 'job type: ${controller.selectedOrderType.value}',
                               );
                               if (controller.selectedOrderType.value.isEmpty) {

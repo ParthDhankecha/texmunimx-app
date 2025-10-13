@@ -4,6 +4,7 @@ class JobPoModel {
   String? user;
   String? firm;
   String? matching;
+  String? mId;
   int? quantity;
   String? remarks;
 
@@ -15,5 +16,6 @@ class JobPoModel {
     this.matching,
     this.quantity,
     this.remarks,
+    this.mId,
   });
 }

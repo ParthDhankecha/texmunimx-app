@@ -16,7 +16,6 @@ import 'package:textile_po/models/sari_matching_model.dart';
 import 'package:textile_po/repository/api_exception.dart';
 import 'package:textile_po/repository/purchase_order_repository.dart';
 import 'package:textile_po/screens/auth_screens/login_screen.dart';
-import 'package:textile_po/utils/date_formate_extension.dart';
 
 class PurchaseOrderController extends GetxController implements GetxService {
   PurchaseOrderController();
@@ -48,6 +47,8 @@ class PurchaseOrderController extends GetxController implements GetxService {
   RxList<FirmId> firmList = RxList();
   RxList<User> userList = RxList();
   RxList<User> jobUserList = RxList();
+  RxList<Design> designList = RxList();
+  RxList<Party> partyList = RxList();
 
   int currentPage = 1;
   int totalPages = 0;
@@ -186,6 +187,13 @@ class PurchaseOrderController extends GetxController implements GetxService {
   updateJobMatching(int index, String value) {
     var model = jobPoList[index];
     model.matching = value;
+    model.mId = sariMatchingList
+        .firstWhere(
+          (element) => element.matching == value,
+          orElse: () => SariMatchingModel(),
+        )
+        .id
+        .toString();
     jobPoList[index] = model;
   }
 
@@ -208,11 +216,39 @@ class PurchaseOrderController extends GetxController implements GetxService {
       totalJobQuantity += element.quantity ?? 0;
     }
     if (totalJobQuantity > mainQuantity) {
-      showSuccessSnackbar('Job PO quantity should not exceed $mainQuantity');
+      showErrorSnackbar('Job PO quantity should not exceed $mainQuantity');
       return false;
     } else {
       return true;
     }
+  }
+
+  //validate machine wise quantity
+  validateSariQuantity() {
+    bool isValid = true;
+    for (var element in jobPoList) {
+      var totalJobQuantity = 0;
+      var mainQuantity = 0;
+      var sari = sariMatchingList.firstWhere(
+        (e) => e.matching == element.matching,
+        orElse: () => SariMatchingModel(),
+      );
+      if (sari.quantity != null) {
+        mainQuantity = sari.quantity!;
+      }
+
+      if (element.matching == sari.matching) {
+        totalJobQuantity += element.quantity ?? 0;
+      }
+
+      if (totalJobQuantity > mainQuantity) {
+        showErrorSnackbar(
+          'Job PO quantity should not exceed $mainQuantity for ${sari.matching}',
+        );
+        isValid = false;
+      }
+    }
+    return isValid;
   }
 
   changePriority(bool value) {
@@ -235,6 +271,57 @@ class PurchaseOrderController extends GetxController implements GetxService {
     selectedParty.value = null;
   }
 
+  fetchOptionsData() async {
+    try {
+      isLoading.value = true;
+      var data = await repository.getOptionsList();
+      firmList.value = data.firms;
+      userList.value = data.users;
+      jobUserList.value = data.jobUsers;
+
+      //fetch design and party list
+
+      designList.value = data.designs;
+
+      partyList.value = data.parties;
+    } on ApiException catch (e) {
+      log('error : $e');
+      switch (e.statusCode) {
+        case 401:
+          Get.offAll(() => LoginScreen());
+          break;
+        default:
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  String firmNameById(String id) {
+    print('firm id: $id');
+    try {
+      return firmList.firstWhere((element) => element.id == id).firmName;
+    } catch (e) {
+      return 'N/A';
+    }
+  }
+
+  String userNameById(String id) {
+    try {
+      return userList.firstWhere((element) => element.id == id).fullname;
+    } catch (e) {
+      return 'N/A';
+    }
+  }
+
+  String getMovedUserById(String id) {
+    try {
+      return userList.firstWhere((element) => element.id == id).fullname;
+    } catch (e) {
+      return 'N/A';
+    }
+  }
+
   fetchInitialData() async {
     try {
       isLoading.value = true;
@@ -247,10 +334,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
         jobPoList.refresh();
       }
 
-      var data = await repository.getOptionsList();
-      firmList.value = data.firms;
-      userList.value = data.users;
-      jobUserList.value = data.jobUsers;
+      fetchOptionsData();
 
       selectDesign(null);
       generateDefaultBoxes();
@@ -281,6 +365,11 @@ class PurchaseOrderController extends GetxController implements GetxService {
     selectedParty.value = null;
     highPriority.value = false;
     selectedDate.value = null;
+    sariMatchingList.value = [];
+    jobPoList.value = [];
+    isJobPoEnabled.value = false;
+    notesCont.text = '';
+    selectedOrderType.value = '';
   }
 
   getTotalPage(int total, int limit) {
@@ -345,7 +434,9 @@ class PurchaseOrderController extends GetxController implements GetxService {
   }) async {
     try {
       isLoading.value = true;
+
       PurchaseOrderListModel purchaseOrderListModel;
+      await fetchOptionsData();
       if (isRefresh) {
         purchaseOrdersList.value = [];
         currentPage = 1;
@@ -440,82 +531,117 @@ class PurchaseOrderController extends GetxController implements GetxService {
       isLoading.value = true;
       Map<String, dynamic> body = {};
 
-      if (selectedOrderType.value == orderTypes[0]) {
-        //garment
-        if (selectedDesign.value == null) {
-          showErrorSnackbar('Please select design');
-          return;
-        }
-        if (selectedParty.value == null) {
-          showErrorSnackbar('Please select party');
-          return;
-        }
-        if (quantityCont.text.trim().isEmpty ||
-            int.tryParse(quantityCont.text.trim()) == null ||
-            (int.tryParse(quantityCont.text.trim()) ?? 0) <= 0) {
-          showErrorSnackbar('Please enter valid quantity');
-          return;
-        }
-        if (rateCont.text.trim().isEmpty ||
-            double.tryParse(rateCont.text.trim()) == null ||
-            (double.tryParse(rateCont.text.trim()) ?? 0) <= 0) {
-          showErrorSnackbar('Please enter valid rate');
-          return;
-        }
-
-        if (isJobPoEnabled.value) {
-          if (!validateGarmetquantity()) {
-            return;
-          }
-        }
-
-        body = {
-          "quantity": int.tryParse(quantityCont.text.trim()) ?? 0,
-          "rate": double.tryParse(rateCont.text.trim()) ?? 0,
-          if (pannaCont.text.trim().isNotEmpty)
-            "panna": double.tryParse(pannaCont.text.trim()) ?? 0,
-          if (partyPoCont.text.trim().isNotEmpty)
-            "partyPoNumber": partyPoCont.text.trim(),
-          "process": processCont.text.trim().isNotEmpty
-              ? processCont.text.trim()
-              : 'N/A',
-
-          "designId": selectedDesign.value!.id,
-          "partyId": selectedParty.value!.id,
-
-          if (selectedDate.value != null)
-            "deliveryDate": selectedDate.value.toString(),
-
-          "isHighPriority": highPriority.value,
-          if (notesCont.text.trim().isNotEmpty) "note": notesCont.text.trim(),
-
-          "orderType": 'garment',
-
-          if (isJobPoEnabled.value) "isJobPo": true,
-
-          if (isJobPoEnabled.value)
-            "jobUser": jobPoList.map((e) {
-              if (e.user == null || e.user!.isEmpty) {
-                throw 'Please select user for all Job PO';
-              }
-              if (e.firm == null || e.firm!.isEmpty) {
-                throw 'Please select firm for all Job PO';
-              }
-              if (e.quantity == null || e.quantity == 0) {
-                throw 'Please enter quantity for all Job PO';
-              }
-
-              return {
-                "quantity": e.quantity,
-                "remarks": e.remarks,
-                "userId": e.user,
-                "firmId": e.firm,
-              };
-            }).toList(),
-        };
-      } else if (selectedOrderType.value == orderTypes[1]) {
-        //sari
+      // if (selectedOrderType.value == orderTypes[0]) {
+      //garment
+      if (selectedDesign.value == null) {
+        showErrorSnackbar('Please select design');
+        return;
       }
+      if (selectedParty.value == null) {
+        showErrorSnackbar('Please select party');
+        return;
+      }
+
+      if ((quantityCont.text.trim().isEmpty ||
+              int.tryParse(quantityCont.text.trim()) == null ||
+              (int.tryParse(quantityCont.text.trim()) ?? 0) <= 0) &&
+          selectedOrderType.value == orderTypes[0]) {
+        showErrorSnackbar('Please enter valid quantity');
+        return;
+      }
+
+      if ((rateCont.text.trim().isEmpty ||
+              double.tryParse(rateCont.text.trim()) == null ||
+              (double.tryParse(rateCont.text.trim()) ?? 0) <= 0) &&
+          selectedOrderType.value == orderTypes[0] &&
+          selectedOrderType.value == orderTypes[0]) {
+        showErrorSnackbar('Please enter valid rate');
+        return;
+      }
+
+      if (isJobPoEnabled.value && selectedOrderType.value == orderTypes[0]) {
+        // germent
+        if (!validateGarmetquantity()) {
+          return;
+        }
+      } else if (isJobPoEnabled.value &&
+          selectedOrderType.value == orderTypes[1]) {
+        if (!validateSariQuantity()) {
+          return;
+        }
+      }
+
+      body = {
+        if (selectedOrderType.value == orderTypes[0])
+          "quantity": int.tryParse(quantityCont.text.trim()) ?? 0,
+
+        if (selectedOrderType.value == orderTypes[0])
+          "rate": double.tryParse(rateCont.text.trim()) ?? 0,
+
+        if (pannaCont.text.trim().isNotEmpty)
+          "panna": double.tryParse(pannaCont.text.trim()) ?? 0,
+
+        if (partyPoCont.text.trim().isNotEmpty)
+          "partyPoNumber": partyPoCont.text.trim(),
+
+        "process": processCont.text.trim().isNotEmpty
+            ? processCont.text.trim()
+            : 'N/A',
+
+        "designId": selectedDesign.value!.id,
+        "partyId": selectedParty.value!.id,
+
+        if (selectedDate.value != null)
+          "deliveryDate": selectedDate.value.toString(),
+
+        "isHighPriority": highPriority.value,
+        if (notesCont.text.trim().isNotEmpty) "note": notesCont.text.trim(),
+
+        "orderType": selectedOrderType.value.toLowerCase(),
+
+        if (isJobPoEnabled.value) "isJobPo": true,
+
+        if (selectedOrderType.value == orderTypes[1])
+          //for sari section
+          "matchings": sariMatchingList.map((e) {
+            return {
+              "mid": e.id,
+              "mLabel": e.matching,
+              "rate": e.rate,
+              "quantity": e.quantity ?? 0,
+              "colors": [
+                e.color1 ?? '',
+                e.color2 ?? '',
+                e.color3 ?? '',
+                e.color4 ?? '',
+              ],
+            };
+          }).toList(),
+
+        if (isJobPoEnabled.value)
+          "jobUser": jobPoList.map((e) {
+            if (e.user == null || e.user!.isEmpty) {
+              throw 'Please select user for all Job PO';
+            }
+            if (e.firm == null || e.firm!.isEmpty) {
+              throw 'Please select firm for all Job PO';
+            }
+            if (e.quantity == null || e.quantity == 0) {
+              throw 'Please enter quantity for all Job PO';
+            }
+
+            return {
+              "quantity": e.quantity,
+              "remarks": e.remarks,
+              "userId": e.user,
+              "firmId": e.firm,
+              if (selectedOrderType.value == orderTypes[1]) "matchingNo": e.mId,
+            };
+          }).toList(),
+      };
+      // } else if (selectedOrderType.value == orderTypes[1]) {
+      //sari
+      //  }
 
       // body = {
       //   "quantity": 100,

@@ -48,7 +48,7 @@ class PurchaseOrderListModel {
         list: List<PurchaseOrderModel>.from(
           json["list"].map((x) => PurchaseOrderModel.fromMap(x)),
         ),
-        totalCount: json["totalCount"],
+        totalCount: json["totalCount"] ?? 0,
       );
 
   Map<String, dynamic> toMap() => {
@@ -63,8 +63,8 @@ class PurchaseOrderModel {
   String partyPoNumber;
   String poNumber;
   String process;
-  List<DesignId> designId;
-  List<PartyId> partyId;
+  String designId;
+  String partyId;
   int quantity;
   double rate;
   int pending;
@@ -84,6 +84,11 @@ class PurchaseOrderModel {
   String workspaceId;
   DateTime createdAt;
   DateTime updatedAt;
+
+  String orderType;
+  bool isJobPo;
+  dynamic jobUser;
+  Matching? matching;
 
   PurchaseOrderModel({
     required this.id,
@@ -107,6 +112,11 @@ class PurchaseOrderModel {
     this.inProcess,
     this.readyToDispatch,
     this.delivered,
+
+    this.orderType = '',
+    this.isJobPo = false,
+    this.jobUser,
+    this.matching,
   });
 
   factory PurchaseOrderModel.fromMap(Map<String, dynamic> json) =>
@@ -116,15 +126,11 @@ class PurchaseOrderModel {
         partyPoNumber: json["partyPoNumber"],
         poNumber: json["poNumber"],
         process: json["process"],
-        designId: List<DesignId>.from(
-          json["designId"].map((x) => DesignId.fromMap(x)),
-        ),
-        partyId: List<PartyId>.from(
-          json["partyId"].map((x) => PartyId.fromMap(x)),
-        ),
-        quantity: json["quantity"],
-        rate: double.parse(json["rate"].toString()),
-        pending: json["pending"],
+        designId: json["designId"],
+        partyId: json["partyId"],
+        quantity: json["quantity"] ?? 0,
+        rate: double.parse(json["rate"] ?? '0'),
+        pending: json["pending"] ?? 0,
         isCompleted: json["isCompleted"],
         completedAt: json["completedAt"],
         deliveryDate: json["deliveryDate"] == null
@@ -145,6 +151,13 @@ class PurchaseOrderModel {
         delivered: json["delivered"] == null
             ? null
             : Delivered.fromMap(json["delivered"]),
+
+        jobUser: json["jobUser"],
+        orderType: json["orderType"] ?? '',
+        isJobPo: json["isJobPo"] ?? false,
+        matching: json["matching"] == null
+            ? null
+            : Matching.fromMap(json["matching"]),
       );
 
   Map<String, dynamic> toMap() => {
@@ -153,8 +166,8 @@ class PurchaseOrderModel {
     "partyPoNumber": partyPoNumber,
     "poNumber": poNumber,
     "process": process,
-    "designId": List<dynamic>.from(designId.map((x) => x.toMap())),
-    "partyId": List<dynamic>.from(partyId.map((x) => x.toMap())),
+    "designId": designId,
+    "partyId": partyId,
     "quantity": quantity,
     "rate": rate,
     "pending": pending,
@@ -166,6 +179,13 @@ class PurchaseOrderModel {
     "workspaceId": workspaceId,
     "createdAt": createdAt.toIso8601String(),
     "updatedAt": updatedAt.toIso8601String(),
+    "inProcess": inProcess?.toMap(),
+    "readyToDispatch": readyToDispatch?.toMap(),
+    "delivered": delivered?.toMap(),
+    "orderType": orderType,
+    "isJobPo": isJobPo,
+    "jobUser": jobUser,
+    "matching": matching?.toMap(),
   };
 }
 
@@ -198,6 +218,78 @@ class DesignId {
     "designNumber": designNumber,
     "designImage": designImage,
     "workspaceId": workspaceId,
+  };
+}
+
+class JobUserClass {
+  String userId;
+  String firmId;
+  int quantity;
+  int pending;
+  String remarks;
+  int matchingNo;
+  String id;
+
+  JobUserClass({
+    required this.userId,
+    required this.firmId,
+    required this.quantity,
+    required this.pending,
+    required this.remarks,
+    required this.matchingNo,
+    required this.id,
+  });
+
+  factory JobUserClass.fromMap(Map<String, dynamic> json) => JobUserClass(
+    userId: json["userId"],
+    firmId: json["firmId"],
+    quantity: json["quantity"],
+    pending: json["pending"],
+    remarks: json["remarks"],
+    matchingNo: json["matchingNo"],
+    id: json["_id"],
+  );
+
+  Map<String, dynamic> toMap() => {
+    "userId": userId,
+    "firmId": firmId,
+    "quantity": quantity,
+    "pending": pending,
+    "remarks": remarks,
+    "matchingNo": matchingNo,
+    "_id": id,
+  };
+}
+
+class Matching {
+  String id;
+  int mid;
+  String mLabel;
+  int quantity;
+  int pending;
+
+  Matching({
+    required this.id,
+    required this.mid,
+    required this.mLabel,
+    required this.quantity,
+    required this.pending,
+  });
+
+  factory Matching.fromMap(Map<String, dynamic> json) => Matching(
+    id: json["_id"],
+    mid: json["mid"],
+    mLabel: json["mLabel"],
+    quantity: json["quantity"],
+    pending: json["pending"],
+  );
+
+  Map<String, dynamic> toMap() => {
+    "_id": id,
+    "mid": mid,
+    "mLabel": mLabel,
+    "quantity": quantity,
+    "pending": pending,
   };
 }
 

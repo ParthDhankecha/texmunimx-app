@@ -4,6 +4,7 @@ import 'package:textile_po/controllers/purchase_order_controller.dart';
 import 'package:textile_po/models/in_process_model.dart';
 import 'package:textile_po/models/order_status_enum.dart';
 import 'package:textile_po/models/purchase_order_options_response.dart';
+import 'package:textile_po/utils/app_colors.dart';
 
 class UpdateStatusBottomSheet extends StatefulWidget {
   final int orderQuantity;
@@ -135,13 +136,29 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                 Row(
                   children: [
                     Text(
-                      'Order Quantity: ${widget.orderQuantity}',
+                      'Order Quantity: ',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const Spacer(),
                     Text(
-                      '${widget.quantityTitle} Quantity: ${widget.pendingQuantity}',
+                      '${widget.orderQuantity}',
                       style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      '${widget.quantityTitle} Quantity:',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const Spacer(),
+                    Text(
+                      '${widget.pendingQuantity}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.mainColor,
+                      ),
                     ),
                   ],
                 ),

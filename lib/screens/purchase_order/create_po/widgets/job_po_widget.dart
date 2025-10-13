@@ -1,12 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/common_widgets/custom_btn.dart';
 import 'package:textile_po/controllers/purchase_order_controller.dart';
 import 'package:textile_po/models/job_po_model.dart';
-import 'package:textile_po/models/sari_matching_model.dart';
 import 'package:textile_po/screens/purchase_order/create_po/widgets/job_po_card.dart';
 import 'package:textile_po/screens/purchase_order/create_po/widgets/job_po_garment_card.dart';
-import 'package:textile_po/screens/purchase_order/create_po/widgets/sari_matching_card.dart';
 
 class JobPoWidget extends StatefulWidget {
   const JobPoWidget({super.key});
@@ -44,7 +44,7 @@ class _JobPoWidgetState extends State<JobPoWidget> {
                   },
 
                   onQuantityChange: (value) {
-                    print('Quantity changed: $value');
+                    log('Quantity changed: $value');
                     //  controller.updateJobQuantity(index, value);
                     model.quantity = int.tryParse(value) ?? 0;
                   },

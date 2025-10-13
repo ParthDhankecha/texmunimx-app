@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/controllers/purchase_order_controller.dart';
+import 'package:textile_po/models/purchase_order_options_response.dart';
 import 'package:textile_po/screens/purchase_order/widgets/delivered_card.dart';
 import 'package:textile_po/screens/purchase_order/widgets/in_process_card.dart';
 import 'package:textile_po/screens/purchase_order/widgets/purchase_order_card.dart';
@@ -61,8 +62,32 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
             () => ListView.builder(
               itemCount: controller.purchaseOrdersList.length,
               itemBuilder: (context, index) {
+                final order = controller.purchaseOrdersList[index];
+
+                final design = controller.designList.firstWhere(
+                  (d) => d.id == order.designId,
+                  orElse: () => Design(
+                    id: '',
+                    designName: 'Unknown Design',
+                    designImage: '',
+                    designNumber: '',
+                  ),
+                );
+
+                final party = controller.partyList.firstWhere(
+                  (p) => p.id == order.partyId,
+                  orElse: () => Party(
+                    id: '',
+                    partyName: 'Unknown Party',
+
+                    partyNumber: '',
+                    mobile: '',
+                  ),
+                );
                 return PurchaseOrderCard(
-                  order: controller.purchaseOrdersList[index],
+                  order: order,
+                  design: design,
+                  party: party,
                 );
               },
             ),
@@ -73,7 +98,33 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
             () => ListView.builder(
               itemCount: controller.inProcessList.length,
               itemBuilder: (context, index) {
-                return InProcessCard(order: controller.inProcessList[index]);
+                final order = controller.purchaseOrdersList[index];
+
+                final design = controller.designList.firstWhere(
+                  (d) => d.id == order.designId,
+                  orElse: () => Design(
+                    id: '',
+                    designName: 'Unknown Design',
+                    designImage: '',
+                    designNumber: '',
+                  ),
+                );
+
+                final party = controller.partyList.firstWhere(
+                  (p) => p.id == order.partyId,
+                  orElse: () => Party(
+                    id: '',
+                    partyName: 'Unknown Party',
+
+                    partyNumber: '',
+                    mobile: '',
+                  ),
+                );
+                return InProcessCard(
+                  order: controller.inProcessList[index],
+                  design: design,
+                  party: party,
+                );
               },
             ),
           ),
@@ -85,8 +136,35 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
                 : ListView.builder(
                     itemCount: controller.readyToDispatchList.length,
                     itemBuilder: (context, index) {
+                      final order = controller.readyToDispatchList[index];
+
+                      final design = controller.designList.firstWhere(
+                        (d) => d.id == order.designId,
+                        orElse: () => Design(
+                          id: '',
+                          designName: 'Unknown Design',
+                          designImage: '',
+                          designNumber: '',
+                        ),
+                      );
+
+                      final party = controller.partyList.firstWhere(
+                        (p) => p.id == order.partyId,
+                        orElse: () => Party(
+                          id: '',
+                          partyName: 'Unknown Party',
+
+                          partyNumber: '',
+                          mobile: '',
+                        ),
+                      );
+                      print(
+                        '${order.readyToDispatch?.quantity} readyToDispatchList',
+                      );
                       return ReadyToDispatchCard(
-                        order: controller.readyToDispatchList[index],
+                        order: order,
+                        design: design,
+                        party: party,
                       );
                     },
                   ),
@@ -94,12 +172,40 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
 
           //Completed
           Obx(
-            () => ListView.builder(
-              itemCount: controller.deliveredList.length,
-              itemBuilder: (context, index) {
-                return DeliveredCard(order: controller.deliveredList[index]);
-              },
-            ),
+            () => controller.deliveredList.isEmpty
+                ? Center(child: Text('No records found!'))
+                : ListView.builder(
+                    itemCount: controller.deliveredList.length,
+                    itemBuilder: (context, index) {
+                      final order = controller.deliveredList[index];
+
+                      final design = controller.designList.firstWhere(
+                        (d) => d.id == order.designId,
+                        orElse: () => Design(
+                          id: '',
+                          designName: 'Unknown Design',
+                          designImage: '',
+                          designNumber: '',
+                        ),
+                      );
+
+                      final party = controller.partyList.firstWhere(
+                        (p) => p.id == order.partyId,
+                        orElse: () => Party(
+                          id: '',
+                          partyName: 'Unknown Party',
+
+                          partyNumber: '',
+                          mobile: '',
+                        ),
+                      );
+                      return DeliveredCard(
+                        order: controller.deliveredList[index],
+                        design: design,
+                        party: party,
+                      );
+                    },
+                  ),
           ),
         ],
       ),

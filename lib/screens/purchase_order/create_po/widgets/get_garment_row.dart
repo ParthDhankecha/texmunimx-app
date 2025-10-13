@@ -37,12 +37,16 @@ class GetGarmentRow extends StatelessWidget {
               hintText: 'enter_total_quantity'.tr,
               textInputType: TextInputType.number,
               onValidator: (value) {
-                if (value!.isEmpty) {
-                  return 'Field is Required';
-                }
-                int i = int.tryParse(value) ?? 0;
-                if (i <= 0) {
-                  return 'Quantity Must be grated then 0';
+                //validation only for garment
+                if (controller.selectedOrderType.value ==
+                    controller.orderTypes[0]) {
+                  if (value!.isEmpty) {
+                    return 'Field is Required';
+                  }
+                  int i = int.tryParse(value) ?? 0;
+                  if (i <= 0) {
+                    return 'Quantity Must be grated then 0';
+                  }
                 }
 
                 return null;
@@ -77,8 +81,11 @@ class GetGarmentRow extends StatelessWidget {
           hintText: 'enter_rate_per_unit'.tr,
           textInputType: TextInputType.number,
           onValidator: (value) {
-            if (value!.isEmpty) {
-              return 'Field is Required';
+            if (controller.selectedOrderType.value ==
+                controller.orderTypes[0]) {
+              if (value!.isEmpty) {
+                return 'Field is Required';
+              }
             }
 
             return null;
