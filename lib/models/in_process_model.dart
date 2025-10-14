@@ -35,6 +35,7 @@ class Delivered {
 }
 
 class ReadyToDispatch {
+  String id;
   int quantity;
   String? firmId;
   String? userId;
@@ -43,6 +44,7 @@ class ReadyToDispatch {
   String remarks;
 
   ReadyToDispatch({
+    required this.id,
     required this.quantity,
     required this.firmId,
     required this.userId,
@@ -52,6 +54,7 @@ class ReadyToDispatch {
   });
 
   factory ReadyToDispatch.fromMap(Map<String, dynamic> json) => ReadyToDispatch(
+    id: json["_id"] ?? '',
     quantity: json["quantity"],
     firmId: json["firmId"] ?? '',
     userId: json["userId"] ?? '',
@@ -71,6 +74,7 @@ class ReadyToDispatch {
 }
 
 class InProcess {
+  String id;
   int quantity;
   String firmId;
   String userId;
@@ -79,6 +83,7 @@ class InProcess {
   String remarks;
 
   InProcess({
+    required this.id,
     required this.quantity,
     required this.firmId,
     required this.userId,
@@ -88,6 +93,7 @@ class InProcess {
   });
 
   factory InProcess.fromMap(Map<String, dynamic> json) => InProcess(
+    id: json["_id"] ?? '',
     quantity: json["quantity"],
     firmId: json["firmId"] ?? '',
     userId: json["userId"] ?? '',

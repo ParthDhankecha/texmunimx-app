@@ -19,20 +19,16 @@ class ThemeController extends GetxController {
     // 2. Optional: Set primary color directly (for backward compatibility, but ColorScheme is preferred)
     primaryColor: AppColors.mainColor,
 
-    // 3. Optional: Customize specific widget themes (e.g., TextButton style for dialogs)
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(
-        foregroundColor: AppColors
-            .mainColor, // Sets the color for OK/CANCEL text in DatePicker/Dialogs
-      ),
+      style: TextButton.styleFrom(foregroundColor: AppColors.mainColor),
     ),
 
-    // 5. Optional: Customize Floating Action Button (FAB)
+    primaryTextTheme: GoogleFonts.poppinsTextTheme(),
+
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: AppColors.mainColor,
     ),
 
-    // Use Material 3
     useMaterial3: true,
 
     popupMenuTheme: PopupMenuThemeData(
@@ -47,6 +43,7 @@ class ThemeController extends GetxController {
     ),
 
     textTheme: GoogleFonts.poppinsTextTheme(),
+
     scaffoldBackgroundColor: AppColors.appBg,
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.appBg,

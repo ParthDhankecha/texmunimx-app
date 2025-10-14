@@ -152,7 +152,11 @@ class PurchaseOrderModel {
             ? null
             : Delivered.fromMap(json["delivered"]),
 
-        jobUser: json["jobUser"],
+        jobUser: json['jobUser'] == null
+            ? null
+            : json["jobUser"] is List
+            ? null
+            : JobUserClass.fromMap(json["jobUser"]),
         orderType: json["orderType"] ?? '',
         isJobPo: json["isJobPo"] ?? false,
         matching: json["matching"] == null
@@ -267,6 +271,7 @@ class Matching {
   String mLabel;
   int quantity;
   int pending;
+  double? rate;
 
   Matching({
     required this.id,
@@ -274,6 +279,7 @@ class Matching {
     required this.mLabel,
     required this.quantity,
     required this.pending,
+    this.rate,
   });
 
   factory Matching.fromMap(Map<String, dynamic> json) => Matching(
@@ -282,6 +288,7 @@ class Matching {
     mLabel: json["mLabel"],
     quantity: json["quantity"],
     pending: json["pending"],
+    rate: json["rate"] != null ? double.parse(json["rate"].toString()) : null,
   );
 
   Map<String, dynamic> toMap() => {

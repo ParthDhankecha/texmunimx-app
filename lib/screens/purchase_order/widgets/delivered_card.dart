@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_utils/get_utils.dart';
 import 'package:textile_po/common_widgets/my_text_field.dart';
 import 'package:textile_po/controllers/purchase_order_controller.dart';
 import 'package:textile_po/models/purchase_order_list_response.dart';

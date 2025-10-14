@@ -7,6 +7,7 @@ class JobPoModel {
   String? mId;
   int? quantity;
   String? remarks;
+  String? jobId;
 
   JobPoModel({
     this.id,
@@ -17,5 +18,6 @@ class JobPoModel {
     this.quantity,
     this.remarks,
     this.mId,
+    this.jobId,
   });
 }

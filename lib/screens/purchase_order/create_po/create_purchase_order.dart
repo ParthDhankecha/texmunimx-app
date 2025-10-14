@@ -11,6 +11,7 @@ import 'package:textile_po/common_widgets/input_field.dart';
 import 'package:textile_po/common_widgets/red_mark.dart';
 import 'package:textile_po/common_widgets/show_error_snackbar.dart';
 import 'package:textile_po/controllers/purchase_order_controller.dart';
+import 'package:textile_po/models/purchase_order_list_response.dart';
 import 'package:textile_po/screens/purchase_order/create_po/widgets/get_garment_row.dart';
 import 'package:textile_po/screens/purchase_order/create_po/widgets/job_po_widget.dart';
 import 'package:textile_po/screens/purchase_order/create_po/widgets/sari_widget.dart';
@@ -19,7 +20,9 @@ import 'package:textile_po/screens/purchase_order/widgets/browse_party.dart';
 import 'package:textile_po/utils/app_colors.dart';
 
 class CreatePurchaseOrder extends StatefulWidget {
-  const CreatePurchaseOrder({super.key});
+  const CreatePurchaseOrder({super.key, this.po});
+
+  final PurchaseOrderModel? po;
 
   @override
   State<CreatePurchaseOrder> createState() => _CreatePurchaseOrderState();
@@ -29,11 +32,17 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
   PurchaseOrderController controller = Get.find<PurchaseOrderController>();
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  PurchaseOrderModel? get po => widget.po;
 
   @override
   void initState() {
     super.initState();
     controller.fetchInitialData();
+    if (po != null) {
+      controller.fetchDataWithId(po!.id);
+    } else {
+      controller.resetInputs();
+    }
   }
 
   @override
@@ -80,30 +89,36 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                     _partyPORow(),
                     SizedBox(height: 10),
 
-                    CustomDropdown<String>(
-                      title: 'order_type'.tr,
-                      items: controller.orderTypes,
-                      isRequired: true,
-                      onChanged: (value) {
-                        log('Dropdown changed: $value');
-                        if (value != null) {
-                          controller.selectedOrderType.value = value;
-                          controller.jobPoList.value = [];
-                          controller.generateJobPoDefaultBoxes();
+                    Obx(
+                      () => CustomDropdown<String>(
+                        title: 'order_type'.tr,
+                        items: controller.orderTypes,
+                        selectedValue: controller.selectedOrderType.value == ''
+                            ? null
+                            : controller.selectedOrderType.value,
+                        isRequired: true,
+                        onChanged: (value) {
+                          log('Dropdown changed: $value');
+                          if (value != null) {
+                            controller.selectedOrderType.value = value;
+                            controller.jobPoList.value = [];
+                            controller.generateJobPoDefaultBoxes();
 
-                          if (value == controller.orderTypes[1]) {
-                            controller.generateDefaultBoxes();
+                            if (value == controller.orderTypes[1]) {
+                              controller.generateDefaultBoxes();
+                            }
+
+                            log(
+                              'Selected Order Type: ${controller.selectedOrderType.value}',
+                            );
+                          } else {
+                            controller.selectedOrderType.value = '';
                           }
-
-                          log(
-                            'Selected Order Type: ${controller.selectedOrderType.value}',
-                          );
-                        } else {
-                          controller.selectedOrderType.value = '';
-                        }
-                      },
-                      itemLabelBuilder: (item) => item,
+                        },
+                        itemLabelBuilder: (item) => item,
+                      ),
                     ),
+
                     SizedBox(height: 10),
                     //garment section
                     Obx(
@@ -220,6 +235,10 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                         }
 
                         if (formKey.currentState!.validate()) {
+                          if (widget.po != null) {
+                            controller.updatePurchaseOrder(widget.po!.id);
+                            return;
+                          }
                           controller.createPurchaseOrder();
                         }
                       },

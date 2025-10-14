@@ -15,6 +15,22 @@ class StatusTagRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
+        if (order.isJobPo) ...[
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[500],
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              child: MyText(
+                'job_po'.tr,
+                style: const TextStyle(color: Colors.white, fontSize: 12),
+              ),
+            ),
+          ),
+          SizedBox(width: 8),
+        ],
         if (order.isHighPriority ?? false) ...[
           Container(
             decoration: BoxDecoration(
@@ -61,20 +77,20 @@ class StatusTagRow extends StatelessWidget {
           ),
         ),
         SizedBox(width: 8),
-        Container(
-          decoration: BoxDecoration(
-            color: type == 'delivered' ? Colors.grey : Colors.red,
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            child: MyText(
-              type,
-              style: const TextStyle(color: Colors.white, fontSize: 12),
-            ),
-          ),
-        ),
-        SizedBox(width: 8),
+        // Container(
+        //   decoration: BoxDecoration(
+        //     color: type == 'delivered' ? Colors.grey : Colors.red,
+        //     borderRadius: BorderRadius.circular(6),
+        //   ),
+        //   child: Padding(
+        //     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        //     child: MyText(
+        //       type,
+        //       style: const TextStyle(color: Colors.white, fontSize: 12),
+        //     ),
+        //   ),
+        // ),
+        // SizedBox(width: 8),
 
         // Status tag
       ],

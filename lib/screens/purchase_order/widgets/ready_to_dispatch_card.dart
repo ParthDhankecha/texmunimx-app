@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/common_widgets/my_text_field.dart';
@@ -32,6 +34,7 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
 
   @override
   Widget build(BuildContext context) {
+    log('read yto siapatch id - ${widget.order.readyToDispatch?.id}');
     return Card(
       elevation: 4.0,
       margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
@@ -218,11 +221,12 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
                       isScrollControlled: true,
 
                       builder: (context) => UpdateStatusBottomSheet(
+                        po: widget.order,
                         orderQuantity: widget.order.matching?.quantity ?? 0,
                         pendingQuantity:
                             widget.order.readyToDispatch?.quantity ?? 0,
-                        moveTo: OrderStatus.pending,
-                        currentStatus: OrderStatus.inProcess,
+                        moveTo: OrderStatus.inProcess,
+                        currentStatus: OrderStatus.readyToDispatch,
                         purchaseId: widget.order.id,
                         quantityTitle: 'Ready To Dispatch'.tr,
                         firmId: widget.order.readyToDispatch?.firmId ?? '',
@@ -236,15 +240,20 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
                 ),
                 TextButton(
                   onPressed: () {
+                    log(
+                      'ready to dispatch id - ${widget.order.readyToDispatch?.id}',
+                    );
+
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
                       builder: (context) => UpdateStatusBottomSheet(
+                        po: widget.order,
                         orderQuantity: widget.order.matching?.quantity ?? 0,
                         pendingQuantity:
                             widget.order.readyToDispatch?.quantity ?? 0,
                         moveTo: OrderStatus.delivered,
-                        currentStatus: OrderStatus.inProcess,
+                        currentStatus: OrderStatus.readyToDispatch,
                         purchaseId: widget.order.id,
                         quantityTitle: 'Ready To Dispatch'.tr,
                         firmId: widget.order.readyToDispatch?.firmId ?? '',

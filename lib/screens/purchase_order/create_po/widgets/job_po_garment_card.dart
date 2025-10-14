@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/common_widgets/app_text_styles.dart';
@@ -41,6 +43,7 @@ class JobPoGarmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log('Job PO Model: ${model.user}');
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Card(
@@ -71,6 +74,13 @@ class JobPoGarmentCard extends StatelessWidget {
                       title: 'job_user'.tr,
                       items: users,
                       isRequired: true,
+                      selectedValue: model.user == '' || model.user == null
+                          ? null
+                          : users.firstWhere(
+                              (element) => element.id.toString() == model.user,
+                              orElse: () =>
+                                  User(id: '', fullname: 'Select User'),
+                            ),
                       onChanged: (value) {
                         if (value != null) {
                           userChange?.call(value.id.toString());
@@ -87,6 +97,14 @@ class JobPoGarmentCard extends StatelessWidget {
                           title: 'firm'.tr,
                           items: firms,
                           isRequired: true,
+                          selectedValue: model.firm == '' || model.firm == null
+                              ? null
+                              : firms.firstWhere(
+                                  (element) =>
+                                      element.id.toString() == model.firm,
+                                  orElse: () =>
+                                      FirmId(id: '', firmName: 'Select Firm'),
+                                ),
                           onChanged: (value) {
                             if (value != null) {
                               onFirmChange?.call(value.id.toString());

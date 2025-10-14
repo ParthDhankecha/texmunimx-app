@@ -215,6 +215,7 @@ class _InProcessCardState extends State<InProcessCard> {
                       isScrollControlled: true,
 
                       builder: (context) => UpdateStatusBottomSheet(
+                        po: widget.order,
                         orderQuantity: widget.order.quantity,
                         pendingQuantity: widget.order.inProcess?.quantity ?? 0,
                         moveTo: OrderStatus.pending,
@@ -235,6 +236,7 @@ class _InProcessCardState extends State<InProcessCard> {
                       context: context,
                       isScrollControlled: true,
                       builder: (context) => UpdateStatusBottomSheet(
+                        po: widget.order,
                         orderQuantity: widget.order.quantity,
                         pendingQuantity: widget.order.inProcess?.quantity ?? 0,
                         moveTo: OrderStatus.readyToDispatch,
@@ -254,25 +256,6 @@ class _InProcessCardState extends State<InProcessCard> {
           ],
         ),
       ),
-    );
-  }
-
-  // Helper method to build progress indicators
-  Widget _buildProgressItem(String title, String quantity) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-
-      children: [
-        Text(
-          title.tr,
-          style: const TextStyle(fontSize: 12, color: Colors.black),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          quantity.toString(),
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-      ],
     );
   }
 }

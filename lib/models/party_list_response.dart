@@ -62,9 +62,9 @@ class PartyModel {
   String? address;
   String? contactDetails;
   String? brokerName;
-  CreatedBy createdBy;
-  DateTime createdAt;
-  DateTime updatedAt;
+  CreatedBy? createdBy;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   PartyModel({
     required this.mobile,
@@ -76,9 +76,9 @@ class PartyModel {
     required this.address,
     required this.contactDetails,
     required this.brokerName,
-    required this.createdBy,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdBy,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory PartyModel.fromMap(Map<String, dynamic> json) => PartyModel(
@@ -106,9 +106,6 @@ class PartyModel {
     "address": address,
     "contactDetails": contactDetails,
     "brokerName": brokerName,
-    "createdBy": createdBy.toMap(),
-    "createdAt": createdAt.toIso8601String(),
-    "updatedAt": updatedAt.toIso8601String(),
   };
 }
 

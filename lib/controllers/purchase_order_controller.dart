@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:textile_po/common_widgets/show_error_snackbar.dart';
 import 'package:textile_po/common_widgets/show_success_snackbar.dart';
 import 'package:textile_po/models/design_list_response.dart';
+import 'package:textile_po/models/get_po_response.dart';
 import 'package:textile_po/models/in_process_model.dart';
 import 'package:textile_po/models/job_po_model.dart';
 import 'package:textile_po/models/order_status_enum.dart';
@@ -16,6 +17,7 @@ import 'package:textile_po/models/sari_matching_model.dart';
 import 'package:textile_po/repository/api_exception.dart';
 import 'package:textile_po/repository/purchase_order_repository.dart';
 import 'package:textile_po/screens/auth_screens/login_screen.dart';
+import 'package:textile_po/utils/date_formate_extension.dart';
 
 class PurchaseOrderController extends GetxController implements GetxService {
   PurchaseOrderController();
@@ -58,7 +60,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
   RxString err = ''.obs;
 
   //orer type
-  List<String> orderTypes = ['Germent', 'Sari'];
+  List<String> orderTypes = ['Garment', 'Sari'];
   RxString selectedOrderType = ''.obs;
 
   RxList<SariMatchingModel> sariMatchingList = RxList();
@@ -142,6 +144,18 @@ class PurchaseOrderController extends GetxController implements GetxService {
           'Matching ${(sariMatchingList.isNotEmpty ? (sariMatchingList.last.id ?? 0) + 1 : 1)}',
     );
     sariMatchingList.add(model);
+    jobPoList.refresh();
+  }
+
+  addSariMatchingByModel(SariMatchingModel model) {
+    sariMatchingList.add(model);
+    sariMatchingList.refresh();
+    jobPoList.refresh();
+  }
+
+  addSariMatchingByList(List<SariMatchingModel> list) {
+    sariMatchingList.addAll(list);
+    sariMatchingList.refresh();
     jobPoList.refresh();
   }
 
@@ -298,7 +312,6 @@ class PurchaseOrderController extends GetxController implements GetxService {
   }
 
   String firmNameById(String id) {
-    print('firm id: $id');
     try {
       return firmList.firstWhere((element) => element.id == id).firmName;
     } catch (e) {
@@ -337,7 +350,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
       fetchOptionsData();
 
       selectDesign(null);
-      generateDefaultBoxes();
+      //generateDefaultBoxes();
       //generateJobPoDefaultBoxes();
       selectedOrderType.value = '';
       err.value = '';
@@ -351,6 +364,168 @@ class PurchaseOrderController extends GetxController implements GetxService {
       }
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  fetchDataWithId(String id) async {
+    try {
+      isLoading.value = true;
+      var data = await repository.getPurchaseOrderByID(id: id);
+      setEditData(data);
+    } on ApiException catch (e) {
+      log('error : $e');
+      switch (e.statusCode) {
+        case 401:
+          Get.offAll(() => LoginScreen());
+          break;
+        default:
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  setEditData(POModel po) async {
+    Design model = designList.firstWhere(
+      (element) => element.id == po.designId,
+      orElse: () =>
+          Design(id: '', designNumber: 'N/A', designName: '', designImage: ''),
+    );
+    selectedDesign.value = DesignModel(
+      id: model.id,
+      designName: model.designName,
+      designNumber: model.designNumber,
+      designImage: model.designImage,
+    );
+
+    Party partyModel = partyList.firstWhere(
+      (element) => element.id == po.partyId,
+      orElse: () =>
+          Party(id: '', partyName: 'N/A', partyNumber: '', mobile: ''),
+    );
+    selectedParty.value = PartyModel(
+      id: partyModel.id,
+      partyName: partyModel.partyName,
+      partyNumber: partyModel.partyNumber,
+      mobile: partyModel.mobile,
+      email: '',
+      gstNo: '',
+      address: '',
+      contactDetails: '',
+      brokerName: '',
+    );
+
+    pannaCont.text = po.panna.toString();
+    processCont.text = po.process;
+    partyPoCont.text = po.partyPoNumber;
+
+    selectedOrderType.value = po.orderType.isNotEmpty
+        ? po.orderType.capitalizeFirst!
+        : '';
+
+    log('selected order type: ${selectedOrderType.value}');
+
+    if (selectedOrderType.value == orderTypes[0]) {
+      //garmets
+      quantityCont.text = po.matchings.isNotEmpty
+          ? po.matchings
+                .map((e) => e.quantity)
+                .reduce((a, b) => a + b)
+                .toString()
+          : '';
+
+      rateCont.text = po.matchings.isNotEmpty
+          ? po.matchings.map((e) => e.rate).reduce((a, b) => a + b).toString()
+          : '';
+    } else if (selectedOrderType.value == orderTypes[1]) {
+      //sari
+
+      quantityCont.text = '';
+      rateCont.text = '';
+
+      if (sariMatchingList.isNotEmpty) {
+        sariMatchingList.value = [];
+      }
+
+      for (var element in po.matchings) {
+        SariMatchingModel model = SariMatchingModel(
+          id: (po.matchings.indexOf(element) + 1),
+          matching: element.mLabel,
+          rate: element.rate,
+          quantity: element.quantity,
+          color1: element.colors.isNotEmpty ? element.colors[0] : '',
+          color2: element.colors.length > 1 ? element.colors[1] : '',
+          color3: element.colors.length > 2 ? element.colors[2] : '',
+          color4: element.colors.length > 3 ? element.colors[3] : '',
+        );
+
+        addSariMatchingByModel(model);
+      }
+    }
+
+    highPriority.value = po.isHighPriority;
+    notesCont.text = po.note;
+    if (po.deliveryDate != null && po.deliveryDate!.isNotEmpty) {
+      selectedDate.value = DateTime.parse(po.deliveryDate!);
+      deliveryDateCont.text = selectedDate.value!.toLocal().ddmmyyFormat;
+    } else {
+      selectedDate.value = null;
+      deliveryDateCont.text = '';
+    }
+
+    //jop po
+    isJobPoEnabled.value = po.isJobPo;
+    if (po.isJobPo) {
+      if (selectedOrderType.value == orderTypes[0]) {
+        //germent
+        jobPoList.value = po.jobUser
+            .map(
+              (e) => JobPoModel(
+                id: (po.jobUser.indexOf(e) + 1),
+                jobPo: 'Job PO ${po.jobUser.indexOf(e) + 1}',
+                user: e.userId,
+                firm: e.firmId,
+                quantity: e.quantity,
+                mId: '',
+                matching: '',
+                remarks: '',
+                jobId: e.id,
+              ),
+            )
+            .toList();
+      } else if (selectedOrderType.value == orderTypes[1]) {
+        jobPoList.value = po.jobUser
+            .map(
+              (e) => JobPoModel(
+                id: po.jobUser.indexOf(e) + 1,
+                jobPo: 'Job PO ${po.jobUser.indexOf(e) + 1}',
+                user: e.userId,
+                firm: e.firmId,
+                quantity: e.quantity,
+                mId: e.matchingNo.toString(),
+                matching: po.matchings
+                    .firstWhere(
+                      (element) => element.mid == e.matchingNo,
+                      orElse: () => Matching2(
+                        colors: [],
+                        rate: 0,
+                        quantity: 0,
+                        pending: 0,
+                        mid: 0,
+                        mLabel: '',
+                        id: '',
+                      ),
+                    )
+                    .mLabel,
+
+                remarks: e.remarks,
+                jobId: e.id,
+              ),
+            )
+            .toList();
+      }
+    } else {
+      jobPoList.value = [];
     }
   }
 
@@ -389,6 +564,8 @@ class PurchaseOrderController extends GetxController implements GetxService {
     String? uId,
     String? machineNo,
     String? remarks,
+    required bool isJobPo,
+    String? machinObjId,
   }) async {
     try {
       isLoading.value = true;
@@ -400,7 +577,45 @@ class PurchaseOrderController extends GetxController implements GetxService {
         userId: uId,
         machineNo: machineNo,
         remarks: remarks,
+        isJobPo: isJobPo,
+        machinObjId: machinObjId,
       );
+      if (data) {
+        showSuccessSnackbar('Status Changed to ${status.displayValue}');
+
+        switch (current) {
+          case OrderStatus.pending:
+            getPurchaseList(isRefresh: true);
+
+            break;
+
+          default:
+            getInProcessList(status: current.name, isRefresh: true);
+        }
+      }
+    } on ApiException catch (e) {
+      log('error : $e');
+      switch (e.statusCode) {
+        case 401:
+          Get.offAll(() => LoginScreen());
+          break;
+        default:
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  updateStatusWithJobPo({
+    required String id,
+    required OrderStatus status,
+    required OrderStatus current,
+    required Map<String, dynamic> body,
+  }) async {
+    try {
+      isLoading.value = true;
+      var data = await repository.changeOrderStatus(id: id, body: body);
+      log('update status data: $data');
       if (data) {
         showSuccessSnackbar('Status Changed to ${status.displayValue}');
 
@@ -665,6 +880,155 @@ class PurchaseOrderController extends GetxController implements GetxService {
       );
       resetInputs();
       //  getPartyList(isRefresh: true);
+    } on ApiException catch (e) {
+      if (kDebugMode) {
+        print('error : $e');
+      }
+      switch (e.statusCode) {
+        case 401:
+          Get.offAll(() => LoginScreen());
+          break;
+        default:
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('error : $e');
+      }
+      if (e is String) {
+        showErrorSnackbar(e);
+      } else {
+        showErrorSnackbar('Something went wrong, please try again later.');
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  //update purchase order
+  updatePurchaseOrder(String id) async {
+    try {
+      isLoading.value = true;
+      Map<String, dynamic> body = {};
+
+      // if (selectedOrderType.value == orderTypes[0]) {
+      //garment
+      if (selectedDesign.value == null) {
+        showErrorSnackbar('Please select design');
+        return;
+      }
+      if (selectedParty.value == null) {
+        showErrorSnackbar('Please select party');
+        return;
+      }
+
+      if ((quantityCont.text.trim().isEmpty ||
+              int.tryParse(quantityCont.text.trim()) == null ||
+              (int.tryParse(quantityCont.text.trim()) ?? 0) <= 0) &&
+          selectedOrderType.value == orderTypes[0]) {
+        showErrorSnackbar('Please enter valid quantity');
+        return;
+      }
+
+      if ((rateCont.text.trim().isEmpty ||
+              double.tryParse(rateCont.text.trim()) == null ||
+              (double.tryParse(rateCont.text.trim()) ?? 0) <= 0) &&
+          selectedOrderType.value == orderTypes[0] &&
+          selectedOrderType.value == orderTypes[0]) {
+        showErrorSnackbar('Please enter valid rate');
+        return;
+      }
+
+      if (isJobPoEnabled.value && selectedOrderType.value == orderTypes[0]) {
+        // germent
+        if (!validateGarmetquantity()) {
+          return;
+        }
+      } else if (isJobPoEnabled.value &&
+          selectedOrderType.value == orderTypes[1]) {
+        if (!validateSariQuantity()) {
+          return;
+        }
+      }
+
+      body = {
+        'id': id,
+        if (selectedOrderType.value == orderTypes[0])
+          "quantity": int.tryParse(quantityCont.text.trim()) ?? 0,
+
+        if (selectedOrderType.value == orderTypes[0])
+          "rate": double.tryParse(rateCont.text.trim()) ?? 0,
+
+        if (pannaCont.text.trim().isNotEmpty)
+          "panna": double.tryParse(pannaCont.text.trim()) ?? 0,
+
+        if (partyPoCont.text.trim().isNotEmpty)
+          "partyPoNumber": partyPoCont.text.trim(),
+
+        "process": processCont.text.trim().isNotEmpty
+            ? processCont.text.trim()
+            : 'N/A',
+
+        "designId": selectedDesign.value!.id,
+        "partyId": selectedParty.value!.id,
+
+        if (selectedDate.value != null)
+          "deliveryDate": selectedDate.value.toString(),
+
+        "isHighPriority": highPriority.value,
+        if (notesCont.text.trim().isNotEmpty) "note": notesCont.text.trim(),
+
+        "orderType": selectedOrderType.value.toLowerCase(),
+
+        if (isJobPoEnabled.value) "isJobPo": true,
+
+        if (selectedOrderType.value == orderTypes[1])
+          //for sari section
+          "matchings": sariMatchingList.map((e) {
+            return {
+              "mid": e.id,
+              "mLabel": e.matching,
+              "rate": e.rate,
+              "quantity": e.quantity ?? 0,
+              "colors": [
+                e.color1 ?? '',
+                e.color2 ?? '',
+                e.color3 ?? '',
+                e.color4 ?? '',
+              ],
+            };
+          }).toList(),
+
+        if (isJobPoEnabled.value)
+          "jobUser": jobPoList.map((e) {
+            if (e.user == null || e.user!.isEmpty) {
+              throw 'Please select user for all Job PO';
+            }
+            if (e.firm == null || e.firm!.isEmpty) {
+              throw 'Please select firm for all Job PO';
+            }
+            if (e.quantity == null || e.quantity == 0) {
+              throw 'Please enter quantity for all Job PO';
+            }
+
+            return {
+              "quantity": e.quantity,
+              "remarks": e.remarks,
+              "userId": e.user,
+              "firmId": e.firm,
+              if (selectedOrderType.value == orderTypes[1]) "matchingNo": e.mId,
+            };
+          }).toList(),
+      };
+
+      await repository.updatePurchaseOrder(reqBody: body);
+      Get.back();
+
+      showSuccessSnackbar(
+        'Order Updated Successfully.',
+        decs: 'Order Updated Successfully.',
+      );
+      resetInputs();
+      getPurchaseList(isRefresh: true);
     } on ApiException catch (e) {
       if (kDebugMode) {
         print('error : $e');

@@ -59,16 +59,16 @@ class DesignModel {
   String designName;
   String designNumber;
   String designImage;
-  DateTime createdAt;
-  DateTime updatedAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   DesignModel({
     required this.id,
     required this.designName,
     required this.designNumber,
     required this.designImage,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory DesignModel.fromMap(Map<String, dynamic> json) => DesignModel(
@@ -85,7 +85,5 @@ class DesignModel {
     "designName": designName,
     "designNumber": designNumber,
     "designImage": designImage,
-    "createdAt": createdAt.toIso8601String(),
-    "updatedAt": updatedAt.toIso8601String(),
   };
 }

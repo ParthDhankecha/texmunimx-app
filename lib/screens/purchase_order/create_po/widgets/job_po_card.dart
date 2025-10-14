@@ -73,6 +73,13 @@ class JobPoCard extends StatelessWidget {
                     child: CustomDropdown<User>(
                       title: 'job_user'.tr,
                       items: users,
+                      selectedValue: model.user == '' || model.user == null
+                          ? null
+                          : users.firstWhere(
+                              (element) => element.id.toString() == model.user,
+                              orElse: () =>
+                                  User(id: '', fullname: 'Select User'),
+                            ),
                       isRequired: true,
                       onChanged: (value) {
                         if (value != null) {
@@ -90,6 +97,14 @@ class JobPoCard extends StatelessWidget {
                           title: 'firm'.tr,
                           items: firms,
                           isRequired: true,
+                          selectedValue: model.firm == '' || model.firm == null
+                              ? null
+                              : firms.firstWhere(
+                                  (element) =>
+                                      element.id.toString() == model.firm,
+                                  orElse: () =>
+                                      FirmId(id: '', firmName: 'Select Firm'),
+                                ),
                           onChanged: (value) {
                             if (value != null) {
                               onFirmChange?.call(value.id.toString());
@@ -112,6 +127,17 @@ class JobPoCard extends StatelessWidget {
                           title: 'matching'.tr,
                           items: matchings,
                           isRequired: true,
+                          selectedValue:
+                              model.matching == '' || model.matching == null
+                              ? null
+                              : matchings.firstWhere(
+                                  (element) =>
+                                      element.matching == model.matching,
+                                  orElse: () => SariMatchingModel(
+                                    id: 0,
+                                    matching: 'Select Matching',
+                                  ),
+                                ),
                           onChanged: (value) {
                             if (value != null) {
                               matchingChange?.call(value.matching!);

@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/controllers/purchase_order_controller.dart';
 import 'package:textile_po/models/in_process_model.dart';
 import 'package:textile_po/models/order_status_enum.dart';
+import 'package:textile_po/models/purchase_order_list_response.dart';
 import 'package:textile_po/models/purchase_order_options_response.dart';
 import 'package:textile_po/utils/app_colors.dart';
 
@@ -16,9 +19,14 @@ class UpdateStatusBottomSheet extends StatefulWidget {
   final String userId;
   final String? quantityTitle;
   final String? machineNo;
+  final String? machinObjId;
+  final bool isJobPo;
+
+  final PurchaseOrderModel po;
 
   const UpdateStatusBottomSheet({
     super.key,
+    required this.po,
     required this.orderQuantity,
     required this.pendingQuantity,
     required this.moveTo,
@@ -28,6 +36,8 @@ class UpdateStatusBottomSheet extends StatefulWidget {
     required this.firmId,
     required this.userId,
     this.machineNo,
+    this.machinObjId,
+    this.isJobPo = true,
   });
 
   @override
@@ -52,6 +62,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
     _quantityController.dispose();
     _machineNoController.dispose();
     _remarksController.dispose();
+
     super.dispose();
   }
 
@@ -65,23 +76,74 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
         context,
       ).showSnackBar(const SnackBar(content: Text('Processing Data')));
 
-      controller.updateOrderStatus(
+      /*
+
+
+   
+    "status": "delivered",
+    "quantity": 1,
+    "machineNo": "",
+    "matchingObjId": "68ee05b8e9d227563155f3ee",
+    "remarks": "finish",
+    "sourceId": "68ee1ce4e9d227563155f586"
+
+
+    {
+    "status": "delivered",
+    "quantity": 1,
+    "machineNo": "",
+    "matchingObjId": "68e8f4922dd6ff744784786f",
+    "remarks": "",
+    "sourceId": "68ecd994643635a23c55d7a9",
+    "firmId": "68e8f55f2dd6ff744784787b",
+    "userId": "68e8a6dbb7c2fd6a52583820"
+}
+
+      */
+
+      //moving from pending to in process
+      log('ready id = ${widget.po.readyToDispatch?.id}');
+      log('current = ${widget.currentStatus}');
+
+      var body = {
+        'id': widget.purchaseId,
+        'status': widget.moveTo.name,
+        'quantity': quantity ?? 1,
+        if (_machineNoController.text.isNotEmpty)
+          'machineNo': _machineNoController.text.trim(),
+        if (_remarksController.text.isNotEmpty)
+          'remarks': _remarksController.text.trim(),
+        if (widget.isJobPo) ...{
+          if (widget.machinObjId != null) 'jobUserId': widget.po.jobUser?.id,
+        } else ...{
+          'matchingObjId': widget.po.matching?.id,
+          'firmId': _selectedFirm?.id,
+          'userId': _selectedUser?.id,
+        },
+        //inProcess
+        if (widget.currentStatus == OrderStatus.inProcess) ...{
+          'sourceId': widget.currentStatus == OrderStatus.inProcess
+              ? widget.po.inProcess?.id
+              : null,
+          'matchingObjId': widget.po.matching?.id,
+          if (!widget.isJobPo) 'firmId': widget.po.inProcess?.firmId,
+          if (!widget.isJobPo) 'userId': widget.po.inProcess?.userId,
+        },
+        //ready to dispatch
+        if (widget.currentStatus == OrderStatus.readyToDispatch) ...{
+          'sourceId': widget.po.readyToDispatch?.id,
+          'matchingObjId': widget.po.matching?.id,
+          if (!widget.isJobPo) 'firmId': widget.po.readyToDispatch?.firmId,
+          if (!widget.isJobPo) 'userId': widget.po.readyToDispatch?.userId,
+        },
+      };
+
+      log('update status body - $body');
+      controller.updateStatusWithJobPo(
         id: widget.purchaseId,
         status: widget.moveTo,
         current: widget.currentStatus,
-        quantity: quantity ?? 1,
-        fId: widget.currentStatus == OrderStatus.pending
-            ? _selectedFirm?.id
-            : widget.firmId,
-        uId: widget.currentStatus == OrderStatus.pending
-            ? _selectedUser?.id
-            : widget.userId,
-        machineNo: _machineNoController.text.isEmpty
-            ? null
-            : _machineNoController.text.trim(),
-        remarks: _remarksController.text.isEmpty
-            ? null
-            : _remarksController.text.trim(),
+        body: body,
       );
       // Close the bottom sheet
       Navigator.pop(context);
@@ -91,11 +153,13 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
   @override
   void initState() {
     super.initState();
-    _machineNoController.text = widget.machineNo ?? '';
+    // _machineNoController.text = widget.machineNo ?? '';
   }
 
   @override
   Widget build(BuildContext context) {
+    log('ready to dispatch id - ${widget.po.readyToDispatch?.id}');
+
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.only(
@@ -141,7 +205,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                     ),
                     const Spacer(),
                     Text(
-                      '${widget.orderQuantity}',
+                      '${widget.po.matching?.quantity ?? widget.orderQuantity}',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -209,8 +273,9 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                 const SizedBox(height: 20),
 
                 // Firm Name dropdown
-                widget.moveTo == OrderStatus.inProcess
+                widget.moveTo == OrderStatus.inProcess && !widget.isJobPo
                     ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Firm Name *',
@@ -263,25 +328,20 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                             },
                           ),
                           const SizedBox(height: 20),
-
-                          // Machine No field
-                          Text(
-                            'Machine No',
-                            style: TextStyle(color: Colors.grey[700]),
-                          ),
-                          const SizedBox(height: 8),
-                          TextFormField(
-                            controller: _machineNoController,
-                            decoration: const InputDecoration(
-                              hintText: 'Enter machine no (e.g. M-01)',
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
                         ],
                       )
                     : SizedBox.shrink(),
-
+                // Machine No field
+                Text('Machine No', style: TextStyle(color: Colors.grey[700])),
+                const SizedBox(height: 8),
+                TextFormField(
+                  controller: _machineNoController,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter machine no (e.g. M-01)',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 20),
                 // Remarks field
                 Text('Remarks', style: TextStyle(color: Colors.grey[700])),
                 const SizedBox(height: 8),

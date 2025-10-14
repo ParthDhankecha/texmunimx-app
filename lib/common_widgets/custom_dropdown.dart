@@ -67,7 +67,7 @@ class CustomDropdown<T> extends StatelessWidget {
             border: Border.all(color: Colors.black12),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: DropdownButtonFormField<T>(
+          child: DropdownButtonFormField<T?>(
             initialValue: initialValue,
             decoration: const InputDecoration(
               border: OutlineInputBorder(
@@ -77,7 +77,7 @@ class CustomDropdown<T> extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             ),
             items: dropdownItems.map((T? value) {
-              return DropdownMenuItem<T>(
+              return DropdownMenuItem<T?>(
                 value: value,
                 // Use the placeholder text if the value is null,
                 // otherwise use the provided itemLabelBuilder function.

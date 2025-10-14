@@ -158,9 +158,7 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
                           mobile: '',
                         ),
                       );
-                      print(
-                        '${order.readyToDispatch?.quantity} readyToDispatchList',
-                      );
+
                       return ReadyToDispatchCard(
                         order: order,
                         design: design,

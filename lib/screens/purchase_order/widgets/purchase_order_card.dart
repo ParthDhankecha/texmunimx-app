@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_utils/src/extensions/export.dart';
+import 'package:get/get.dart';
 import 'package:textile_po/common_widgets/my_text_field.dart';
 import 'package:textile_po/models/order_status_enum.dart';
 import 'package:textile_po/models/purchase_order_list_response.dart';
 import 'package:textile_po/models/purchase_order_options_response.dart';
 import 'package:textile_po/screens/purchase_order/change_order_status/change_order_status_screen.dart';
+import 'package:textile_po/screens/purchase_order/create_po/create_purchase_order.dart';
 import 'package:textile_po/screens/purchase_order/widgets/status_tag_row.dart';
 import 'package:textile_po/utils/app_colors.dart';
 import 'package:textile_po/utils/app_const.dart';
@@ -149,19 +150,27 @@ class PurchaseOrderCard extends StatelessWidget {
                       isScrollControlled: true,
                       useSafeArea: true,
                       builder: (context) => UpdateStatusBottomSheet(
-                        orderQuantity: order.quantity,
-                        pendingQuantity: order.pending,
+                        po: order,
+                        orderQuantity: order.matching?.quantity ?? 0,
+                        pendingQuantity: order.matching?.pending ?? 0,
                         moveTo: OrderStatus.inProcess,
                         currentStatus: OrderStatus.pending,
                         purchaseId: order.id,
                         firmId: '',
                         userId: '',
+                        isJobPo: order.isJobPo,
+                        machinObjId: order.matching?.id,
                       ),
                     );
                   },
                   child: MyText('in_progress'),
                 ),
-                TextButton(onPressed: () {}, child: MyText('edit')),
+                TextButton(
+                  onPressed: () {
+                    Get.to(() => CreatePurchaseOrder(po: order));
+                  },
+                  child: MyText('edit'),
+                ),
               ],
             ),
           ],

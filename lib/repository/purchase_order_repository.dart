@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:textile_po/models/get_po_response.dart';
 import 'package:textile_po/models/purchase_order_list_response.dart';
 import 'package:textile_po/models/purchase_order_options_response.dart';
 import 'package:textile_po/repository/api_client.dart';
@@ -58,12 +59,42 @@ class PurchaseOrderRepository {
     return purchaseOrderListResponseFromMap(data).data;
   }
 
+  //get purchase order by id
+  Future<POModel> getPurchaseOrderByID({required String id}) async {
+    var endPoint = AppConst.purchaseOrder;
+
+    if (kDebugMode) {
+      print('token : ${sp.userToken}');
+    }
+    var data = await apiClient.request(
+      '$endPoint/$id',
+
+      headers: {'authorization': sp.userToken},
+    );
+
+    log('data : $data');
+    return getPoResponseFromMap(data).data;
+  }
+
   Future<dynamic> createPurchaseOrder({Map<String, dynamic>? reqBody}) async {
     var endPoint = AppConst.purchaseOrderCreate;
     if (kDebugMode) {
       print('reqBody - $reqBody');
     }
     dynamic data = await apiClient.requestPost(
+      endPoint,
+      body: reqBody,
+      headers: {'authorization': sp.userToken},
+    );
+    return data;
+  }
+
+  Future<dynamic> updatePurchaseOrder({Map<String, dynamic>? reqBody}) async {
+    var endPoint = '${AppConst.purchaseOrderUpdate}/${reqBody?['id']}';
+    if (kDebugMode) {
+      print('reqBody - $reqBody');
+    }
+    dynamic data = await apiClient.requestPut(
       endPoint,
       body: reqBody,
       headers: {'authorization': sp.userToken},
@@ -80,16 +111,44 @@ class PurchaseOrderRepository {
     String? userId,
     String? machineNo,
     String? remarks,
+    required bool isJobPo,
+    String? machinObjId,
   }) async {
     var endPoint = AppConst.purchaseOrderChangeStatus;
     var body = {
       'status': status,
       'quantity': quantity,
-      if (firmId != null) 'firmId': firmId,
-      if (userId != null) 'userId': userId,
       if (machineNo != null) 'machineNo': machineNo,
       if (remarks != null) 'remarks': remarks,
     };
+
+    if (isJobPo) {
+      if (machinObjId != null) body['machineObjId'] = machinObjId;
+      if (firmId != null) body['firmId'] = firmId;
+      if (userId != null) body['jobUserId'] = userId;
+    } else {
+      if (userId != null) body['jobUserId'] = userId;
+    }
+
+    if (kDebugMode) {
+      print('token : ${sp.userToken}');
+      print('body : $body');
+    }
+    var data = await apiClient.requestPut(
+      '$endPoint/$id',
+      body: body,
+      headers: {'authorization': sp.userToken},
+    );
+
+    log('data : $data');
+    return baseModelFromMap(data).code == "OK";
+  }
+
+  Future<bool> changeOrderStatus({
+    Map<String, dynamic>? body,
+    required String id,
+  }) async {
+    var endPoint = AppConst.purchaseOrderChangeStatus;
 
     if (kDebugMode) {
       print('token : ${sp.userToken}');
