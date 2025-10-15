@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:textile_po/common_widgets/red_mark.dart';
+import 'package:texmunimx/common_widgets/red_mark.dart';
 
 /// A reusable, generic dropdown widget for any data type (T).
 ///
@@ -43,7 +43,7 @@ class CustomDropdown<T> extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 8.0, bottom: 4.0),
+          padding: const EdgeInsets.only(left: 6.0, bottom: 4.0),
           child: Row(
             children: [
               Text(
@@ -74,7 +74,7 @@ class CustomDropdown<T> extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(8.0)),
                 borderSide: BorderSide(color: Colors.grey),
               ),
-              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              contentPadding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
             ),
             items: dropdownItems.map((T? value) {
               return DropdownMenuItem<T?>(
@@ -83,6 +83,7 @@ class CustomDropdown<T> extends StatelessWidget {
                 // otherwise use the provided itemLabelBuilder function.
                 child: Text(
                   value == null ? placeholderText : itemLabelBuilder(value),
+                  style: TextStyle(fontSize: 14),
                 ),
               );
             }).toList(),

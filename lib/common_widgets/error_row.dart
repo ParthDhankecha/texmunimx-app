@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:textile_po/utils/app_colors.dart';
+import 'package:texmunimx/utils/app_colors.dart';
 
 class ErrorRow extends StatelessWidget {
   const ErrorRow({super.key, required this.title, this.desc});

@@ -3,6 +3,7 @@
 //     final orderHistoryResponse = orderHistoryResponseFromMap(jsonString);
 
 import 'dart:convert';
+import 'dart:developer';
 
 OrderHistoryResponse orderHistoryResponseFromMap(String str) =>
     OrderHistoryResponse.fromMap(json.decode(str));
@@ -98,38 +99,50 @@ class OrderHistory {
     "eventDate": eventDate.toIso8601String(),
     "_id": id,
   };
+
+  RemarksClass? get remarksDetails {
+    if (remarks is Map<String, dynamic>) {
+      try {
+        return RemarksClass.fromMap(remarks as Map<String, dynamic>);
+      } catch (e) {
+        log('Error parsing remarks into RemarksClass: $e');
+        return null;
+      }
+    }
+    return null;
+  }
 }
 
 class RemarksClass {
-  int panna;
-  String partyPoNumber;
-  String process;
-  String designId;
-  String partyId;
-  bool isHighPriority;
+  int? panna;
+  String? partyPoNumber;
+  String? process;
+  String? designId;
+  String? partyId;
+  bool? isHighPriority;
   String? orderType;
-  DateTime deliveryDate;
+  DateTime? deliveryDate;
   String? createdBy;
   String? workspaceId;
   bool? isJobPo;
   String? poNumber;
-  List<Matching> matchings;
+  List<Matching>? matchings;
   List<dynamic>? jobUser;
 
   RemarksClass({
-    required this.panna,
-    required this.partyPoNumber,
-    required this.process,
-    required this.designId,
-    required this.partyId,
-    required this.isHighPriority,
+    this.panna,
+    this.partyPoNumber,
+    this.process,
+    this.designId,
+    this.partyId,
+    this.isHighPriority,
     this.orderType,
-    required this.deliveryDate,
+    this.deliveryDate,
     this.createdBy,
     this.workspaceId,
     this.isJobPo,
     this.poNumber,
-    required this.matchings,
+    this.matchings,
     this.jobUser,
   });
 
@@ -141,7 +154,9 @@ class RemarksClass {
     partyId: json["partyId"],
     isHighPriority: json["isHighPriority"],
     orderType: json["orderType"],
-    deliveryDate: DateTime.parse(json["deliveryDate"]),
+    deliveryDate: DateTime.parse(
+      json["deliveryDate"] ?? DateTime.now().toIso8601String(),
+    ),
     createdBy: json["createdBy"],
     workspaceId: json["workspaceId"],
     isJobPo: json["isJobPo"],
@@ -162,13 +177,14 @@ class RemarksClass {
     "partyId": partyId,
     "isHighPriority": isHighPriority,
     "orderType": orderType,
-    "deliveryDate":
-        "${deliveryDate.year.toString().padLeft(4, '0')}-${deliveryDate.month.toString().padLeft(2, '0')}-${deliveryDate.day.toString().padLeft(2, '0')}",
+    "deliveryDate": "",
     "createdBy": createdBy,
     "workspaceId": workspaceId,
     "isJobPo": isJobPo,
     "poNumber": poNumber,
-    "matchings": List<dynamic>.from(matchings.map((x) => x.toMap())),
+    "matchings": matchings == null
+        ? []
+        : List<dynamic>.from(matchings!.map((x) => x.toMap())),
     "jobUser": jobUser == null
         ? []
         : List<dynamic>.from(jobUser!.map((x) => x)),

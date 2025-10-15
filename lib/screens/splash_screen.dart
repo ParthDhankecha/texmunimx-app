@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:textile_po/controllers/splash_controller.dart';
-import 'package:textile_po/utils/app_colors.dart';
-import 'package:textile_po/utils/app_strings.dart';
+import 'package:texmunimx/controllers/splash_controller.dart';
+import 'package:texmunimx/utils/app_colors.dart';
+import 'package:texmunimx/utils/app_strings.dart';
 import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {

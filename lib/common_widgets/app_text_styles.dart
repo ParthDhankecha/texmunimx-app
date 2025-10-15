@@ -1,6 +1,6 @@
 //title text
 import 'package:flutter/widgets.dart';
-import 'package:textile_po/utils/app_colors.dart';
+import 'package:texmunimx/utils/app_colors.dart';
 
 final appbarStyle = TextStyle(
   fontSize: 20,

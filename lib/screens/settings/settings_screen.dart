@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/screens/calculator/calculator_screen.dart';
-import 'package:textile_po/screens/create_design/design_list_screen.dart';
-import 'package:textile_po/screens/firms/firm_list_screen.dart';
-import 'package:textile_po/screens/party/party_list_screen.dart';
-import 'package:textile_po/screens/settings/widgets/language_bottom_sheet.dart';
-import 'package:textile_po/screens/settings/widgets/logout_dialog.dart';
-import 'package:textile_po/screens/settings/widgets/settings_card.dart';
-import 'package:textile_po/screens/users/users_list_screen.dart';
-import 'package:textile_po/utils/shared_pref.dart';
+import 'package:texmunimx/screens/calculator/calculator_screen.dart';
+import 'package:texmunimx/screens/create_design/design_list_screen.dart';
+import 'package:texmunimx/screens/firms/firm_list_screen.dart';
+import 'package:texmunimx/screens/party/party_list_screen.dart';
+import 'package:texmunimx/screens/settings/widgets/language_bottom_sheet.dart';
+import 'package:texmunimx/screens/settings/widgets/logout_dialog.dart';
+import 'package:texmunimx/screens/settings/widgets/settings_card.dart';
+import 'package:texmunimx/screens/users/users_list_screen.dart';
+import 'package:texmunimx/utils/shared_pref.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});

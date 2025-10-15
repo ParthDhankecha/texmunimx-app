@@ -1,4 +1,4 @@
-import 'package:textile_po/utils/shared_pref.dart';
+import 'package:texmunimx/utils/shared_pref.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController implements GetxService {

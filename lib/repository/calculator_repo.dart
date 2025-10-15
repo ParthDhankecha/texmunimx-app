@@ -1,11 +1,11 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:textile_po/models/calculator_get_response.dart';
-import 'package:textile_po/repository/api_client.dart';
-import 'package:textile_po/repository/base_model.dart';
-import 'package:textile_po/utils/app_const.dart';
-import 'package:textile_po/utils/shared_pref.dart';
+import 'package:texmunimx/models/calculator_get_response.dart';
+import 'package:texmunimx/repository/api_client.dart';
+import 'package:texmunimx/repository/base_model.dart';
+import 'package:texmunimx/utils/app_const.dart';
+import 'package:texmunimx/utils/shared_pref.dart';
 
 class CalculatorRepo {
   final ApiClient apiClient = Get.find();

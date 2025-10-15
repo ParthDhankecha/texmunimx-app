@@ -1,6 +1,6 @@
 // Reusable widget for a date picker field
 import 'package:flutter/material.dart';
-import 'package:textile_po/utils/date_formate_extension.dart';
+import 'package:texmunimx/utils/date_formate_extension.dart';
 
 class DateInputField extends StatelessWidget {
   final DateTime? selectedDate;

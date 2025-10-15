@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/export.dart';
-import 'package:textile_po/common_widgets/my_text_field.dart';
-import 'package:textile_po/models/purchase_order_list_response.dart';
-import 'package:textile_po/utils/app_colors.dart';
+import 'package:texmunimx/common_widgets/my_text_field.dart';
+import 'package:texmunimx/models/purchase_order_list_response.dart';
+import 'package:texmunimx/utils/app_colors.dart';
 
 class StatusTagRow extends StatelessWidget {
   const StatusTagRow({super.key, required this.order, this.type = 'pending'});

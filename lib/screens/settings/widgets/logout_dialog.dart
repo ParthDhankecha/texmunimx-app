@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/common_widgets/app_text_styles.dart';
-import 'package:textile_po/controllers/home_controller.dart';
-import 'package:textile_po/controllers/login_controllers.dart';
+import 'package:texmunimx/common_widgets/app_text_styles.dart';
+import 'package:texmunimx/controllers/home_controller.dart';
+import 'package:texmunimx/controllers/login_controllers.dart';
 
 class LogoutDialog extends StatelessWidget {
   const LogoutDialog({super.key});

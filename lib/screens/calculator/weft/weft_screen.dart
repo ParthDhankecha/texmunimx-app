@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/common_widgets/app_text_styles.dart';
-import 'package:textile_po/common_widgets/custom_btn.dart';
-import 'package:textile_po/common_widgets/my_text_field.dart';
-import 'package:textile_po/controllers/calculator_controller.dart';
-import 'package:textile_po/models/cal_weft_model.dart';
-import 'package:textile_po/screens/calculator/weft/weft_item_card.dart';
-import 'package:textile_po/utils/formate_double.dart';
+import 'package:texmunimx/common_widgets/app_text_styles.dart';
+import 'package:texmunimx/common_widgets/custom_btn.dart';
+import 'package:texmunimx/common_widgets/my_text_field.dart';
+import 'package:texmunimx/controllers/calculator_controller.dart';
+import 'package:texmunimx/models/cal_weft_model.dart';
+import 'package:texmunimx/screens/calculator/weft/weft_item_card.dart';
+import 'package:texmunimx/utils/formate_double.dart';
 
 class WeftScreen extends StatefulWidget {
   const WeftScreen({super.key});

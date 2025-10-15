@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/common_widgets/custom_btn_red.dart';
-import 'package:textile_po/controllers/create_design_controller.dart';
+import 'package:texmunimx/common_widgets/custom_btn_red.dart';
+import 'package:texmunimx/controllers/create_design_controller.dart';
 
 class DeleteDesignDialog extends StatelessWidget {
   const DeleteDesignDialog({super.key});

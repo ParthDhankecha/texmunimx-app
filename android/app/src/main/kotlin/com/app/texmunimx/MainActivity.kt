@@ -1,4 +1,4 @@
-package com.example.textile_po
+package com.app.texmunimx
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/controllers/localization_controller.dart';
-import 'package:textile_po/screens/splash_screen.dart';
-import 'package:textile_po/utils/app_strings.dart';
-import 'package:textile_po/utils/internationalization.dart';
-import 'package:textile_po/utils/my_theme_controller.dart';
+import 'package:texmunimx/controllers/localization_controller.dart';
+import 'package:texmunimx/screens/splash_screen.dart';
+import 'package:texmunimx/utils/app_strings.dart';
+import 'package:texmunimx/utils/internationalization.dart';
+import 'package:texmunimx/utils/my_theme_controller.dart';
 import 'utils/get_di.dart' as getit;
 
 void main() async {

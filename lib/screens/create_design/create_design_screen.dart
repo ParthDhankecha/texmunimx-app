@@ -4,17 +4,17 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:textile_po/common_widgets/custom_btn.dart';
-import 'package:textile_po/common_widgets/custom_btn_red.dart';
-import 'package:textile_po/common_widgets/custom_progress_btn_.dart';
-import 'package:textile_po/common_widgets/error_row.dart';
-import 'package:textile_po/common_widgets/input_field.dart';
-import 'package:textile_po/controllers/create_design_controller.dart';
-import 'package:textile_po/controllers/home_controller.dart';
-import 'package:textile_po/models/design_list_response.dart';
-import 'package:textile_po/screens/create_design/widgets/delete_design_dialog.dart';
-import 'package:textile_po/utils/app_colors.dart';
-import 'package:textile_po/utils/app_const.dart';
+import 'package:texmunimx/common_widgets/custom_btn.dart';
+import 'package:texmunimx/common_widgets/custom_btn_red.dart';
+import 'package:texmunimx/common_widgets/custom_progress_btn_.dart';
+import 'package:texmunimx/common_widgets/error_row.dart';
+import 'package:texmunimx/common_widgets/input_field.dart';
+import 'package:texmunimx/controllers/create_design_controller.dart';
+import 'package:texmunimx/controllers/home_controller.dart';
+import 'package:texmunimx/models/design_list_response.dart';
+import 'package:texmunimx/screens/create_design/widgets/delete_design_dialog.dart';
+import 'package:texmunimx/utils/app_colors.dart';
+import 'package:texmunimx/utils/app_const.dart';
 
 class CreateDesignScreen extends StatefulWidget {
   final DesignModel? designModel;

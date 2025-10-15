@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:textile_po/common_widgets/app_text_styles.dart';
-import 'package:textile_po/common_widgets/custom_progress_btn_.dart';
-import 'package:textile_po/common_widgets/input_field.dart';
-import 'package:textile_po/common_widgets/main_btn.dart';
-import 'package:textile_po/common_widgets/password_input.dart';
-import 'package:textile_po/controllers/login_controllers.dart';
-import 'package:textile_po/screens/auth_screens/widgets/privacy_bar.dart';
+import 'package:texmunimx/common_widgets/app_text_styles.dart';
+import 'package:texmunimx/common_widgets/custom_progress_btn_.dart';
+import 'package:texmunimx/common_widgets/input_field.dart';
+import 'package:texmunimx/common_widgets/main_btn.dart';
+import 'package:texmunimx/common_widgets/password_input.dart';
+import 'package:texmunimx/controllers/login_controllers.dart';
+import 'package:texmunimx/screens/auth_screens/widgets/privacy_bar.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/utils/app_strings.dart';
+import 'package:texmunimx/utils/app_strings.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

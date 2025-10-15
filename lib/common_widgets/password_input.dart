@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/utils/app_colors.dart';
+import 'package:texmunimx/utils/app_colors.dart';
 
 class PasswordTextField extends StatefulWidget {
   final TextEditingController controller;

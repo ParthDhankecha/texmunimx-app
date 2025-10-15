@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/common_widgets/app_text_styles.dart';
-import 'package:textile_po/common_widgets/custom_dropdown.dart';
-import 'package:textile_po/common_widgets/input_field.dart';
-import 'package:textile_po/common_widgets/my_text_field.dart';
-import 'package:textile_po/common_widgets/red_mark.dart';
-import 'package:textile_po/models/in_process_model.dart';
-import 'package:textile_po/models/job_po_model.dart';
-import 'package:textile_po/models/purchase_order_options_response.dart';
-import 'package:textile_po/models/sari_matching_model.dart';
-import 'package:textile_po/utils/app_colors.dart';
+import 'package:texmunimx/common_widgets/app_text_styles.dart';
+import 'package:texmunimx/common_widgets/custom_dropdown.dart';
+import 'package:texmunimx/common_widgets/input_field.dart';
+import 'package:texmunimx/common_widgets/my_text_field.dart';
+import 'package:texmunimx/common_widgets/red_mark.dart';
+import 'package:texmunimx/models/in_process_model.dart';
+import 'package:texmunimx/models/job_po_model.dart';
+import 'package:texmunimx/models/purchase_order_options_response.dart';
+import 'package:texmunimx/models/sari_matching_model.dart';
+import 'package:texmunimx/utils/app_colors.dart';
 
 class JobPoCard extends StatelessWidget {
   final JobPoModel model;
@@ -44,10 +44,11 @@ class JobPoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('JobPoCard rebuild - ${model.user}');
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Card(
-        elevation: 6,
+        elevation: 4,
         child: Container(
           padding: EdgeInsets.all(6),
           child: Column(

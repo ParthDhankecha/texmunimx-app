@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:textile_po/controllers/home_controller.dart';
+import 'package:texmunimx/controllers/home_controller.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/screens/purchase_order/create_po/create_purchase_order.dart';
-import 'package:textile_po/screens/purchase_order/purchase_order_list_screen.dart';
-import 'package:textile_po/screens/settings/settings_screen.dart';
-import 'package:textile_po/utils/app_colors.dart';
-import 'package:textile_po/utils/shared_pref.dart';
+import 'package:texmunimx/screens/purchase_order/create_po/create_purchase_order.dart';
+import 'package:texmunimx/screens/purchase_order/purchase_order_list_screen.dart';
+import 'package:texmunimx/screens/settings/settings_screen.dart';
+import 'package:texmunimx/utils/app_colors.dart';
+import 'package:texmunimx/utils/shared_pref.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

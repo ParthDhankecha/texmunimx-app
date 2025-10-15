@@ -2,12 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/common_widgets/app_text_styles.dart';
-import 'package:textile_po/common_widgets/input_field.dart';
-import 'package:textile_po/common_widgets/my_text_field.dart';
-import 'package:textile_po/common_widgets/red_mark.dart';
-import 'package:textile_po/models/sari_matching_model.dart';
-import 'package:textile_po/utils/app_colors.dart';
+import 'package:texmunimx/common_widgets/app_text_styles.dart';
+import 'package:texmunimx/common_widgets/input_field.dart';
+import 'package:texmunimx/common_widgets/my_text_field.dart';
+import 'package:texmunimx/common_widgets/red_mark.dart';
+import 'package:texmunimx/models/sari_matching_model.dart';
+import 'package:texmunimx/utils/app_colors.dart';
 
 class SariMatchingCard extends StatelessWidget {
   final SariMatchingModel model;
@@ -40,7 +40,7 @@ class SariMatchingCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Card(
-        elevation: 6,
+        elevation: 4,
         child: Container(
           padding: EdgeInsets.all(6),
           child: Column(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:textile_po/common_widgets/app_text_styles.dart';
-import 'package:textile_po/models/labour_cost_model.dart';
-import 'package:textile_po/utils/app_colors.dart';
-import 'package:textile_po/utils/formate_double.dart';
+import 'package:texmunimx/common_widgets/app_text_styles.dart';
+import 'package:texmunimx/models/labour_cost_model.dart';
+import 'package:texmunimx/utils/app_colors.dart';
+import 'package:texmunimx/utils/formate_double.dart';
 
 class LabourCostCard extends StatelessWidget {
   final bool isMain;

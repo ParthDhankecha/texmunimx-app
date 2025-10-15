@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/controllers/calculator_controller.dart';
-import 'package:textile_po/screens/calculator/labour/labour_cost_list.dart';
-import 'package:textile_po/screens/calculator/warp_screen.dart';
-import 'package:textile_po/screens/calculator/weft/weft_screen.dart';
-import 'package:textile_po/screens/calculator/widgets/select_design.dart';
-import 'package:textile_po/screens/calculator/widgets/text_separator_widget.dart';
+import 'package:texmunimx/controllers/calculator_controller.dart';
+import 'package:texmunimx/screens/calculator/labour/labour_cost_list.dart';
+import 'package:texmunimx/screens/calculator/warp_screen.dart';
+import 'package:texmunimx/screens/calculator/weft/weft_screen.dart';
+import 'package:texmunimx/screens/calculator/widgets/select_design.dart';
+import 'package:texmunimx/screens/calculator/widgets/text_separator_widget.dart';
 
 class CalculatorScreen extends StatefulWidget {
   const CalculatorScreen({super.key});

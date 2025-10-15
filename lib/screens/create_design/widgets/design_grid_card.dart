@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:textile_po/models/design_list_response.dart';
-import 'package:textile_po/utils/app_const.dart';
+import 'package:texmunimx/models/design_list_response.dart';
+import 'package:texmunimx/utils/app_const.dart';
 
 class DesignCard extends StatelessWidget {
   final DesignModel design;

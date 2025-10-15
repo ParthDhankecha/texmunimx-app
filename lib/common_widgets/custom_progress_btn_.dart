@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:textile_po/utils/app_colors.dart';
+import 'package:texmunimx/utils/app_colors.dart';
 
 class CustomProgressBtn extends StatelessWidget {
   const CustomProgressBtn({super.key});

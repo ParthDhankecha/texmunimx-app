@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/controllers/party_controller.dart';
-import 'package:textile_po/controllers/purchase_order_controller.dart';
-import 'package:textile_po/screens/party/create_party.dart';
-import 'package:textile_po/screens/party/widgets/party_card.dart';
-import 'package:textile_po/screens/party/widgets/search_party_appbar.dart';
+import 'package:texmunimx/controllers/party_controller.dart';
+import 'package:texmunimx/controllers/purchase_order_controller.dart';
+import 'package:texmunimx/screens/party/create_party.dart';
+import 'package:texmunimx/screens/party/widgets/party_card.dart';
+import 'package:texmunimx/screens/party/widgets/search_party_appbar.dart';
 
 class PartyListScreen extends StatefulWidget {
   final bool openForSelect;

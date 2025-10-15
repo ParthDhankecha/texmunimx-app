@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/common_widgets/custom_btn.dart';
-import 'package:textile_po/common_widgets/custom_btn_red.dart';
-import 'package:textile_po/common_widgets/input_field.dart';
-import 'package:textile_po/controllers/firm_controller.dart';
-import 'package:textile_po/models/firm_list_response.dart';
+import 'package:texmunimx/common_widgets/custom_btn.dart';
+import 'package:texmunimx/common_widgets/custom_btn_red.dart';
+import 'package:texmunimx/common_widgets/input_field.dart';
+import 'package:texmunimx/controllers/firm_controller.dart';
+import 'package:texmunimx/models/firm_list_response.dart';
 
 class CreateFirmScreen extends StatefulWidget {
   final FirmModel? firm;

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/common_widgets/app_text_styles.dart';
-import 'package:textile_po/common_widgets/custom_btn.dart';
-import 'package:textile_po/common_widgets/red_mark.dart';
-import 'package:textile_po/controllers/purchase_order_controller.dart';
-import 'package:textile_po/screens/create_design/design_list_screen.dart';
-import 'package:textile_po/utils/app_colors.dart';
-import 'package:textile_po/utils/app_const.dart';
+import 'package:texmunimx/common_widgets/app_text_styles.dart';
+import 'package:texmunimx/common_widgets/custom_btn.dart';
+import 'package:texmunimx/common_widgets/red_mark.dart';
+import 'package:texmunimx/controllers/purchase_order_controller.dart';
+import 'package:texmunimx/screens/create_design/design_list_screen.dart';
+import 'package:texmunimx/utils/app_colors.dart';
+import 'package:texmunimx/utils/app_const.dart';
 
 class BrowseDesign extends StatelessWidget {
   const BrowseDesign({super.key, required this.controller});

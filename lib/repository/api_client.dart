@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:textile_po/repository/api_exception.dart';
+import 'package:texmunimx/repository/api_exception.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:textile_po/repository/media_type_from_file.dart';
-import 'package:textile_po/utils/shared_pref.dart';
+import 'package:texmunimx/repository/media_type_from_file.dart';
+import 'package:texmunimx/utils/shared_pref.dart';
 
 enum ApiType { get, post, put, delete }
 

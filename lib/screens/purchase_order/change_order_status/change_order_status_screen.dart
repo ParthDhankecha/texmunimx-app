@@ -2,12 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/controllers/purchase_order_controller.dart';
-import 'package:textile_po/models/in_process_model.dart';
-import 'package:textile_po/models/order_status_enum.dart';
-import 'package:textile_po/models/purchase_order_list_response.dart';
-import 'package:textile_po/models/purchase_order_options_response.dart';
-import 'package:textile_po/utils/app_colors.dart';
+import 'package:texmunimx/controllers/purchase_order_controller.dart';
+import 'package:texmunimx/models/in_process_model.dart';
+import 'package:texmunimx/models/order_status_enum.dart';
+import 'package:texmunimx/models/purchase_order_list_response.dart';
+import 'package:texmunimx/models/purchase_order_options_response.dart';
+import 'package:texmunimx/utils/app_colors.dart';
 
 class UpdateStatusBottomSheet extends StatefulWidget {
   final int orderQuantity;

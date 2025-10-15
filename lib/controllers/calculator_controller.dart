@@ -2,15 +2,15 @@ import 'dart:developer';
 
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/common_widgets/show_error_snackbar.dart';
-import 'package:textile_po/common_widgets/show_success_snackbar.dart';
-import 'package:textile_po/models/cal_weft_model.dart';
-import 'package:textile_po/models/calculator_get_response.dart';
-import 'package:textile_po/models/design_list_response.dart';
-import 'package:textile_po/models/labour_cost_model.dart';
-import 'package:textile_po/repository/api_exception.dart';
-import 'package:textile_po/repository/calculator_repo.dart';
-import 'package:textile_po/screens/auth_screens/login_screen.dart';
+import 'package:texmunimx/common_widgets/show_error_snackbar.dart';
+import 'package:texmunimx/common_widgets/show_success_snackbar.dart';
+import 'package:texmunimx/models/cal_weft_model.dart';
+import 'package:texmunimx/models/calculator_get_response.dart';
+import 'package:texmunimx/models/design_list_response.dart';
+import 'package:texmunimx/models/labour_cost_model.dart';
+import 'package:texmunimx/repository/api_exception.dart';
+import 'package:texmunimx/repository/calculator_repo.dart';
+import 'package:texmunimx/screens/auth_screens/login_screen.dart';
 
 class CalculatorController extends GetxController implements GetxService {
   RxBool isLoading = false.obs;

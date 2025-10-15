@@ -3,22 +3,22 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/common_widgets/show_error_snackbar.dart';
-import 'package:textile_po/common_widgets/show_success_snackbar.dart';
-import 'package:textile_po/models/design_list_response.dart';
-import 'package:textile_po/models/get_po_response.dart';
-import 'package:textile_po/models/in_process_model.dart';
-import 'package:textile_po/models/job_po_model.dart';
-import 'package:textile_po/models/order_history_response.dart';
-import 'package:textile_po/models/order_status_enum.dart';
-import 'package:textile_po/models/party_list_response.dart';
-import 'package:textile_po/models/purchase_order_list_response.dart';
-import 'package:textile_po/models/purchase_order_options_response.dart';
-import 'package:textile_po/models/sari_matching_model.dart';
-import 'package:textile_po/repository/api_exception.dart';
-import 'package:textile_po/repository/purchase_order_repository.dart';
-import 'package:textile_po/screens/auth_screens/login_screen.dart';
-import 'package:textile_po/utils/date_formate_extension.dart';
+import 'package:texmunimx/common_widgets/show_error_snackbar.dart';
+import 'package:texmunimx/common_widgets/show_success_snackbar.dart';
+import 'package:texmunimx/models/design_list_response.dart';
+import 'package:texmunimx/models/get_po_response.dart';
+import 'package:texmunimx/models/in_process_model.dart';
+import 'package:texmunimx/models/job_po_model.dart';
+import 'package:texmunimx/models/order_history_response.dart';
+import 'package:texmunimx/models/order_status_enum.dart';
+import 'package:texmunimx/models/party_list_response.dart';
+import 'package:texmunimx/models/purchase_order_list_response.dart';
+import 'package:texmunimx/models/purchase_order_options_response.dart';
+import 'package:texmunimx/models/sari_matching_model.dart';
+import 'package:texmunimx/repository/api_exception.dart';
+import 'package:texmunimx/repository/purchase_order_repository.dart';
+import 'package:texmunimx/screens/auth_screens/login_screen.dart';
+import 'package:texmunimx/utils/date_formate_extension.dart';
 
 class PurchaseOrderController extends GetxController implements GetxService {
   PurchaseOrderController();
@@ -391,10 +391,11 @@ class PurchaseOrderController extends GetxController implements GetxService {
   }
 
   fetchDataWithId(String id) async {
+    log('fetchDataWithId id: $id');
     try {
       isLoading.value = true;
       var data = await repository.getPurchaseOrderByID(id: id);
-      setEditData(data);
+      await setEditData(data);
     } on ApiException catch (e) {
       log('error : $e');
       switch (e.statusCode) {
@@ -547,9 +548,12 @@ class PurchaseOrderController extends GetxController implements GetxService {
             )
             .toList();
       }
+      jobPoList.refresh();
     } else {
       jobPoList.value = [];
     }
+    sariMatchingList.refresh();
+    jobPoList.refresh();
   }
 
   resetInputs() {

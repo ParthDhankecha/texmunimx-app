@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:textile_po/models/firm_list_response.dart';
-import 'package:textile_po/models/user_list_response.dart';
-import 'package:textile_po/repository/api_client.dart';
-import 'package:textile_po/utils/app_const.dart';
-import 'package:textile_po/utils/shared_pref.dart';
+import 'package:texmunimx/models/firm_list_response.dart';
+import 'package:texmunimx/repository/api_client.dart';
+import 'package:texmunimx/utils/app_const.dart';
+import 'package:texmunimx/utils/shared_pref.dart';
 
 class FirmRepository {
   Sharedprefs sp = Get.find<Sharedprefs>();

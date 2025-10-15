@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:textile_po/models/in_process_model.dart';
+import 'package:texmunimx/models/in_process_model.dart';
 
 PurchaseOrderOptionsResponse purchaseOrderOptionsResponseFromMap(String str) =>
     PurchaseOrderOptionsResponse.fromMap(json.decode(str));

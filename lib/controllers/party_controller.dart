@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/common_widgets/show_success_snackbar.dart';
-import 'package:textile_po/models/party_list_response.dart';
-import 'package:textile_po/repository/api_exception.dart';
-import 'package:textile_po/repository/party_repo.dart';
-import 'package:textile_po/screens/auth_screens/login_screen.dart';
-import 'package:textile_po/utils/shared_pref.dart';
+import 'package:texmunimx/common_widgets/show_success_snackbar.dart';
+import 'package:texmunimx/models/party_list_response.dart';
+import 'package:texmunimx/repository/api_exception.dart';
+import 'package:texmunimx/repository/party_repo.dart';
+import 'package:texmunimx/screens/auth_screens/login_screen.dart';
+import 'package:texmunimx/utils/shared_pref.dart';
 
 class PartyController extends GetxController implements GetxService {
   PartyRepo partyRepo = Get.find<PartyRepo>();

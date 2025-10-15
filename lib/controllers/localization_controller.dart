@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/utils/shared_pref.dart';
+import 'package:texmunimx/utils/shared_pref.dart';
 
 class LocalizationController extends GetxController {
   final Sharedprefs sp = Get.find<Sharedprefs>();

@@ -1,7 +1,7 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/common_widgets/app_text_styles.dart';
+import 'package:texmunimx/common_widgets/app_text_styles.dart';
 
 class AnimatedActiveSwitch extends StatelessWidget {
   final bool current;

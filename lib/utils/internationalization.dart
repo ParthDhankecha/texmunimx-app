@@ -179,6 +179,9 @@ class AppTranslations extends Translations {
       'history': 'History',
       'updated_at': 'Updated At',
       'user': 'User',
+      'no_order_history_found': 'No Order History Found',
+      'view_details': 'View Details',
+      'order_history': 'Order History',
     },
     'hi_IN': {
       'language_change': 'भाषा बदलें',
@@ -335,6 +338,12 @@ class AppTranslations extends Translations {
       'are_you_sure_you_want_to_delete_firm':
           'क्या आप वाकई फर्म हटाना चाहते हैं?',
       'history': 'इतिहास',
+      'updated_at': 'अपडेटेड एट',
+
+      'order_history': 'ऑर्डर इतिहास',
+      'user': 'उपयोगकर्ता',
+      'no_order_history_found': 'कोई ऑर्डर इतिहास नहीं मिला',
+      'view_details': 'विवरण देखें',
     },
 
     'gu_IN': {
@@ -491,6 +500,11 @@ class AppTranslations extends Translations {
       'are_you_sure_you_want_to_delete_firm':
           'શું તમે ખરેખર ફર્મ કાઢી નાખવા માંગો છો?',
       'history': 'ઇતિહાસ',
+      'updated_at': 'અપડેટેડ એટ',
+      'order_history': 'ઓર્ડર ઇતિહાસ',
+      'user': 'વપરાશકર્તા',
+      'no_order_history_found': 'કોઈ ઓર્ડર ઇતિહાસ મળ્યો નથી',
+      'view_details': 'વિગતો જુઓ',
     },
   };
 }

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/common_widgets/address_input_field.dart';
-import 'package:textile_po/common_widgets/custom_btn.dart';
-import 'package:textile_po/common_widgets/custom_btn_red.dart';
-import 'package:textile_po/common_widgets/custom_progress_btn_.dart';
-import 'package:textile_po/common_widgets/error_row.dart';
-import 'package:textile_po/common_widgets/input_field.dart';
-import 'package:textile_po/controllers/party_controller.dart';
-import 'package:textile_po/models/party_list_response.dart';
-import 'package:textile_po/screens/party/widgets/delete_party_dialog.dart';
-import 'package:textile_po/utils/app_colors.dart';
+import 'package:texmunimx/common_widgets/address_input_field.dart';
+import 'package:texmunimx/common_widgets/custom_btn.dart';
+import 'package:texmunimx/common_widgets/custom_btn_red.dart';
+import 'package:texmunimx/common_widgets/custom_progress_btn_.dart';
+import 'package:texmunimx/common_widgets/error_row.dart';
+import 'package:texmunimx/common_widgets/input_field.dart';
+import 'package:texmunimx/controllers/party_controller.dart';
+import 'package:texmunimx/models/party_list_response.dart';
+import 'package:texmunimx/screens/party/widgets/delete_party_dialog.dart';
+import 'package:texmunimx/utils/app_colors.dart';
 
 class CreatePartyScreen extends StatefulWidget {
   final PartyModel? partyModel;

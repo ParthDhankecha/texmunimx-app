@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/common_widgets/app_text_styles.dart';
-import 'package:textile_po/common_widgets/custom_btn.dart';
-import 'package:textile_po/common_widgets/input_field.dart';
-import 'package:textile_po/controllers/calculator_controller.dart';
-import 'package:textile_po/models/labour_cost_model.dart';
-import 'package:textile_po/screens/calculator/labour/labour_cost_card.dart';
-import 'package:textile_po/utils/app_colors.dart';
+import 'package:texmunimx/common_widgets/app_text_styles.dart';
+import 'package:texmunimx/common_widgets/custom_btn.dart';
+import 'package:texmunimx/common_widgets/input_field.dart';
+import 'package:texmunimx/controllers/calculator_controller.dart';
+import 'package:texmunimx/models/labour_cost_model.dart';
+import 'package:texmunimx/screens/calculator/labour/labour_cost_card.dart';
+import 'package:texmunimx/utils/app_colors.dart';
 
 class LabourCostList extends StatefulWidget {
   const LabourCostList({super.key});

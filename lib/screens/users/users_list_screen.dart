@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/controllers/user_controller.dart';
-import 'package:textile_po/screens/users/create_users_screen.dart';
-import 'package:textile_po/screens/users/widgets/user_list_card.dart';
-import 'package:textile_po/utils/app_colors.dart';
+import 'package:texmunimx/controllers/user_controller.dart';
+import 'package:texmunimx/screens/users/create_users_screen.dart';
+import 'package:texmunimx/screens/users/widgets/user_list_card.dart';
+import 'package:texmunimx/utils/app_colors.dart';
 
 class UsersListScreen extends StatefulWidget {
   const UsersListScreen({super.key});

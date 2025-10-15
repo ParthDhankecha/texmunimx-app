@@ -2,12 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
-import 'package:textile_po/common_widgets/my_text_field.dart';
-import 'package:textile_po/controllers/purchase_order_controller.dart';
-import 'package:textile_po/models/order_history_response.dart';
-import 'package:textile_po/utils/app_colors.dart';
-import 'package:textile_po/utils/date_formate_extension.dart';
+import 'package:texmunimx/controllers/purchase_order_controller.dart';
+import 'package:texmunimx/models/order_history_response.dart';
+import 'package:texmunimx/screens/purchase_order/order_history/widget/order_details_sheet.dart';
+import 'package:texmunimx/utils/app_colors.dart';
+import 'package:texmunimx/utils/date_formate_extension.dart';
 
 class OrderHistoryCard extends StatefulWidget {
   const OrderHistoryCard({super.key, required this.order});
@@ -34,10 +33,44 @@ class _OrderHistoryCardState extends State<OrderHistoryCard> {
                 title: 'updated_at',
                 value: widget.order.eventDate.ddMMyyyyhhmma,
               ),
-              _buildRow(title: 'user', value: widget.order.userId),
+              _buildRow(
+                title: 'user',
+                value: widget.order.userId.capitalizeFirst!,
+              ),
               _buildRow(
                 title: 'moved_by',
                 value: widget.order.movedBy.capitalizeFirst!,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () => showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) {
+                        return OrderHistoryDetailsSheet(order: widget.order);
+                      },
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.mainColor.withAlpha(22),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Row(
+                        children: [
+                          Text('view_details'.tr),
+                          Icon(Icons.arrow_drop_down),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

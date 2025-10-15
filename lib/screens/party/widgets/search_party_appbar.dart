@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/common_widgets/search_field.dart';
-import 'package:textile_po/controllers/party_controller.dart';
-import 'package:textile_po/screens/party/create_party.dart';
-import 'package:textile_po/utils/app_colors.dart';
+import 'package:texmunimx/common_widgets/search_field.dart';
+import 'package:texmunimx/controllers/party_controller.dart';
+import 'package:texmunimx/screens/party/create_party.dart';
+import 'package:texmunimx/utils/app_colors.dart';
 
 AppBar searchPartyAppbar() {
   return AppBar(

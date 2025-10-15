@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/common_widgets/custom_btn_red.dart';
-import 'package:textile_po/controllers/party_controller.dart';
+import 'package:texmunimx/common_widgets/custom_btn_red.dart';
+import 'package:texmunimx/controllers/party_controller.dart';
 
 class DeletePartyDialog extends StatelessWidget {
   const DeletePartyDialog({super.key});

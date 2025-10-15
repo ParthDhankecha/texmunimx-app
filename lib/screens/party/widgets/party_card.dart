@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_po/models/party_list_response.dart';
+import 'package:texmunimx/models/party_list_response.dart';
 
 class PartyCard extends StatelessWidget {
   const PartyCard({
