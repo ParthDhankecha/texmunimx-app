@@ -7,6 +7,7 @@ import 'package:textile_po/screens/purchase_order/widgets/in_process_card.dart';
 import 'package:textile_po/screens/purchase_order/widgets/purchase_order_card.dart';
 import 'package:textile_po/screens/purchase_order/widgets/ready_to_dispatch_card.dart';
 import 'package:textile_po/utils/app_colors.dart';
+import 'package:textile_po/utils/shared_pref.dart';
 
 class PurchaseOrderListPage extends StatefulWidget {
   const PurchaseOrderListPage({super.key});
@@ -18,6 +19,7 @@ class PurchaseOrderListPage extends StatefulWidget {
 class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
     with TickerProviderStateMixin {
   final PurchaseOrderController controller = Get.find();
+  final Sharedprefs sp = Get.find<Sharedprefs>();
   late final TabController tabController;
 
   @override
@@ -88,6 +90,8 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
                   order: order,
                   design: design,
                   party: party,
+                  isEditvisible:
+                      sp.userRole == sp.admin || sp.userRole == sp.owner,
                 );
               },
             ),
@@ -98,7 +102,7 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
             () => ListView.builder(
               itemCount: controller.inProcessList.length,
               itemBuilder: (context, index) {
-                final order = controller.purchaseOrdersList[index];
+                final order = controller.inProcessList[index];
 
                 final design = controller.designList.firstWhere(
                   (d) => d.id == order.designId,

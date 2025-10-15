@@ -167,6 +167,18 @@ class AppTranslations extends Translations {
       'ready_to_dispatch_quantity': 'Ready to Dispatch Quantity',
       'completed_quantity': 'Completed Quantity',
       'delivered_quantity': 'Delivered Quantity',
+      'note': 'Note',
+      'firms': 'Firms',
+      'add_firm': 'Add Firm',
+      'edit_firm': 'Edit Firm',
+      'firm_enter_name': 'Enter Firm Name',
+      'firm_name_required': 'Firm Name is required.',
+      'delete_firm': 'Delete Firm',
+      'are_you_sure_you_want_to_delete_firm':
+          'Are you sure you want to delete firm?',
+      'history': 'History',
+      'updated_at': 'Updated At',
+      'user': 'User',
     },
     'hi_IN': {
       'language_change': 'भाषा बदलें',
@@ -311,7 +323,20 @@ class AppTranslations extends Translations {
       'ready_to_dispatch_quantity': 'डिस्पैच के लिए तैयार मात्रा',
       'completed_quantity': 'पूर्ण मात्रा',
       'delivered_quantity': 'वितरित मात्रा',
+      'note': 'नोट',
+
+      'firms': 'फर्म',
+      'add_firm': 'फर्म जोड़ें',
+      'edit_firm': 'फर्म संपादित करें',
+      'firm_enter_name': 'फर्म का नाम दर्ज करें',
+      'firm_name_required': 'फर्म का नाम आवश्यक है।',
+
+      'delete_firm': 'फर्म हटाएं',
+      'are_you_sure_you_want_to_delete_firm':
+          'क्या आप वाकई फर्म हटाना चाहते हैं?',
+      'history': 'इतिहास',
     },
+
     'gu_IN': {
       'language_change': 'ભાષા બદલો',
       'english': 'અંગ્રેજી',
@@ -455,6 +480,17 @@ class AppTranslations extends Translations {
       'ready_to_dispatch_quantity': 'રવાના થવા માટે તૈયાર જથ્થો',
       'completed_quantity': 'પૂર્ણ જથ્થો',
       'delivered_quantity': 'પહોંચાડાયેલું જથ્થો',
+      'note': 'નોંધ',
+
+      'firms': 'ફર્મ',
+      'add_firm': 'ફર્મ ઉમેરો',
+      'edit_firm': 'ફર્મ સંપાદિત કરો',
+      'firm_enter_name': 'ફર્મનું નામ દાખલ કરો',
+      'firm_name_required': 'ફર્મનું નામ જરૂરી છે.',
+      'delete_firm': 'ફર્મ કાઢી નાખો',
+      'are_you_sure_you_want_to_delete_firm':
+          'શું તમે ખરેખર ફર્મ કાઢી નાખવા માંગો છો?',
+      'history': 'ઇતિહાસ',
     },
   };
 }

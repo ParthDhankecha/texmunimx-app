@@ -209,6 +209,7 @@ class ApiClient extends GetxService {
 
     try {
       response = await http.put(url, body: jsonBody, headers: finalHeaders);
+      log('res : ${response.body}');
       switch (response.statusCode) {
         case 200:
         case 201:
@@ -223,7 +224,7 @@ class ApiClient extends GetxService {
         default:
           throw ApiException(
             statusCode: response.statusCode,
-            message: response.reasonPhrase ?? '',
+            message: jsonDecode(response.body)['message'] ?? '',
           );
       }
     } catch (e) {

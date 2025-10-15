@@ -210,6 +210,21 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
               ],
             ),
             const SizedBox(height: 6),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                MyText('note'),
+                Text(
+                  widget.order.readyToDispatch?.remarks ?? 'N/A',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: AppColors.mainColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

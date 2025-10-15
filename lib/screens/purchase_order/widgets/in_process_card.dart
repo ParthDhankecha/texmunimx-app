@@ -204,6 +204,21 @@ class _InProcessCardState extends State<InProcessCard> {
               ],
             ),
             const SizedBox(height: 6),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                MyText('note'),
+                Text(
+                  widget.order.inProcess?.remarks ?? 'N/A',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: AppColors.mainColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

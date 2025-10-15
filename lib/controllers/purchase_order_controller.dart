@@ -9,6 +9,7 @@ import 'package:textile_po/models/design_list_response.dart';
 import 'package:textile_po/models/get_po_response.dart';
 import 'package:textile_po/models/in_process_model.dart';
 import 'package:textile_po/models/job_po_model.dart';
+import 'package:textile_po/models/order_history_response.dart';
 import 'package:textile_po/models/order_status_enum.dart';
 import 'package:textile_po/models/party_list_response.dart';
 import 'package:textile_po/models/purchase_order_list_response.dart';
@@ -58,6 +59,9 @@ class PurchaseOrderController extends GetxController implements GetxService {
   RxBool hasMore = false.obs;
 
   RxString err = ''.obs;
+
+  //order history
+  RxList<OrderHistory> orderHistoryList = RxList();
 
   //orer type
   List<String> orderTypes = ['Garment', 'Sari'];
@@ -298,6 +302,25 @@ class PurchaseOrderController extends GetxController implements GetxService {
       designList.value = data.designs;
 
       partyList.value = data.parties;
+    } on ApiException catch (e) {
+      log('error : $e');
+      switch (e.statusCode) {
+        case 401:
+          Get.offAll(() => LoginScreen());
+          break;
+        default:
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  fatchOrderHistoryById(String id) async {
+    try {
+      isLoading.value = true;
+      var data = await repository.getOrderHistory(id: id);
+      orderHistoryList.value = data.orderHistory;
+      orderHistoryList.refresh();
     } on ApiException catch (e) {
       log('error : $e');
       switch (e.statusCode) {

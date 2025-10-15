@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/models/get_po_response.dart';
+import 'package:textile_po/models/order_history_response.dart';
 import 'package:textile_po/models/purchase_order_list_response.dart';
 import 'package:textile_po/models/purchase_order_options_response.dart';
 import 'package:textile_po/repository/api_client.dart';
@@ -162,5 +163,22 @@ class PurchaseOrderRepository {
 
     log('data : $data');
     return baseModelFromMap(data).code == "OK";
+  }
+
+  //get order history
+  Future<OrderHistoryListModel> getOrderHistory({String? id}) async {
+    var endPoint = AppConst.orderHistory;
+
+    var data = await apiClient.request(
+      '$endPoint/$id',
+      body: {},
+      headers: {'authorization': sp.userToken},
+    );
+
+    if (kDebugMode) {
+      print('token : ${sp.userToken}');
+      print('data : $data');
+    }
+    return orderHistoryResponseFromMap(data).data;
   }
 }

@@ -1,6 +1,6 @@
 class AppConst {
   //base url
-  static String baseUrl = 'http://192.168.29.2:3001/api/v1/device/';
+  static String baseUrl = 'http://192.168.29.162:3001/api/v1/device/';
 
   static String imageBaseUrl = '';
 
@@ -27,7 +27,6 @@ class AppConst {
 
   //purchase orders
   static String purchaseOrderCreate = 'purchase-order/create'; //post
-  // panna, process, designId, partyId, quantity, rate, optinal - deliveryDate, highPrority
   static String purchaseOrderList = 'purchase-order/list'; // post
   static String purchaseOrderUpdate = 'purchase-order/update'; // put - {id}
   static String purchaseOrderDelete = 'purchase-order/delete'; // delete - {id}
@@ -35,11 +34,18 @@ class AppConst {
   static String purchaseOrderChangeStatus =
       'purchase-order/change-status'; //put with id
   static String purchaseOrder = 'purchase-order'; // get with id
+  static String orderHistory = 'purchase-order/history'; // get
+
+  static String firmsCreate = 'firm/create';
+  static String firmsUpdate = 'firm/update';
+  static String firmsList = 'firm/list'; // post - list
+  static String firmsDelete = 'firm/delete'; // delete - {id}
 
   //calculator
   //design/design-details/{id}  - get
   static String designDetails = 'design-detail'; // get with id
   static String calculatorSave = 'design-detail/upsert'; // get with id
+
   //designId,
 
   static String getAssetPng(String name) {

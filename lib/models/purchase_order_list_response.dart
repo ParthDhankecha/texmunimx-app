@@ -72,6 +72,7 @@ class PurchaseOrderModel {
   dynamic completedAt;
   DateTime? deliveryDate;
   bool? isHighPriority;
+  String? note;
 
   //in process
   InProcess? inProcess;
@@ -117,6 +118,7 @@ class PurchaseOrderModel {
     this.isJobPo = false,
     this.jobUser,
     this.matching,
+    this.note,
   });
 
   factory PurchaseOrderModel.fromMap(Map<String, dynamic> json) =>
@@ -162,6 +164,7 @@ class PurchaseOrderModel {
         matching: json["matching"] == null
             ? null
             : Matching.fromMap(json["matching"]),
+        note: json["note"] ?? '',
       );
 
   Map<String, dynamic> toMap() => {

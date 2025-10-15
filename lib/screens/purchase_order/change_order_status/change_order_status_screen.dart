@@ -72,35 +72,6 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
       // Form is valid, perform the action
       final quantity = int.tryParse(_quantityController.text);
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Processing Data')));
-
-      /*
-
-
-   
-    "status": "delivered",
-    "quantity": 1,
-    "machineNo": "",
-    "matchingObjId": "68ee05b8e9d227563155f3ee",
-    "remarks": "finish",
-    "sourceId": "68ee1ce4e9d227563155f586"
-
-
-    {
-    "status": "delivered",
-    "quantity": 1,
-    "machineNo": "",
-    "matchingObjId": "68e8f4922dd6ff744784786f",
-    "remarks": "",
-    "sourceId": "68ecd994643635a23c55d7a9",
-    "firmId": "68e8f55f2dd6ff744784787b",
-    "userId": "68e8a6dbb7c2fd6a52583820"
-}
-
-      */
-
       //moving from pending to in process
       log('ready id = ${widget.po.readyToDispatch?.id}');
       log('current = ${widget.currentStatus}');
@@ -194,7 +165,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 14),
 
                 // Quantity headers
                 Row(
@@ -226,7 +197,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 14),
 
                 // Move To field (pre-filled and not editable)
                 Text(
@@ -244,7 +215,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                     fillColor: Color.fromARGB(255, 240, 240, 240),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
 
                 // Quantity field with validation
                 Text('Quantity *', style: TextStyle(color: Colors.grey[700])),
@@ -270,7 +241,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
 
                 // Firm Name dropdown
                 widget.moveTo == OrderStatus.inProcess && !widget.isJobPo
@@ -341,7 +312,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                     border: OutlineInputBorder(),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 // Remarks field
                 Text('Remarks', style: TextStyle(color: Colors.grey[700])),
                 const SizedBox(height: 8),
@@ -353,7 +324,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                     border: OutlineInputBorder(),
                   ),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 10),
 
                 // Action buttons
                 Row(
@@ -363,7 +334,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                         onPressed: () => Navigator.pop(context),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          side: const BorderSide(color: Colors.blue),
+                          side: BorderSide(color: AppColors.mainColor),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -376,7 +347,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                       child: ElevatedButton(
                         onPressed: _saveStatus,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
+                          backgroundColor: AppColors.mainColor,
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
@@ -388,6 +359,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 10),
               ],
             ),
           ),

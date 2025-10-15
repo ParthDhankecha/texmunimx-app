@@ -60,7 +60,9 @@ class PurchaseOptionsModel {
         parties: List<Party>.from(json["parties"].map((x) => Party.fromMap(x))),
         firms: List<FirmId>.from(json["firms"].map((x) => FirmId.fromMap(x))),
         users: List<User>.from(json["users"].map((x) => User.fromMap(x))),
-        jobUsers: List<User>.from(json["jobUsers"].map((x) => User.fromMap(x))),
+        jobUsers: json["jobUsers"] != null
+            ? List<User>.from(json["jobUsers"].map((x) => User.fromMap(x)))
+            : [],
       );
 
   Map<String, dynamic> toMap() => {

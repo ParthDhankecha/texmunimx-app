@@ -1,5 +1,6 @@
 import 'package:textile_po/controllers/calculator_controller.dart';
 import 'package:textile_po/controllers/create_design_controller.dart';
+import 'package:textile_po/controllers/firm_controller.dart';
 import 'package:textile_po/controllers/home_controller.dart';
 import 'package:textile_po/controllers/localization_controller.dart';
 import 'package:textile_po/controllers/login_controllers.dart';
@@ -10,6 +11,7 @@ import 'package:textile_po/controllers/user_controller.dart';
 import 'package:textile_po/repository/api_client.dart';
 import 'package:textile_po/repository/calculator_repo.dart';
 import 'package:textile_po/repository/create_design_repo.dart';
+import 'package:textile_po/repository/firm_repository.dart';
 import 'package:textile_po/repository/login_repo.dart';
 import 'package:textile_po/repository/party_repo.dart';
 import 'package:textile_po/repository/purchase_order_repository.dart';
@@ -35,6 +37,7 @@ Future<void> init() async {
   Get.lazyPut(() => PurchaseOrderRepository());
   Get.lazyPut(() => CalculatorRepo());
   Get.lazyPut(() => UsersRepository());
+  Get.lazyPut(() => FirmRepository());
 
   //language
   Get.lazyPut(() => LocalizationController());
@@ -53,4 +56,5 @@ Future<void> init() async {
   Get.lazyPut(() => PurchaseOrderController());
   Get.lazyPut(() => CalculatorController());
   Get.lazyPut(() => UserController());
+  Get.lazyPut(() => FirmController());
 }

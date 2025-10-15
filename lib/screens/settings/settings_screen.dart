@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textile_po/screens/calculator/calculator_screen.dart';
 import 'package:textile_po/screens/create_design/design_list_screen.dart';
+import 'package:textile_po/screens/firms/firm_list_screen.dart';
 import 'package:textile_po/screens/party/party_list_screen.dart';
 import 'package:textile_po/screens/settings/widgets/language_bottom_sheet.dart';
 import 'package:textile_po/screens/settings/widgets/logout_dialog.dart';
@@ -36,34 +37,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             child: Column(
               children: [
-                SettingsCard(
-                  icon: Icons.design_services,
-                  iconColor: Colors.blue,
-                  title: 'browse_design'.tr,
-                  onTap: () {
-                    Get.to(() => const DesignListScreen());
-                  },
+                //only for owner and admin
+                Column(
+                  children: [
+                    if (sp.userRole == sp.owner || sp.userRole == sp.admin) ...[
+                      SettingsCard(
+                        icon: Icons.business,
+                        iconColor: Colors.blueAccent,
+                        title: 'firms'.tr,
+                        onTap: () {
+                          Get.to(() => const FirmListScreen());
+                        },
+                      ),
+                      _buildDivider(),
+                      SettingsCard(
+                        icon: Icons.design_services,
+                        iconColor: Colors.blue,
+                        title: 'browse_design'.tr,
+                        onTap: () {
+                          Get.to(() => const DesignListScreen());
+                        },
+                      ),
+                      _buildDivider(),
+                      SettingsCard(
+                        icon: Icons.people,
+                        iconColor: Colors.blueGrey,
+                        title: 'browse_party'.tr,
+                        onTap: () {
+                          Get.to(() => const PartyListScreen());
+                        },
+                      ),
+                      _buildDivider(),
+                      SettingsCard(
+                        icon: Icons.calculate,
+                        iconColor: Colors.orange,
+                        title: 'calculator'.tr,
+                        onTap: () {
+                          Get.to(() => const CalculatorScreen());
+                        },
+                      ),
+                    ],
+                  ],
                 ),
-                _buildDivider(),
-                SettingsCard(
-                  icon: Icons.people,
-                  iconColor: Colors.blueGrey,
-                  title: 'browse_party'.tr,
-                  onTap: () {
-                    Get.to(() => const PartyListScreen());
-                  },
-                ),
-
-                _buildDivider(),
-                SettingsCard(
-                  icon: Icons.calculate,
-                  iconColor: Colors.orange,
-                  title: 'calculator'.tr,
-                  onTap: () {
-                    Get.to(() => const CalculatorScreen());
-                  },
-                ),
-
                 _buildDivider(),
                 if (sp.userRole == sp.owner)
                   Column(

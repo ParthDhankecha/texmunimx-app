@@ -6,6 +6,7 @@ import 'package:textile_po/models/purchase_order_list_response.dart';
 import 'package:textile_po/models/purchase_order_options_response.dart';
 import 'package:textile_po/screens/purchase_order/change_order_status/change_order_status_screen.dart';
 import 'package:textile_po/screens/purchase_order/create_po/create_purchase_order.dart';
+import 'package:textile_po/screens/purchase_order/order_history/order_history_list.dart';
 import 'package:textile_po/screens/purchase_order/widgets/status_tag_row.dart';
 import 'package:textile_po/utils/app_colors.dart';
 import 'package:textile_po/utils/app_const.dart';
@@ -15,12 +16,14 @@ class PurchaseOrderCard extends StatelessWidget {
   final PurchaseOrderModel order;
   final Design design;
   final Party party;
+  final bool isEditvisible;
 
   const PurchaseOrderCard({
     super.key,
     required this.order,
     required this.design,
     required this.party,
+    this.isEditvisible = true,
   });
 
   @override
@@ -141,6 +144,15 @@ class PurchaseOrderCard extends StatelessWidget {
             ),
 
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                MyText('note'),
+                Text(order.note ?? 'N/A', style: const TextStyle(fontSize: 14)),
+              ],
+            ),
+            const SizedBox(height: 4),
+
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
@@ -165,11 +177,20 @@ class PurchaseOrderCard extends StatelessWidget {
                   },
                   child: MyText('in_progress'),
                 ),
+                isEditvisible
+                    ? TextButton(
+                        onPressed: () {
+                          Get.to(() => CreatePurchaseOrder(po: order));
+                        },
+                        child: MyText('edit'),
+                      )
+                    : SizedBox.shrink(),
+
                 TextButton(
                   onPressed: () {
-                    Get.to(() => CreatePurchaseOrder(po: order));
+                    Get.to(() => OrderHistoryListScreen(id: order.id));
                   },
-                  child: MyText('edit'),
+                  child: MyText('history'),
                 ),
               ],
             ),
