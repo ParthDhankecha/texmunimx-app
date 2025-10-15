@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    homeController.selectedIndex.value = 0;
+    homeController.selectedIndex.value = 1;
   }
 
   @override

@@ -28,7 +28,7 @@ class SplashController extends GetxController implements GetxService {
     });
   }
 
-  getDEfaultConfig() async {
+  getDefaultConfig() async {
     try {
       var response = await apiClient.request(AppConst.defaultConfig);
       var data = jsonDecode(response);
