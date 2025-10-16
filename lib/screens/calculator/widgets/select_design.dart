@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:texmunimx/common_widgets/app_text_styles.dart';
 import 'package:texmunimx/common_widgets/custom_btn.dart';
+import 'package:texmunimx/common_widgets/custom_network_image.dart';
 import 'package:texmunimx/controllers/calculator_controller.dart';
 import 'package:texmunimx/models/design_list_response.dart';
 import 'package:texmunimx/screens/create_design/design_list_screen.dart';
@@ -24,23 +25,13 @@ class SelectDesign extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Design/Party image
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    AppConst.imageBaseUrl +
-                        (controller.selectedDesign.value?.designImage ?? ''),
-                    width: 60,
-                    height: 60,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      width: 60,
-                      height: 60,
-                      color: Colors.grey[200],
-                      child: Image.network(
-                        AppConst.imageBaseUrl + AppConst.placeHolderImage,
-                      ),
-                    ),
-                  ),
+                CustomNetworkImage(
+                  imageUrl:
+                      AppConst.imageBaseUrl +
+                      (controller.selectedDesign.value?.designImage ?? ''),
+                  height: 80,
+                  width: 80,
+                  fit: BoxFit.cover,
                 ),
                 SizedBox(width: 16),
                 controller.selectedDesign.value != null

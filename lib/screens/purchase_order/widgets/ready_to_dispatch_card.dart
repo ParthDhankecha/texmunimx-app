@@ -75,6 +75,16 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
                     ],
                   ),
                 ),
+                Text(
+                  widget.order.poNumber.isNotEmpty
+                      ? widget.order.poNumber
+                      : 'N/A',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: AppColors.mainColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 10),

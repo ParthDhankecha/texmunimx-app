@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:texmunimx/common_widgets/app_text_styles.dart';
 import 'package:texmunimx/common_widgets/custom_btn.dart';
+import 'package:texmunimx/common_widgets/custom_network_image.dart';
 import 'package:texmunimx/common_widgets/red_mark.dart';
 import 'package:texmunimx/controllers/purchase_order_controller.dart';
 import 'package:texmunimx/screens/create_design/design_list_screen.dart';
@@ -40,23 +41,21 @@ class BrowseDesign extends StatelessWidget {
                               decoration: BoxDecoration(
                                 color: Colors.black,
                                 borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                  image: Image.network(
+                              ),
+                              child: CustomNetworkImage(
+                                imageUrl:
                                     controller
-                                            .selectedDesign
-                                            .value!
-                                            .designImage
-                                            .isNotEmpty
-                                        ? AppConst.imageBaseUrl +
-                                              controller
-                                                  .selectedDesign
-                                                  .value!
-                                                  .designImage
-                                        : AppConst.imageBaseUrl +
-                                              AppConst.placeHolderImage,
-                                  ).image,
-                                  fit: BoxFit.cover,
-                                ),
+                                        .selectedDesign
+                                        .value!
+                                        .designImage
+                                        .isNotEmpty
+                                    ? AppConst.imageBaseUrl +
+                                          controller
+                                              .selectedDesign
+                                              .value!
+                                              .designImage
+                                    : AppConst.imageBaseUrl +
+                                          AppConst.placeHolderImage,
                               ),
                             ),
 

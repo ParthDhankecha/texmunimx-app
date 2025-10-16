@@ -42,26 +42,6 @@ class PurchaseOrderCard extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Design/Party image
-                // ClipRRect(
-                //   borderRadius: BorderRadius.circular(8.0),
-                //   child: Image.network(
-                //     order.designId.isNotEmpty
-                //         ? AppConst.imageBaseUrl + design.designImage
-                //         : 'https://placehold.co/100x100',
-                //     width: 50,
-                //     height: 50,
-                //     fit: BoxFit.cover,
-                //     errorBuilder: (context, error, stackTrace) => Container(
-                //       width: 60,
-                //       height: 60,
-                //       color: Colors.grey[200],
-                //       child: Image.network(
-                //         AppConst.imageBaseUrl + AppConst.placeHolderImage,
-                //       ),
-                //     ),
-                //   ),
-                // ),
                 CustomNetworkImage(
                   imageUrl: AppConst.imageBaseUrl + design.designImage,
                   height: 60,
@@ -83,6 +63,14 @@ class PurchaseOrderCard extends StatelessWidget {
                         ),
                       ),
                     ],
+                  ),
+                ),
+                Text(
+                  order.poNumber.isNotEmpty ? order.poNumber : 'N/A',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: AppColors.mainColor,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],

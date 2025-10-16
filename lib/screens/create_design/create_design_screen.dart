@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:texmunimx/common_widgets/custom_btn.dart';
 import 'package:texmunimx/common_widgets/custom_btn_red.dart';
+import 'package:texmunimx/common_widgets/custom_network_image.dart';
 import 'package:texmunimx/common_widgets/custom_progress_btn_.dart';
 import 'package:texmunimx/common_widgets/error_row.dart';
 import 'package:texmunimx/common_widgets/input_field.dart';
@@ -184,8 +185,9 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
                                           Expanded(
                                             child: SizedBox(
                                               height: 140,
-                                              child: Image.network(
-                                                AppConst.imageBaseUrl +
+                                              child: CustomNetworkImage(
+                                                imageUrl:
+                                                    AppConst.imageBaseUrl +
                                                     controller
                                                         .selectedDesignImage
                                                         .value,

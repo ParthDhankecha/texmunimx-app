@@ -28,11 +28,7 @@ class _WeftScreenState extends State<WeftScreen> {
             children: [
               Row(
                 children: [
-                  MyText(
-                    'Total Weft Cost'.tr,
-                    append: ' (₹)',
-                    style: bodyStyle,
-                  ),
+                  MyText('total_weft_cost', append: ' (₹)', style: bodyStyle),
                 ],
               ),
 

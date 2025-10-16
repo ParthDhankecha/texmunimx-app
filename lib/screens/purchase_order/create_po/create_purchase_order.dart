@@ -112,7 +112,6 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                                   if (value != null) {
                                     controller.selectedOrderType.value = value;
                                     controller.jobPoList.value = [];
-                                    controller.generateJobPoDefaultBoxes();
 
                                     if (value == controller.orderTypes[1]) {
                                       controller.generateDefaultBoxes();

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:texmunimx/common_widgets/custom_network_image.dart';
 import 'package:texmunimx/models/design_list_response.dart';
@@ -14,6 +16,7 @@ class DesignCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log('image - ${AppConst.imageBaseUrl + design.designImage}');
     return InkWell(
       onTap: onDesignSelect,
       child: Card(
