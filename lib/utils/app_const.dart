@@ -1,6 +1,7 @@
 class AppConst {
   //base url
-  static String baseUrl = 'http://13.233.223.160:3001/api/v1/device/';
+  //static String baseUrl = 'http://13.233.223.160:3001/api/v1/device/';
+  static String baseUrl = 'http://192.168.29.162:3001/api/v1/device/';
 
   static String imageBaseUrl = '';
 

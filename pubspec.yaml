@@ -34,6 +34,7 @@ dependencies:
   http_parser: ^4.1.2
   intl: ^0.20.2
   animated_toggle_switch: ^0.8.5
+  cached_network_image: ^3.4.1
 
 
 dev_dependencies:

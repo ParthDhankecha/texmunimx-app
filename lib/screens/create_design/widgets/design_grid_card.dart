@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:texmunimx/common_widgets/custom_network_image.dart';
 import 'package:texmunimx/models/design_list_response.dart';
 import 'package:texmunimx/utils/app_const.dart';
 
@@ -24,24 +25,11 @@ class DesignCard extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            // Background Image
-            FadeInImage(
-              //placeholder: const AssetImage('assets/placeholder.png'),
-              placeholder: AssetImage('assets/images/placeholder.png'),
-              image: NetworkImage(
-                design.designImage.isEmpty
-                    ? AppConst.imageBaseUrl + AppConst.placeHolderImage
-                    : AppConst.imageBaseUrl + design.designImage,
-              ),
+            CustomNetworkImage(
+              imageUrl: design.designImage.isEmpty
+                  ? AppConst.imageBaseUrl + AppConst.placeHolderImage
+                  : AppConst.imageBaseUrl + design.designImage,
               fit: BoxFit.cover,
-              // imageErrorBuilder: (context, error, stackTrace) {
-              //   return Container(
-              //     color: Colors.grey[200],
-              //     child: Center(
-              //       child: Icon(Icons.broken_image, color: Colors.grey[400]),
-              //     ),
-              //   );
-              // },
             ),
             // Gradient Overlay to improve text readability
             Container(
@@ -49,7 +37,7 @@ class DesignCard extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [Colors.transparent, Colors.black54],
+                  colors: [Colors.transparent, Colors.black87],
                 ),
               ),
             ),
@@ -70,13 +58,9 @@ class DesignCard extends StatelessWidget {
                   ),
                   Text(
                     design.designNumber,
-                    style: const TextStyle(color: Colors.white70, fontSize: 16),
+                    style: const TextStyle(color: Colors.white, fontSize: 16),
                   ),
                   const SizedBox(height: 8.0),
-                  const Text(
-                    'Ready for production',
-                    style: TextStyle(color: Colors.white, fontSize: 14),
-                  ),
                 ],
               ),
             ),

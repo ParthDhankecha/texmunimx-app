@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:texmunimx/common_widgets/custom_network_image.dart';
 import 'package:texmunimx/common_widgets/my_text_field.dart';
 import 'package:texmunimx/models/order_status_enum.dart';
 import 'package:texmunimx/models/purchase_order_list_response.dart';
@@ -42,24 +43,30 @@ class PurchaseOrderCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Design/Party image
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    order.designId.isNotEmpty
-                        ? AppConst.imageBaseUrl + design.designImage
-                        : 'https://placehold.co/100x100',
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      width: 60,
-                      height: 60,
-                      color: Colors.grey[200],
-                      child: Image.network(
-                        AppConst.imageBaseUrl + AppConst.placeHolderImage,
-                      ),
-                    ),
-                  ),
+                // ClipRRect(
+                //   borderRadius: BorderRadius.circular(8.0),
+                //   child: Image.network(
+                //     order.designId.isNotEmpty
+                //         ? AppConst.imageBaseUrl + design.designImage
+                //         : 'https://placehold.co/100x100',
+                //     width: 50,
+                //     height: 50,
+                //     fit: BoxFit.cover,
+                //     errorBuilder: (context, error, stackTrace) => Container(
+                //       width: 60,
+                //       height: 60,
+                //       color: Colors.grey[200],
+                //       child: Image.network(
+                //         AppConst.imageBaseUrl + AppConst.placeHolderImage,
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                CustomNetworkImage(
+                  imageUrl: AppConst.imageBaseUrl + design.designImage,
+                  height: 60,
+                  width: 60,
+                  fit: BoxFit.cover,
                 ),
                 const SizedBox(width: 16),
                 // Party Name and Company

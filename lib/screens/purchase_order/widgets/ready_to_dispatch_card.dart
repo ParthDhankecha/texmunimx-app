@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:texmunimx/common_widgets/custom_network_image.dart';
 import 'package:texmunimx/common_widgets/my_text_field.dart';
 import 'package:texmunimx/controllers/purchase_order_controller.dart';
 import 'package:texmunimx/models/order_status_enum.dart';
@@ -49,22 +50,28 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Design/Party image
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    widget.order.designId.isNotEmpty
-                        ? AppConst.imageBaseUrl + widget.design.designImage
-                        : 'https://placehold.co/100x100',
-                    width: 42,
-                    height: 42,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      width: 42,
-                      height: 42,
-                      color: Colors.grey[200],
-                      child: const Icon(Icons.broken_image, color: Colors.grey),
-                    ),
-                  ),
+                // ClipRRect(
+                //   borderRadius: BorderRadius.circular(8.0),
+                //   child: Image.network(
+                //     widget.order.designId.isNotEmpty
+                //         ? AppConst.imageBaseUrl + widget.design.designImage
+                //         : 'https://placehold.co/100x100',
+                //     width: 42,
+                //     height: 42,
+                //     fit: BoxFit.cover,
+                //     errorBuilder: (context, error, stackTrace) => Container(
+                //       width: 42,
+                //       height: 42,
+                //       color: Colors.grey[200],
+                //       child: const Icon(Icons.broken_image, color: Colors.grey),
+                //     ),
+                //   ),
+                // ),
+                CustomNetworkImage(
+                  imageUrl: AppConst.imageBaseUrl + widget.design.designImage,
+                  height: 60,
+                  width: 60,
+                  fit: BoxFit.cover,
                 ),
                 const SizedBox(width: 16),
                 // Party Name and Company
