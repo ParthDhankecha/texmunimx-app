@@ -73,172 +73,181 @@ class _CreateUsersScreenState extends State<CreateUsersScreen> {
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Obx(
-                        () => CustomDropdown<RolesModel>(
-                          title: 'user_role'.tr,
-                          isRequired: true,
-                          selectedValue: selectedRoleId.value == -1
-                              ? null
-                              : userController.userRole.firstWhere(
-                                  (role) => role.id == selectedRoleId.value,
-                                  orElse: () => RolesModel(id: -1, type: ''),
-                                ),
-                          items: userController.userRole,
-                          onChanged: (RolesModel? newValue) {
-                            if (newValue != null) {
-                              selectedRoleId.value = newValue.id;
-                            } else {
-                              selectedRoleId.value = -1; // Reset selection
-                            }
-                          },
-                          itemLabelBuilder: (RolesModel item) => item.type,
-                          placeholderText: 'select_role'.tr,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      _buildInputField(
-                        label: 'name'.tr,
-                        hintText: 'enter_name'.tr,
-                        keyboardType: TextInputType.name,
-                        controller: nameController,
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return 'Name is required';
-                          }
-                          return null;
-                        },
-                      ),
-                      _buildInputField(
-                        label: 'email'.tr,
-                        hintText: 'enter_email'.tr,
-                        controller: emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return 'Email is required';
-                          }
-                          // Simple email validation
-                          if (!GetUtils.isEmail(value.trim())) {
-                            return 'Please enter a valid email';
-                          }
-                          return null;
-                        },
-                      ),
-                      _buildPhoneField(
-                        label: 'phone'.tr,
-                        hintText: 'mobile_number'.tr,
-                        controller: phoneController,
-                      ),
-                      _buildPassword(
-                        controller: passwordController,
-                        hintText: 'enter_password'.tr,
-                      ),
-                      Obx(
-                        () => UserActiveSwitch(
-                          isActive: isActive.value,
-                          onChanged: (value) {
-                            isActive.value = value;
-                          },
-                        ),
-                      ),
+                  child: Container(
+                    padding: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
 
-                      SizedBox(height: 10),
-                      Obx(
-                        () => userController.isLoading.value
-                            ? Center(child: CircularProgressIndicator())
-                            : Column(
-                                children: [
-                                  CustomBtn(
-                                    title: widget.user != null
-                                        ? 'update'.tr
-                                        : 'create'.tr,
-                                    onTap: () {
-                                      // Handle create user logic here
-                                      if (selectedRoleId.value == -1) {
-                                        showErrorSnackbar(
-                                          'Please select a role',
-                                        );
-                                        return;
-                                      }
-
-                                      if (formKey.currentState!.validate()) {
-                                        // All fields are valid, proceed with user creation
-                                        // You can access the input values using the controllers
-                                        String name = nameController.text
-                                            .trim();
-                                        String email = emailController.text
-                                            .trim();
-                                        String phone = phoneController.text
-                                            .trim();
-                                        String password = passwordController
-                                            .text
-                                            .trim();
-                                        bool activeStatus = isActive.value;
-                                        int roleId = selectedRoleId.value;
-
-                                        if (widget.user != null) {
-                                          userController.updateUser(
-                                            userId: widget.user!.id.toString(),
-                                            name: name,
-                                            email: email,
-                                            phone: phone,
-                                            password: password,
-                                            role: roleId,
-                                            isActive: activeStatus,
-                                          );
-                                        } else {
-                                          userController.createUser(
-                                            name: name,
-                                            email: email,
-                                            phone: phone,
-                                            password: password,
-                                            role: roleId,
-                                            isActive: activeStatus,
-                                          );
-                                        }
-                                      }
-                                    },
+                      border: Border.all(color: Colors.black26, width: 0.50),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Obx(
+                          () => CustomDropdown<RolesModel>(
+                            title: 'user_role'.tr,
+                            isRequired: true,
+                            selectedValue: selectedRoleId.value == -1
+                                ? null
+                                : userController.userRole.firstWhere(
+                                    (role) => role.id == selectedRoleId.value,
+                                    orElse: () => RolesModel(id: -1, type: ''),
                                   ),
+                            items: userController.userRole,
+                            onChanged: (RolesModel? newValue) {
+                              if (newValue != null) {
+                                selectedRoleId.value = newValue.id;
+                              } else {
+                                selectedRoleId.value = -1; // Reset selection
+                              }
+                            },
+                            itemLabelBuilder: (RolesModel item) => item.type,
+                            placeholderText: 'select_role'.tr,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        _buildInputField(
+                          label: 'name'.tr,
+                          hintText: 'enter_name'.tr,
+                          keyboardType: TextInputType.name,
+                          controller: nameController,
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Name is required';
+                            }
+                            return null;
+                          },
+                        ),
+                        _buildInputField(
+                          label: 'email'.tr,
+                          hintText: 'enter_email'.tr,
+                          controller: emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Email is required';
+                            }
+                            // Simple email validation
+                            if (!GetUtils.isEmail(value.trim())) {
+                              return 'Please enter a valid email';
+                            }
+                            return null;
+                          },
+                        ),
+                        _buildPhoneField(
+                          label: 'phone'.tr,
+                          hintText: 'mobile_number'.tr,
+                          controller: phoneController,
+                        ),
+                        _buildPassword(
+                          controller: passwordController,
+                          hintText: 'enter_password'.tr,
+                        ),
+                        Obx(
+                          () => UserActiveSwitch(
+                            isActive: isActive.value,
+                            onChanged: (value) {
+                              isActive.value = value;
+                            },
+                          ),
+                        ),
 
-                                  if (widget.user != null)
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 12),
-                                      child: CustomBtnRed(
-                                        title: 'delete'.tr,
-
-                                        onTap: () {
-                                          // Handle delete user logic here
-                                          Get.defaultDialog(
-                                            title: 'confirm'.tr,
-                                            middleText:
-                                                'are_you_sure_you_want_to_delete_user'
-                                                    .tr,
-                                            //textCancel: 'no'.tr,
-                                            textConfirm: 'delete'.tr,
-                                            confirmTextColor: Colors.white,
-                                            buttonColor: Colors.red,
-                                            cancel: TextButton(
-                                              onPressed: () => Get.back(),
-                                              child: Text('no'.tr),
-                                            ),
-                                            onConfirm: () {
-                                              Get.back();
-                                              userController.deleteUser(
-                                                userId: widget.user!.id
-                                                    .toString(),
-                                              );
-                                            },
+                        SizedBox(height: 10),
+                        Obx(
+                          () => userController.isLoading.value
+                              ? Center(child: CircularProgressIndicator())
+                              : Column(
+                                  children: [
+                                    CustomBtn(
+                                      title: widget.user != null
+                                          ? 'update'.tr
+                                          : 'create'.tr,
+                                      onTap: () {
+                                        // Handle create user logic here
+                                        if (selectedRoleId.value == -1) {
+                                          showErrorSnackbar(
+                                            'Please select a role',
                                           );
-                                        },
-                                      ),
+                                          return;
+                                        }
+
+                                        if (formKey.currentState!.validate()) {
+                                          // All fields are valid, proceed with user creation
+                                          // You can access the input values using the controllers
+                                          String name = nameController.text
+                                              .trim();
+                                          String email = emailController.text
+                                              .trim();
+                                          String phone = phoneController.text
+                                              .trim();
+                                          String password = passwordController
+                                              .text
+                                              .trim();
+                                          bool activeStatus = isActive.value;
+                                          int roleId = selectedRoleId.value;
+
+                                          if (widget.user != null) {
+                                            userController.updateUser(
+                                              userId: widget.user!.id
+                                                  .toString(),
+                                              name: name,
+                                              email: email,
+                                              phone: phone,
+                                              password: password,
+                                              role: roleId,
+                                              isActive: activeStatus,
+                                            );
+                                          } else {
+                                            userController.createUser(
+                                              name: name,
+                                              email: email,
+                                              phone: phone,
+                                              password: password,
+                                              role: roleId,
+                                              isActive: activeStatus,
+                                            );
+                                          }
+                                        }
+                                      },
                                     ),
-                                ],
-                              ),
-                      ),
-                    ],
+
+                                    if (widget.user != null)
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 12),
+                                        child: CustomBtnRed(
+                                          title: 'delete'.tr,
+                                          isOutline: true,
+                                          onTap: () {
+                                            // Handle delete user logic here
+                                            Get.defaultDialog(
+                                              title: 'confirm'.tr,
+                                              middleText:
+                                                  'are_you_sure_you_want_to_delete_user'
+                                                      .tr,
+                                              //textCancel: 'no'.tr,
+                                              textConfirm: 'delete'.tr,
+                                              confirmTextColor: Colors.white,
+                                              buttonColor: Colors.red,
+                                              cancel: TextButton(
+                                                onPressed: () => Get.back(),
+                                                child: Text('no'.tr),
+                                              ),
+                                              onConfirm: () {
+                                                Get.back();
+                                                userController.deleteUser(
+                                                  userId: widget.user!.id
+                                                      .toString(),
+                                                );
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

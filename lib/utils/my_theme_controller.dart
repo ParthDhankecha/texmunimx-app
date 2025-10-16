@@ -69,6 +69,22 @@ class ThemeController extends GetxController {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     ),
+
+    switchTheme: SwitchThemeData(
+      thumbColor: WidgetStateProperty.resolveWith<Color>((states) {
+        if (states.contains(WidgetState.selected)) {
+          return AppColors.mainColor; // Color when switch is ON
+        }
+        return Colors.white; // Color when switch is OFF
+      }),
+      trackColor: WidgetStateProperty.resolveWith<Color>((states) {
+        if (states.contains(WidgetState.selected)) {
+          return AppColors.mainColor.withAlpha(128); // Track color when ON
+        }
+        return Colors.grey; // Track color when OFF
+      }),
+      trackOutlineWidth: WidgetStatePropertyAll(0),
+    ),
   );
 
   final ThemeData darkTheme = ThemeData(

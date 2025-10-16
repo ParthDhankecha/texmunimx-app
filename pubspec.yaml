@@ -35,6 +35,9 @@ dependencies:
   intl: ^0.20.2
   animated_toggle_switch: ^0.8.5
   cached_network_image: ^3.4.1
+  pdf: ^3.11.3
+  printing:  # To save/share the PDF file
+  path_provider: 
 
 
 dev_dependencies:

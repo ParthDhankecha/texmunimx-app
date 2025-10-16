@@ -183,6 +183,7 @@ class AppTranslations extends Translations {
       'no_order_history_found': 'No Order History Found',
       'view_details': 'View Details',
       'order_history': 'Order History',
+      'pdf': 'PDF',
     },
     'hi_IN': {
       'language_change': 'भाषा बदलें',
@@ -346,6 +347,7 @@ class AppTranslations extends Translations {
       'user': 'उपयोगकर्ता',
       'no_order_history_found': 'कोई ऑर्डर इतिहास नहीं मिला',
       'view_details': 'विवरण देखें',
+      'pdf': 'पीडीएफ',
     },
 
     'gu_IN': {
@@ -508,6 +510,7 @@ class AppTranslations extends Translations {
       'user': 'વપરાશકર્તા',
       'no_order_history_found': 'કોઈ ઓર્ડર ઇતિહાસ મળ્યો નથી',
       'view_details': 'વિગતો જુઓ',
+      'pdf': 'પીડીએફ',
     },
   };
 }

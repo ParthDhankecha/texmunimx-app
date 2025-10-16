@@ -50,92 +50,96 @@ class _CreateFirmScreenState extends State<CreateFirmScreen> {
         child: Column(
           children: [
             Divider(),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildInputField(
-                        label: 'firm_name'.tr,
-                        hintText: 'firm_enter_name'.tr,
-                        keyboardType: TextInputType.name,
-                        controller: nameController,
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return 'firm_name_required'.tr;
-                          }
-                          return null;
-                        },
-                      ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                padding: EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
 
-                      SizedBox(height: 10),
-                      Obx(
-                        () => firmController.isLoading.value
-                            ? Center(child: CircularProgressIndicator())
-                            : Column(
-                                children: [
-                                  CustomBtn(
-                                    title: widget.firm != null
-                                        ? 'update'.tr
-                                        : 'create'.tr,
-                                    onTap: () {
-                                      if (formKey.currentState!.validate()) {
-                                        // All fields are valid, proceed with user creation
-                                        // You can access the input values using the controllers
-                                        String name = nameController.text
-                                            .trim();
+                  border: Border.all(color: Colors.black26, width: 0.50),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildInputField(
+                      label: 'firm_name'.tr,
+                      hintText: 'firm_enter_name'.tr,
+                      keyboardType: TextInputType.name,
+                      controller: nameController,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'firm_name_required'.tr;
+                        }
+                        return null;
+                      },
+                    ),
 
-                                        if (widget.firm != null) {
-                                          firmController.updateFirm(
-                                            firmId: widget.firm!.id.toString(),
-                                            name: name,
-                                          );
-                                        } else {
-                                          firmController.createFirm(name: name);
-                                        }
+                    SizedBox(height: 10),
+                    Obx(
+                      () => firmController.isLoading.value
+                          ? Center(child: CircularProgressIndicator())
+                          : Column(
+                              children: [
+                                CustomBtn(
+                                  title: widget.firm != null
+                                      ? 'update'.tr
+                                      : 'create'.tr,
+                                  onTap: () {
+                                    if (formKey.currentState!.validate()) {
+                                      // All fields are valid, proceed with user creation
+                                      // You can access the input values using the controllers
+                                      String name = nameController.text.trim();
+
+                                      if (widget.firm != null) {
+                                        firmController.updateFirm(
+                                          firmId: widget.firm!.id.toString(),
+                                          name: name,
+                                        );
+                                      } else {
+                                        firmController.createFirm(name: name);
                                       }
-                                    },
-                                  ),
+                                    }
+                                  },
+                                ),
 
-                                  if (widget.firm != null)
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 12),
-                                      child: CustomBtnRed(
-                                        title: 'delete'.tr,
+                                if (widget.firm != null)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 12),
+                                    child: CustomBtnRed(
+                                      title: 'delete'.tr,
+                                      isOutline: true,
 
-                                        onTap: () {
-                                          // Handle delete user logic here
-                                          Get.defaultDialog(
-                                            title: 'confirm'.tr,
-                                            middleText:
-                                                'are_you_sure_you_want_to_delete_firm'
-                                                    .tr,
-                                            //textCancel: 'no'.tr,
-                                            textConfirm: 'delete'.tr,
-                                            confirmTextColor: Colors.white,
-                                            buttonColor: Colors.red,
-                                            cancel: TextButton(
-                                              onPressed: () => Get.back(),
-                                              child: Text('no'.tr),
-                                            ),
-                                            onConfirm: () {
-                                              Get.back();
-                                              firmController.deleteFirm(
-                                                firmId: widget.firm!.id
-                                                    .toString(),
-                                              );
-                                            },
-                                          );
-                                        },
-                                      ),
+                                      onTap: () {
+                                        // Handle delete user logic here
+                                        Get.defaultDialog(
+                                          title: 'confirm'.tr,
+                                          middleText:
+                                              'are_you_sure_you_want_to_delete_firm'
+                                                  .tr,
+                                          //textCancel: 'no'.tr,
+                                          textConfirm: 'delete'.tr,
+                                          confirmTextColor: Colors.white,
+                                          buttonColor: Colors.red,
+                                          cancel: TextButton(
+                                            onPressed: () => Get.back(),
+                                            child: Text('no'.tr),
+                                          ),
+                                          onConfirm: () {
+                                            Get.back();
+                                            firmController.deleteFirm(
+                                              firmId: widget.firm!.id
+                                                  .toString(),
+                                            );
+                                          },
+                                        );
+                                      },
                                     ),
-                                ],
-                              ),
-                      ),
-                    ],
-                  ),
+                                  ),
+                              ],
+                            ),
+                    ),
+                  ],
                 ),
               ),
             ),

@@ -1,7 +1,12 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 import 'package:texmunimx/common_widgets/show_error_snackbar.dart';
 import 'package:texmunimx/common_widgets/show_success_snackbar.dart';
 import 'package:texmunimx/models/cal_weft_model.dart';
@@ -501,5 +506,461 @@ class CalculatorController extends GetxController implements GetxService {
             default:
           }
         });
+  }
+
+  Future<void> generateAndDownloadPdf() async {
+    final pdf = pw.Document();
+
+    // 1. Load a font that supports bold/regular if you need consistent styling
+    // If you don't load a font, the default might not support bolding.
+    // final font = await PdfGoogleFonts.openSansRegular();
+    // final boldFont = await PdfGoogleFonts.openSansBold();
+
+    // Create the PDF content
+    pdf.addPage(
+      pw.Page(
+        pageFormat: PdfPageFormat.a4,
+        build: (pw.Context context) {
+          // Use a custom function to build the main content
+          return _buildPdfContent(
+            // Pass the necessary data and fonts if loaded
+            // font: font,
+            // boldFont: boldFont,
+          );
+        },
+      ),
+    );
+
+    // 2. Save/Download the PDF
+    try {
+      final String fileName =
+          'Calculator_Data_${DateTime.now().millisecondsSinceEpoch}.pdf';
+
+      // Get a suitable directory for the file
+      final directory = await getTemporaryDirectory();
+      final file = File('${directory.path}/$fileName');
+
+      // Write the PDF bytes to the file
+      await file.writeAsBytes(await pdf.save());
+
+      // Use the printing package to share/open the file
+      await Printing.sharePdf(bytes: await pdf.save(), filename: fileName);
+
+      Get.snackbar(
+        'Success',
+        'PDF generated and ready to share/save.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to generate or save PDF: $e',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
+  // --- PDF Widget Builders ---
+
+  // A helper function to build the main content structure
+  pw.Widget _buildPdfContent({pw.Font? font, pw.Font? boldFont}) {
+    // Define Text Styles for PDF
+    final pw.TextStyle titlePdfStyle = pw.TextStyle(
+      fontSize: 16,
+      fontWeight: pw.FontWeight.bold,
+      // font: boldFont,
+    );
+    final pw.TextStyle bodyPdfStyle = pw.TextStyle(
+      fontSize: 14,
+      fontWeight: pw.FontWeight.bold,
+      // font: boldFont,
+    );
+    final pw.TextStyle normalPdfStyle = pw.TextStyle(
+      fontSize: 14,
+      // font: font,
+    );
+    final pw.TextStyle smallNormalPdfStyle = pw.TextStyle(
+      fontSize: 12,
+      // font: font,
+    );
+
+    return pw.ListView(
+      children: [
+        // Design Details
+        _buildPdfDesignDetails(
+          titlePdfStyle: titlePdfStyle,
+          normalPdfStyle: normalPdfStyle,
+          designName: selectedDesign.value?.designName ?? 'N/A',
+          designNumber: selectedDesign.value?.designNumber ?? 'N/A',
+        ),
+        pw.SizedBox(height: 10),
+
+        // Wrap Details
+        _buildPdfWrapDetails(
+          titlePdfStyle: titlePdfStyle,
+          bodyPdfStyle: bodyPdfStyle,
+          smallNormalPdfStyle: smallNormalPdfStyle,
+          quality: qualityCont.text.trim().toString(),
+          denier: denierCont.text.trim().toString(),
+          tar: tarCont.text.trim().toString(),
+          meter: meterCont.text.trim().toString(),
+          ratePerKg: ratePerKgCont.text.trim().toString(),
+          totalWarpCost: warpCost.value.toStringAsFixed(2),
+        ),
+        pw.SizedBox(height: 10),
+
+        // Weft Details
+        _buildPdfWeftDetails(
+          titlePdfStyle: titlePdfStyle,
+          bodyPdfStyle: bodyPdfStyle,
+          smallNormalPdfStyle: smallNormalPdfStyle,
+          weftList: weftList,
+          totalWeftCost: totalWeftCost.toStringAsFixed(2),
+        ),
+        pw.SizedBox(height: 10),
+
+        // Labour Details
+        _buildPdfLabourDetails(
+          titlePdfStyle: titlePdfStyle,
+          bodyPdfStyle: bodyPdfStyle,
+          smallNormalPdfStyle: smallNormalPdfStyle,
+          designCard: designCardCont.text,
+          labourCostList: labourCostList,
+        ),
+      ],
+    );
+  }
+
+  // Mimics your buildKeyValueRow in PDF
+  pw.Widget _buildPdfKeyValueRow(
+    String key,
+    String value,
+    pw.TextStyle keyStyle,
+    pw.TextStyle valueStyle,
+  ) {
+    return pw.Container(
+      decoration: pw.BoxDecoration(
+        color: PdfColor.fromInt(
+          0xFFF5F5F5,
+        ), // Corresponds to Colors.grey.shade100
+        border: pw.Border.all(color: PdfColors.black, width: 0.10),
+      ),
+      padding: const pw.EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+      child: pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+        children: [
+          pw.Text(key, style: keyStyle),
+          pw.Text(value, style: valueStyle),
+        ],
+      ),
+    );
+  }
+
+  // Mimics your buildTotalRow in PDF
+  pw.Widget _buildPdfTotalRow(
+    String key,
+    String value,
+    pw.TextStyle bodyStyle,
+    pw.TextStyle boldStyle,
+  ) {
+    return pw.Container(
+      decoration: pw.BoxDecoration(
+        color: PdfColor.fromInt(
+          0xFFF5F5F5,
+        ), // Corresponds to Colors.grey.shade100
+        border: pw.Border.all(color: PdfColors.black, width: 0.50),
+      ),
+      padding: const pw.EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+      child: pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+        children: [
+          pw.Text(key, style: bodyStyle.copyWith(color: PdfColors.black)),
+          pw.Text(value, style: boldStyle),
+        ],
+      ),
+    );
+  }
+
+  // Design Details Section
+  pw.Widget _buildPdfDesignDetails({
+    required pw.TextStyle titlePdfStyle,
+    required pw.TextStyle normalPdfStyle,
+    required String designName,
+    required String designNumber,
+  }) {
+    return pw.Container(
+      padding: const pw.EdgeInsets.all(8.0),
+      decoration: pw.BoxDecoration(
+        borderRadius: pw.BorderRadius.circular(10),
+        border: pw.Border.all(color: PdfColors.black, width: 0.50),
+      ),
+      child: pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        children: [
+          pw.Text('Design: $designName ($designNumber)', style: normalPdfStyle),
+          // NOTE: Image loading in pw.Image is complex (needs Uint8List).
+          // For simplicity, I'm excluding the image here.
+        ],
+      ),
+    );
+  }
+
+  // Wrap Details Section
+  pw.Widget _buildPdfWrapDetails({
+    required pw.TextStyle titlePdfStyle,
+    required pw.TextStyle bodyPdfStyle,
+    required pw.TextStyle smallNormalPdfStyle,
+    required String quality,
+    required String denier,
+    required String tar,
+    required String meter,
+    required String ratePerKg,
+    required String totalWarpCost,
+  }) {
+    return pw.Container(
+      padding: const pw.EdgeInsets.all(8.0),
+      decoration: pw.BoxDecoration(
+        borderRadius: pw.BorderRadius.circular(10),
+        border: pw.Border.all(color: PdfColors.black, width: 0.50),
+      ),
+      child: pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        children: [
+          pw.Text('Wrap', style: titlePdfStyle),
+          pw.SizedBox(height: 10),
+
+          _buildPdfKeyValueRow(
+            'Quality',
+            quality,
+            smallNormalPdfStyle,
+            bodyPdfStyle,
+          ),
+
+          pw.Row(
+            children: [
+              pw.Expanded(
+                child: _buildPdfKeyValueRow(
+                  'Denier',
+                  denier,
+                  smallNormalPdfStyle,
+                  bodyPdfStyle,
+                ),
+              ),
+              pw.Expanded(
+                child: _buildPdfKeyValueRow(
+                  'Tar',
+                  tar,
+                  smallNormalPdfStyle,
+                  bodyPdfStyle,
+                ),
+              ),
+            ],
+          ),
+
+          pw.Row(
+            children: [
+              pw.Expanded(
+                child: _buildPdfKeyValueRow(
+                  'Meter',
+                  meter,
+                  smallNormalPdfStyle,
+                  bodyPdfStyle,
+                ),
+              ),
+              pw.Expanded(
+                child: _buildPdfKeyValueRow(
+                  'Rate Per Kg',
+                  ratePerKg,
+                  smallNormalPdfStyle,
+                  bodyPdfStyle,
+                ),
+              ),
+            ],
+          ),
+
+          _buildPdfTotalRow(
+            'Total Wrap Cost',
+            totalWarpCost,
+            bodyPdfStyle,
+            bodyPdfStyle,
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Weft Details Section
+  pw.Widget _buildPdfWeftDetails({
+    required pw.TextStyle titlePdfStyle,
+    required pw.TextStyle bodyPdfStyle,
+    required pw.TextStyle smallNormalPdfStyle,
+    required List<dynamic> weftList, // Use dynamic if the model isn't available
+    required String totalWeftCost,
+  }) {
+    return pw.Container(
+      padding: const pw.EdgeInsets.all(8.0),
+      decoration: pw.BoxDecoration(
+        borderRadius: pw.BorderRadius.circular(10),
+        border: pw.Border.all(color: PdfColors.black, width: 0.50),
+      ),
+      child: pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        children: [
+          pw.Text('Weft', style: titlePdfStyle),
+          pw.SizedBox(height: 10),
+
+          ...weftList.map((element) {
+            // NOTE: Assuming your WeftItemModel has properties: feeder, quality, denier, pick, panno, meter, rate
+            String feeder = element.feeder;
+            String quality = element.quality?.trim() ?? 'N/A';
+            String denier = element.denier?.toStringAsFixed(2) ?? 'N/A';
+            String pick = element.pick?.toStringAsFixed(2) ?? 'N/A';
+            String panno = element.panno?.toStringAsFixed(2) ?? 'N/A';
+            String meter = element.meter?.toStringAsFixed(2) ?? 'N/A';
+            String rate = element.rate?.toStringAsFixed(2) ?? 'N/A';
+
+            return pw.Column(
+              children: [
+                pw.Row(
+                  children: [
+                    pw.Expanded(
+                      child: _buildPdfKeyValueRow(
+                        'Feeder',
+                        feeder,
+                        smallNormalPdfStyle,
+                        bodyPdfStyle,
+                      ),
+                    ),
+                  ],
+                ),
+                pw.Row(
+                  children: [
+                    pw.Expanded(
+                      child: _buildPdfKeyValueRow(
+                        'Quality',
+                        quality,
+                        smallNormalPdfStyle,
+                        bodyPdfStyle,
+                      ),
+                    ),
+                    pw.Expanded(
+                      child: _buildPdfKeyValueRow(
+                        'Denier',
+                        denier,
+                        smallNormalPdfStyle,
+                        bodyPdfStyle,
+                      ),
+                    ),
+                    pw.Expanded(
+                      child: _buildPdfKeyValueRow(
+                        'Pick',
+                        pick,
+                        smallNormalPdfStyle,
+                        bodyPdfStyle,
+                      ),
+                    ),
+                  ],
+                ),
+                pw.Row(
+                  children: [
+                    pw.Expanded(
+                      child: _buildPdfKeyValueRow(
+                        'Panno',
+                        panno,
+                        smallNormalPdfStyle,
+                        bodyPdfStyle,
+                      ),
+                    ),
+                    pw.Expanded(
+                      child: _buildPdfKeyValueRow(
+                        'Meter',
+                        meter,
+                        smallNormalPdfStyle,
+                        bodyPdfStyle,
+                      ),
+                    ),
+                    pw.Expanded(
+                      child: _buildPdfKeyValueRow(
+                        'Rate',
+                        rate,
+                        smallNormalPdfStyle,
+                        bodyPdfStyle,
+                      ),
+                    ),
+                  ],
+                ),
+                pw.SizedBox(height: 8),
+              ],
+            );
+          }),
+
+          _buildPdfTotalRow(
+            'Total Weft Cost',
+            totalWeftCost,
+            bodyPdfStyle,
+            bodyPdfStyle,
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Labour Details Section
+  pw.Widget _buildPdfLabourDetails({
+    required pw.TextStyle titlePdfStyle,
+    required pw.TextStyle bodyPdfStyle,
+    required pw.TextStyle smallNormalPdfStyle,
+    required String designCard,
+    required List<dynamic>
+    labourCostList, // Use dynamic if the model isn't available
+  }) {
+    return pw.Container(
+      padding: const pw.EdgeInsets.all(8.0),
+      decoration: pw.BoxDecoration(
+        borderRadius: pw.BorderRadius.circular(10),
+        border: pw.Border.all(color: PdfColors.black, width: 0.50),
+      ),
+      child: pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        children: [
+          pw.Text('Labour', style: titlePdfStyle),
+
+          _buildPdfKeyValueRow(
+            'Design Card',
+            designCard,
+            smallNormalPdfStyle,
+            bodyPdfStyle,
+          ),
+          pw.SizedBox(height: 10),
+
+          // Header for cost list: Paisa | Cost
+          _buildPdfKeyValueRow(
+            'Paisa',
+            'Cost',
+            smallNormalPdfStyle,
+            bodyPdfStyle,
+          ),
+
+          ...labourCostList.map((element) {
+            // NOTE: Assuming your LabourCostItemModel has properties: paisa, cost
+            String paisa = element.paisa.toStringAsFixed(2);
+            String cost = element.cost.toStringAsFixed(2);
+
+            return pw.Row(
+              children: [
+                pw.Expanded(
+                  child: _buildPdfKeyValueRow(
+                    paisa,
+                    cost,
+                    smallNormalPdfStyle,
+                    bodyPdfStyle,
+                  ),
+                ),
+              ],
+            );
+          }).toList(),
+        ],
+      ),
+    );
   }
 }

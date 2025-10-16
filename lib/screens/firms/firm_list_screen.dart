@@ -35,7 +35,6 @@ class _FirmListScreenState extends State<FirmListScreen> {
       ),
       body: Column(
         children: [
-          Divider(color: Colors.grey.shade500, thickness: 1),
           Obx(() {
             if (firmController.isLoading.value) {
               return const Center(child: CircularProgressIndicator());

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:texmunimx/controllers/calculator_controller.dart';
+import 'package:texmunimx/screens/calculator/calculator_pdf_view_screen.dart';
 import 'package:texmunimx/screens/calculator/labour/labour_cost_list.dart';
 import 'package:texmunimx/screens/calculator/warp_screen.dart';
 import 'package:texmunimx/screens/calculator/weft/weft_screen.dart';
@@ -17,7 +18,6 @@ class CalculatorScreen extends StatefulWidget {
 class _CalculatorScreenState extends State<CalculatorScreen> {
   CalculatorController controller = Get.find<CalculatorController>();
 
-  List<Widget> screenList = [WarpScreen()];
   @override
   void initState() {
     super.initState();
@@ -39,7 +39,18 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('calculator'.tr), elevation: 6),
+      appBar: AppBar(
+        title: Text('calculator'.tr),
+        elevation: 6,
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.to(() => const CalculatorPdfViewScreen());
+            },
+            child: Text('pdf'.tr),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           //select design

@@ -58,19 +58,12 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: Icon(Icons.arrow_back_ios),
-        ),
-      ),
+      appBar: AppBar(title: Text('design_details'.tr)),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(14),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
@@ -79,23 +72,6 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
                 ),
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            'design_details'.tr,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.blackColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    Divider(),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
@@ -126,7 +102,6 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
                         ],
                       ),
                     ),
-                    Divider(),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
@@ -152,7 +127,6 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
                         ],
                       ),
                     ),
-                    Divider(),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
@@ -295,15 +269,16 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
                     SizedBox(height: 12),
 
                     if (designModel != null)
-                      CustomBtnRed(
-                        title: 'Delete',
-                        onTap: () {
-                          Get.dialog(DeleteDesignDialog());
-                        },
-                        isOutline: true,
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: CustomBtnRed(
+                          title: 'Delete',
+                          onTap: () {
+                            Get.dialog(DeleteDesignDialog());
+                          },
+                          isOutline: true,
+                        ),
                       ),
-
-                    SizedBox(height: 12),
                   ],
                 ),
               ),
