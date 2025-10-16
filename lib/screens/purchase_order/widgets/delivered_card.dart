@@ -45,23 +45,6 @@ class _DeliveredCardState extends State<DeliveredCard> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Design/Party image
-                // ClipRRect(
-                //   borderRadius: BorderRadius.circular(8.0),
-                //   child: Image.network(
-                //     widget.order.designId.isNotEmpty
-                //         ? AppConst.imageBaseUrl + widget.design.designImage
-                //         : 'https://placehold.co/100x100',
-                //     width: 42,
-                //     height: 42,
-                //     fit: BoxFit.cover,
-                //     errorBuilder: (context, error, stackTrace) => Container(
-                //       width: 42,
-                //       height: 42,
-                //       color: Colors.grey[200],
-                //       child: const Icon(Icons.broken_image, color: Colors.grey),
-                //     ),
-                //   ),
-                // ),
                 CustomNetworkImage(
                   imageUrl: AppConst.imageBaseUrl + widget.design.designImage,
                   height: 60,

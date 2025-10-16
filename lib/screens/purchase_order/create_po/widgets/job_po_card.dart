@@ -44,7 +44,6 @@ class JobPoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('JobPoCard rebuild - ${model.user}');
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Card(
