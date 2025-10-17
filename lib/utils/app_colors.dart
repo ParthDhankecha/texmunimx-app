@@ -10,4 +10,5 @@ class AppColors {
   static final errorColor = Colors.redAccent;
 
   static final appBg = Color(0xffF8F9Fa);
+  static final lightGray = Color.fromARGB(125, 224, 224, 224);
 }

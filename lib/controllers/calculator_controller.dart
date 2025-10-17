@@ -548,7 +548,6 @@ class CalculatorController extends GetxController implements GetxService {
       designImageBytes = null;
     }
 
-    // Download the image if a URL exists
     final pdf = pw.Document();
 
     // Create the PDF content
@@ -568,12 +567,7 @@ class CalculatorController extends GetxController implements GetxService {
           return pw.Container();
         },
         build: (pw.Context context) {
-          // Use a custom function to build the main content
-          return _buildPdfContent(
-            // Pass the necessary data and fonts if loaded
-            // font: font,
-            // boldFont: boldFont,
-          );
+          return _buildPdfContent();
         },
       ),
     );
@@ -609,9 +603,7 @@ class CalculatorController extends GetxController implements GetxService {
 
   // --- PDF Widget Builders ---
 
-  // A helper function to build the main content structure
   List<pw.Widget> _buildPdfContent() {
-    // Define Text Styles for PDF
     final pw.TextStyle titlePdfStyle = pw.TextStyle(
       fontSize: 16,
       fontWeight: pw.FontWeight.bold,
@@ -676,7 +668,6 @@ class CalculatorController extends GetxController implements GetxService {
     ];
   }
 
-  // Mimics your buildKeyValueRow in PDF
   pw.Widget _buildPdfKeyValueRow(
     String key,
     String value,
@@ -685,9 +676,7 @@ class CalculatorController extends GetxController implements GetxService {
   ) {
     return pw.Container(
       decoration: pw.BoxDecoration(
-        color: PdfColor.fromInt(
-          0xFFF5F5F5,
-        ), // Corresponds to Colors.grey.shade100
+        color: PdfColor.fromInt(0xFFF5F5F5),
         border: pw.Border.all(color: PdfColors.black, width: 0.10),
       ),
       padding: const pw.EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
@@ -701,7 +690,6 @@ class CalculatorController extends GetxController implements GetxService {
     );
   }
 
-  // Mimics your buildTotalRow in PDF
   pw.Widget _buildPdfTotalRow(
     String key,
     String value,
@@ -710,9 +698,7 @@ class CalculatorController extends GetxController implements GetxService {
   ) {
     return pw.Container(
       decoration: pw.BoxDecoration(
-        color: PdfColor.fromInt(
-          0xFFF5F5F5,
-        ), // Corresponds to Colors.grey.shade100
+        color: PdfColor.fromInt(0xFFF5F5F5),
         border: pw.Border.all(color: PdfColors.black, width: 0.50),
       ),
       padding: const pw.EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
@@ -748,10 +734,10 @@ class CalculatorController extends GetxController implements GetxService {
                 pw.Padding(
                   padding: const pw.EdgeInsets.only(right: 10),
                   child: pw.Container(
-                    height: 56, // Match your Flutter widget height
-                    width: 56, // Match your Flutter widget width
+                    height: 56,
+                    width: 56,
                     child: pw.ClipRRect(
-                      horizontalRadius: 10, // Apply border radius if desired
+                      horizontalRadius: 10,
                       verticalRadius: 10,
                       child: pw.Image(
                         pw.MemoryImage(designImageBytes!),
@@ -766,9 +752,6 @@ class CalculatorController extends GetxController implements GetxService {
               ),
             ],
           ),
-
-          // NOTE: Image loading in pw.Image is complex (needs Uint8List).
-          // For simplicity, I'm excluding the image here.
         ],
       ),
     );
@@ -863,7 +846,7 @@ class CalculatorController extends GetxController implements GetxService {
     required pw.TextStyle titlePdfStyle,
     required pw.TextStyle bodyPdfStyle,
     required pw.TextStyle smallNormalPdfStyle,
-    required List<dynamic> weftList, // Use dynamic if the model isn't available
+    required List<dynamic> weftList,
     required String totalWeftCost,
   }) {
     return pw.Container(
@@ -879,7 +862,6 @@ class CalculatorController extends GetxController implements GetxService {
           pw.SizedBox(height: 10),
 
           ...weftList.map((element) {
-            // NOTE: Assuming your WeftItemModel has properties: feeder, quality, denier, pick, panno, meter, rate
             String feeder = element.feeder;
             String quality = element.quality?.trim() ?? 'N/A';
             String denier = element.denier?.toStringAsFixed(2) ?? 'N/A';
@@ -984,8 +966,7 @@ class CalculatorController extends GetxController implements GetxService {
     required pw.TextStyle bodyPdfStyle,
     required pw.TextStyle smallNormalPdfStyle,
     required String designCard,
-    required List<dynamic>
-    labourCostList, // Use dynamic if the model isn't available
+    required List<dynamic> labourCostList,
   }) {
     return pw.Container(
       padding: const pw.EdgeInsets.all(8.0),
@@ -1015,7 +996,6 @@ class CalculatorController extends GetxController implements GetxService {
           ),
 
           ...labourCostList.map((element) {
-            // NOTE: Assuming your LabourCostItemModel has properties: paisa, cost
             String paisa = element.paisa.toStringAsFixed(2);
             String cost = element.cost.toStringAsFixed(2);
 

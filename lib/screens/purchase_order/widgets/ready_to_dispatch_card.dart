@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:texmunimx/common_widgets/custom_btn.dart';
 import 'package:texmunimx/common_widgets/custom_network_image.dart';
 import 'package:texmunimx/common_widgets/my_text_field.dart';
 import 'package:texmunimx/controllers/purchase_order_controller.dart';
@@ -36,7 +37,7 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
 
   @override
   Widget build(BuildContext context) {
-    log('read yto siapatch id - ${widget.order.readyToDispatch?.id}');
+    log('ready_to_dispatch id - ${widget.order.readyToDispatch?.id}');
     return Card(
       elevation: 4.0,
       margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
@@ -171,7 +172,7 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MyText('order_quantity'),
+                MyText('order_quantity', append: ' : '),
                 Text(
                   '${widget.order.matching?.quantity ?? "0"}',
                   style: TextStyle(fontSize: 14),
@@ -183,7 +184,7 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MyText('pending_quantity'),
+                MyText('pending_quantity', append: ' : '),
                 Text(
                   '${widget.order.matching?.pending ?? "0"}',
                   style: TextStyle(
@@ -199,7 +200,7 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MyText('ready_to_dispatch_quantity'),
+                MyText('ready_to_dispatch_quantity', append: ' : '),
                 Text(
                   '${widget.order.readyToDispatch?.quantity ?? 0}',
                   style: TextStyle(
@@ -214,7 +215,7 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MyText('note'),
+                MyText('note', append: ' : '),
                 Text(
                   widget.order.readyToDispatch?.remarks ?? 'N/A',
                   style: TextStyle(
@@ -230,8 +231,8 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton(
-                  onPressed: () {
+                CustomBtn(
+                  onTap: () {
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
@@ -252,14 +253,16 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
                       ),
                     );
                   },
-                  child: Text('In Process'),
+                  title: 'in_progress'.tr,
+                  isOutline: true,
+                  isSmall: true,
                 ),
-                TextButton(
-                  onPressed: () {
-                    log(
-                      'ready to dispatch id - ${widget.order.readyToDispatch?.id}',
-                    );
+                SizedBox(width: 8),
 
+                CustomBtn(
+                  isOutline: true,
+                  isSmall: true,
+                  onTap: () {
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
@@ -279,13 +282,16 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
                       ),
                     );
                   },
-                  child: Text('Completed'),
+                  title: 'completed'.tr,
                 ),
-                TextButton(
-                  onPressed: () {
+                SizedBox(width: 8),
+                CustomBtn(
+                  isOutline: true,
+                  isSmall: true,
+                  onTap: () {
                     Get.to(() => OrderHistoryListScreen(id: widget.order.id));
                   },
-                  child: MyText('history'),
+                  title: 'history'.tr,
                 ),
               ],
             ),

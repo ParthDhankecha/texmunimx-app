@@ -103,6 +103,22 @@ class PurchaseOrderRepository {
     return data;
   }
 
+  Future<bool> deletePurchaseOrder(String id) async {
+    var endPoint = AppConst.purchaseOrderDelete;
+
+    if (kDebugMode) {
+      print('token : ${sp.userToken}');
+    }
+    var data = await apiClient.request(
+      '$endPoint/$id',
+      method: ApiType.delete,
+      headers: {'authorization': sp.userToken},
+    );
+
+    log('data : $data');
+    return baseModelFromMap(data).code == "OK";
+  }
+
   //change status
   Future<bool> changeStatus({
     required String id,

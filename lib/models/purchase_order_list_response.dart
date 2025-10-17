@@ -90,6 +90,7 @@ class PurchaseOrderModel {
   bool isJobPo;
   dynamic jobUser;
   Matching? matching;
+  bool? isLocked;
 
   PurchaseOrderModel({
     required this.id,
@@ -119,6 +120,7 @@ class PurchaseOrderModel {
     this.jobUser,
     this.matching,
     this.note,
+    this.isLocked,
   });
 
   factory PurchaseOrderModel.fromMap(Map<String, dynamic> json) =>
@@ -165,6 +167,7 @@ class PurchaseOrderModel {
             ? null
             : Matching.fromMap(json["matching"]),
         note: json["note"] ?? '',
+        isLocked: json["isLocked"] ?? false,
       );
 
   Map<String, dynamic> toMap() => {

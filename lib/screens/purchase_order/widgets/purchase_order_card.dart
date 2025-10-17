@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:texmunimx/common_widgets/custom_btn.dart';
 import 'package:texmunimx/common_widgets/custom_network_image.dart';
 import 'package:texmunimx/common_widgets/my_text_field.dart';
 import 'package:texmunimx/models/order_status_enum.dart';
@@ -80,7 +81,7 @@ class PurchaseOrderCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MyText('party_name'),
+                MyText('party_name', append: ' : '),
                 Text(
                   order.partyId.isNotEmpty ? party.partyName : 'N/A',
                   style: const TextStyle(fontSize: 14),
@@ -92,7 +93,7 @@ class PurchaseOrderCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
               children: [
-                MyText('party_number'),
+                MyText('party_number', append: ' : '),
                 Text(
                   order.partyId.isNotEmpty ? party.partyNumber : 'N/A',
                   style: const TextStyle(fontSize: 14, color: Colors.black),
@@ -102,7 +103,7 @@ class PurchaseOrderCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MyText('panna'),
+                MyText('panna', append: ' : '),
                 Text(
                   formatDouble(order.panna),
                   style: const TextStyle(fontSize: 14),
@@ -114,7 +115,7 @@ class PurchaseOrderCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MyText('order_quantity'),
+                MyText('order_quantity', append: ' : '),
                 Text(
                   '${order.matching?.quantity ?? "0"}',
                   style: TextStyle(fontSize: 14),
@@ -126,7 +127,7 @@ class PurchaseOrderCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MyText('pending_quantity'),
+                MyText('pending_quantity', append: ' : '),
                 Text(
                   '${order.matching?.pending ?? "0"}',
                   style: TextStyle(
@@ -141,7 +142,7 @@ class PurchaseOrderCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MyText('note'),
+                MyText('note', append: ' : '),
                 Text(order.note ?? 'N/A', style: const TextStyle(fontSize: 14)),
               ],
             ),
@@ -150,8 +151,8 @@ class PurchaseOrderCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton(
-                  onPressed: () {
+                CustomBtn(
+                  onTap: () {
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
@@ -170,22 +171,29 @@ class PurchaseOrderCard extends StatelessWidget {
                       ),
                     );
                   },
-                  child: MyText('in_progress'),
+                  title: 'in_progress'.tr,
+                  isSmall: true,
+                  isOutline: true,
                 ),
+                SizedBox(width: 10),
                 isEditvisible
-                    ? TextButton(
-                        onPressed: () {
+                    ? CustomBtn(
+                        onTap: () {
                           Get.to(() => CreatePurchaseOrder(po: order));
                         },
-                        child: MyText('edit'),
+                        title: 'edit'.tr,
+                        isSmall: true,
+                        isOutline: true,
                       )
                     : SizedBox.shrink(),
-
-                TextButton(
-                  onPressed: () {
+                isEditvisible ? SizedBox(width: 10) : SizedBox.shrink(),
+                CustomBtn(
+                  onTap: () {
                     Get.to(() => OrderHistoryListScreen(id: order.id));
                   },
-                  child: MyText('history'),
+                  title: 'history'.tr,
+                  isSmall: true,
+                  isOutline: true,
                 ),
               ],
             ),

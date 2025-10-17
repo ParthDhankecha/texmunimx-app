@@ -24,6 +24,7 @@ class JobPoCard extends StatelessWidget {
   final List<User> users;
   final List<FirmId> firms;
   final List<SariMatchingModel> matchings;
+  final bool isLocked;
 
   const JobPoCard({
     super.key,
@@ -40,6 +41,7 @@ class JobPoCard extends StatelessWidget {
     required this.users,
     required this.firms,
     required this.matchings,
+    this.isLocked = false,
   });
 
   @override
@@ -56,13 +58,14 @@ class JobPoCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   MyText('job_po', append: ' ${index + 1}', style: bodyStyle),
-                  IconButton(
-                    onPressed: onRemove,
-                    icon: Icon(
-                      Icons.delete_outline_rounded,
-                      color: AppColors.errorColor,
+                  if (!isLocked)
+                    IconButton(
+                      onPressed: onRemove,
+                      icon: Icon(
+                        Icons.delete_outline_rounded,
+                        color: AppColors.errorColor,
+                      ),
                     ),
-                  ),
                 ],
               ),
 
@@ -73,6 +76,7 @@ class JobPoCard extends StatelessWidget {
                     child: CustomDropdown<User>(
                       title: 'job_user'.tr,
                       items: users,
+                      isEnabled: !isLocked,
                       selectedValue: model.user == '' || model.user == null
                           ? null
                           : users.firstWhere(
@@ -97,6 +101,7 @@ class JobPoCard extends StatelessWidget {
                           title: 'firm'.tr,
                           items: firms,
                           isRequired: true,
+                          isEnabled: !isLocked,
                           selectedValue: model.firm == '' || model.firm == null
                               ? null
                               : firms.firstWhere(
@@ -126,6 +131,7 @@ class JobPoCard extends StatelessWidget {
                         CustomDropdown<SariMatchingModel>(
                           title: 'matching'.tr,
                           items: matchings,
+                          isEnabled: !isLocked,
                           isRequired: true,
                           selectedValue:
                               model.matching == '' || model.matching == null

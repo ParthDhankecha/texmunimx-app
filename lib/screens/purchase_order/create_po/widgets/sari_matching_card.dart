@@ -49,13 +49,15 @@ class SariMatchingCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   MyText('Matching', append: ' ${index + 1}', style: bodyStyle),
-                  IconButton(
-                    onPressed: onRemove,
-                    icon: Icon(
-                      Icons.delete_outline_rounded,
-                      color: AppColors.errorColor,
-                    ),
-                  ),
+                  model.isLocked == true
+                      ? SizedBox.shrink()
+                      : IconButton(
+                          onPressed: onRemove,
+                          icon: Icon(
+                            Icons.delete_outline_rounded,
+                            color: AppColors.errorColor,
+                          ),
+                        ),
                 ],
               ),
 

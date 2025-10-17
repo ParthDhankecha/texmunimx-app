@@ -38,6 +38,7 @@ class _JobPoWidgetState extends State<JobPoWidget> {
                   users: controller.jobUserList,
                   firms: controller.firmList,
                   matchings: controller.sariMatchingList,
+                  isLocked: model.isLocked ?? false,
 
                   onRemove: () {
                     controller.removeJobPo(index);
@@ -64,6 +65,7 @@ class _JobPoWidgetState extends State<JobPoWidget> {
                 users: controller.jobUserList,
                 firms: controller.firmList,
                 matchings: controller.sariMatchingList,
+                isLocked: model.isLocked ?? false,
 
                 onRemove: () {
                   controller.removeJobPo(index);

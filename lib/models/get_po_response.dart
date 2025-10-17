@@ -54,6 +54,7 @@ class POModel {
   String workspaceId;
   DateTime createdAt;
   DateTime updatedAt;
+  bool? isLocked;
 
   POModel({
     required this.id,
@@ -76,6 +77,7 @@ class POModel {
     required this.workspaceId,
     required this.createdAt,
     required this.updatedAt,
+    this.isLocked,
   });
 
   factory POModel.fromMap(Map<String, dynamic> json) => POModel(
@@ -101,6 +103,7 @@ class POModel {
     workspaceId: json["workspaceId"],
     createdAt: DateTime.parse(json["createdAt"]),
     updatedAt: DateTime.parse(json["updatedAt"]),
+    isLocked: json["isLocked"] ?? false,
   );
 
   Map<String, dynamic> toMap() => {
@@ -179,6 +182,7 @@ class Matching2 {
   int mid;
   String mLabel;
   String id;
+  bool? isLocked;
 
   Matching2({
     required this.colors,
@@ -188,6 +192,7 @@ class Matching2 {
     required this.mid,
     required this.mLabel,
     required this.id,
+    this.isLocked,
   });
 
   factory Matching2.fromMap(Map<String, dynamic> json) => Matching2(
@@ -198,6 +203,7 @@ class Matching2 {
     mid: json["mid"],
     mLabel: json["mLabel"],
     id: json["_id"],
+    isLocked: json["isLocked"],
   );
 
   Map<String, dynamic> toMap() => {

@@ -18,7 +18,7 @@ class StatusTagRow extends StatelessWidget {
         if (order.isJobPo) ...[
           Container(
             decoration: BoxDecoration(
-              color: Colors.grey[500],
+              color: Color.fromARGB(255, 108, 117, 125),
               borderRadius: BorderRadius.circular(6),
             ),
             child: Padding(
@@ -34,7 +34,7 @@ class StatusTagRow extends StatelessWidget {
         if (order.isHighPriority ?? false) ...[
           Container(
             decoration: BoxDecoration(
-              color: Colors.orange,
+              color: Color.fromARGB(255, 220, 53, 69),
               borderRadius: BorderRadius.circular(6),
             ),
             child: Padding(
@@ -65,7 +65,9 @@ class StatusTagRow extends StatelessWidget {
         ],
         Container(
           decoration: BoxDecoration(
-            color: order.orderType == 'sari' ? Colors.blueGrey : Colors.blue,
+            color: order.orderType == 'sari'
+                ? Color.fromARGB(255, 13, 202, 240)
+                : Color.fromARGB(255, 255, 193, 7),
             borderRadius: BorderRadius.circular(6),
           ),
           child: Padding(
@@ -77,20 +79,6 @@ class StatusTagRow extends StatelessWidget {
           ),
         ),
         SizedBox(width: 8),
-        // Container(
-        //   decoration: BoxDecoration(
-        //     color: type == 'delivered' ? Colors.grey : Colors.red,
-        //     borderRadius: BorderRadius.circular(6),
-        //   ),
-        //   child: Padding(
-        //     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        //     child: MyText(
-        //       type,
-        //       style: const TextStyle(color: Colors.white, fontSize: 12),
-        //     ),
-        //   ),
-        // ),
-        // SizedBox(width: 8),
 
         // Status tag
       ],

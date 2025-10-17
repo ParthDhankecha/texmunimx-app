@@ -38,6 +38,7 @@ class BrowseDesign extends StatelessWidget {
                           children: [
                             Container(
                               height: 140,
+                              width: double.infinity,
                               decoration: BoxDecoration(
                                 color: Colors.black,
                                 borderRadius: BorderRadius.circular(10),

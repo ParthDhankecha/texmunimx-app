@@ -11,6 +11,7 @@ class CustomDropdown<T> extends StatelessWidget {
   final List<T> items;
   final ValueChanged<T?> onChanged;
   final bool isRequired;
+  final bool isEnabled;
 
   /// A required function that converts an item of type T into the String
   /// that should be displayed in the dropdown list.
@@ -28,6 +29,7 @@ class CustomDropdown<T> extends StatelessWidget {
     required this.itemLabelBuilder,
     this.placeholderText = 'Select', // Default placeholder text
     this.isRequired = false,
+    this.isEnabled = true,
   });
 
   @override
@@ -87,7 +89,7 @@ class CustomDropdown<T> extends StatelessWidget {
                 ),
               );
             }).toList(),
-            onChanged: onChanged,
+            onChanged: isEnabled ? onChanged : null,
           ),
         ),
       ],

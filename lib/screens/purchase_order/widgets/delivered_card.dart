@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:texmunimx/common_widgets/custom_btn.dart';
 import 'package:texmunimx/common_widgets/custom_network_image.dart';
 import 'package:texmunimx/common_widgets/my_text_field.dart';
 import 'package:texmunimx/controllers/purchase_order_controller.dart';
@@ -162,7 +163,7 @@ class _DeliveredCardState extends State<DeliveredCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MyText('order_quantity'),
+                MyText('order_quantity', append: ' : '),
                 Text(
                   '${widget.order.matching?.quantity ?? "0"}',
                   style: TextStyle(fontSize: 14),
@@ -174,7 +175,7 @@ class _DeliveredCardState extends State<DeliveredCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MyText('pending_quantity'),
+                MyText('pending_quantity', append: ' : '),
                 Text(
                   '${widget.order.matching?.pending ?? "0"}',
                   style: TextStyle(
@@ -190,7 +191,7 @@ class _DeliveredCardState extends State<DeliveredCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MyText('delivered_quantity'),
+                MyText('delivered_quantity', append: ' : '),
                 Text(
                   '${widget.order.delivered?.quantity ?? 0}',
                   style: TextStyle(
@@ -205,7 +206,7 @@ class _DeliveredCardState extends State<DeliveredCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MyText('note'),
+                MyText('note', append: ' : '),
                 Text(
                   widget.order.delivered?.remarks ?? 'N/A',
                   style: TextStyle(
@@ -220,11 +221,13 @@ class _DeliveredCardState extends State<DeliveredCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton(
-                  onPressed: () {
+                CustomBtn(
+                  onTap: () {
                     Get.to(() => OrderHistoryListScreen(id: widget.order.id));
                   },
-                  child: MyText('history'),
+                  title: 'history'.tr,
+                  isOutline: true,
+                  isSmall: true,
                 ),
               ],
             ),

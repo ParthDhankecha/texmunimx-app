@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:texmunimx/common_widgets/app_text_styles.dart';
@@ -25,6 +23,7 @@ class JobPoGarmentCard extends StatelessWidget {
   final List<User> users;
   final List<FirmId> firms;
   final List<SariMatchingModel> matchings;
+  final bool isLocked;
 
   const JobPoGarmentCard({
     super.key,
@@ -39,11 +38,11 @@ class JobPoGarmentCard extends StatelessWidget {
     required this.users,
     required this.firms,
     required this.matchings,
+    this.isLocked = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    log('Job PO Model: ${model.user}');
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Card(
@@ -56,13 +55,14 @@ class JobPoGarmentCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   MyText('job_po', append: ' ${index + 1}', style: bodyStyle),
-                  IconButton(
-                    onPressed: onRemove,
-                    icon: Icon(
-                      Icons.delete_outline_rounded,
-                      color: AppColors.errorColor,
+                  if (!isLocked)
+                    IconButton(
+                      onPressed: onRemove,
+                      icon: Icon(
+                        Icons.delete_outline_rounded,
+                        color: AppColors.errorColor,
+                      ),
                     ),
-                  ),
                 ],
               ),
 
@@ -74,6 +74,7 @@ class JobPoGarmentCard extends StatelessWidget {
                       title: 'job_user'.tr,
                       items: users,
                       isRequired: true,
+                      isEnabled: !isLocked,
                       selectedValue: model.user == '' || model.user == null
                           ? null
                           : users.firstWhere(
@@ -97,6 +98,7 @@ class JobPoGarmentCard extends StatelessWidget {
                           title: 'firm'.tr,
                           items: firms,
                           isRequired: true,
+                          isEnabled: !isLocked,
                           selectedValue: model.firm == '' || model.firm == null
                               ? null
                               : firms.firstWhere(

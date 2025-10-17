@@ -8,6 +8,7 @@ class SariMatchingModel {
   double? rate;
   double? meter;
   int? quantity;
+  bool? isLocked;
 
   SariMatchingModel({
     this.id,
@@ -19,5 +20,6 @@ class SariMatchingModel {
     this.rate,
     this.meter,
     this.quantity,
+    this.isLocked,
   });
 }

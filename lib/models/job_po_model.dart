@@ -8,6 +8,7 @@ class JobPoModel {
   int? quantity;
   String? remarks;
   String? jobId;
+  bool? isLocked;
 
   JobPoModel({
     this.id,
@@ -19,5 +20,6 @@ class JobPoModel {
     this.remarks,
     this.mId,
     this.jobId,
+    this.isLocked,
   });
 }

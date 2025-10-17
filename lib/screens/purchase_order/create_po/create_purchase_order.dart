@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:texmunimx/common_widgets/app_text_styles.dart';
 import 'package:texmunimx/common_widgets/custom_btn.dart';
+import 'package:texmunimx/common_widgets/custom_btn_red.dart';
 import 'package:texmunimx/common_widgets/custom_dropdown.dart';
 import 'package:texmunimx/common_widgets/date_input_field.dart';
 import 'package:texmunimx/common_widgets/error_row.dart';
@@ -102,6 +103,11 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                               () => CustomDropdown<String>(
                                 title: 'order_type'.tr,
                                 items: controller.orderTypes,
+                                isEnabled: widget.po == null
+                                    ? true
+                                    : widget.po!.isLocked == true
+                                    ? false
+                                    : true,
                                 selectedValue:
                                     controller.selectedOrderType.value == ''
                                     ? null
@@ -188,7 +194,6 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                                     onChanged: (value) {
                                       controller.changePriority(value);
                                     },
-                                    inactiveTrackColor: Colors.grey,
                                   ),
                                 ),
                               ],
@@ -224,7 +229,6 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                                       }
                                       controller.changeJobPoEnabled(value);
                                     },
-                                    inactiveTrackColor: Colors.grey,
                                   ),
                                 ),
                               ],
@@ -262,6 +266,16 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                                 }
                               },
                             ),
+                            if (widget.po != null &&
+                                widget.po!.isLocked == false) ...{
+                              SizedBox(height: 10),
+                              CustomBtnRed(
+                                title: 'delete'.tr,
+                                onTap: () {
+                                  controller.deletePurchaseOrder(widget.po!.id);
+                                },
+                              ),
+                            },
                           ],
                         ),
                       ),

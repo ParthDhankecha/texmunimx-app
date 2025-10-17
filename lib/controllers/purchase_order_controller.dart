@@ -481,6 +481,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
           color2: element.colors.length > 1 ? element.colors[1] : '',
           color3: element.colors.length > 2 ? element.colors[2] : '',
           color4: element.colors.length > 3 ? element.colors[3] : '',
+          isLocked: element.isLocked,
         );
 
         addSariMatchingByModel(model);
@@ -514,6 +515,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
                 matching: '',
                 remarks: '',
                 jobId: e.id,
+                isLocked: e.isLocked,
               ),
             )
             .toList();
@@ -544,6 +546,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
 
                 remarks: e.remarks,
                 jobId: e.id,
+                isLocked: e.isLocked,
               ),
             )
             .toList();
@@ -1075,6 +1078,38 @@ class PurchaseOrderController extends GetxController implements GetxService {
       } else {
         showErrorSnackbar('Something went wrong, please try again later.');
       }
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  // delete purchase order
+  deletePurchaseOrder(String id) async {
+    try {
+      isLoading.value = true;
+
+      await repository.deletePurchaseOrder(id);
+      Get.back();
+
+      showSuccessSnackbar('Order Deleted Successfully.');
+      resetInputs();
+
+      getPurchaseList(isRefresh: true);
+    } on ApiException catch (e) {
+      if (kDebugMode) {
+        print('error : $e');
+      }
+      switch (e.statusCode) {
+        case 401:
+          Get.offAll(() => LoginScreen());
+          break;
+        default:
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('error : $e');
+      }
+      showErrorSnackbar('Something went wrong, please try again later.');
     } finally {
       isLoading.value = false;
     }

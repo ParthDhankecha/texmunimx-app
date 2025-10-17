@@ -42,18 +42,26 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
       appBar: AppBar(
         elevation: 6,
         title: Text('purchase_order'.tr),
-        bottom: TabBar(
-          controller: tabController,
-          indicatorColor: AppColors.mainColor,
-          labelColor: AppColors.mainColor,
-          unselectedLabelColor: Colors.black,
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(48),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: TabBar(
+              controller: tabController,
+              indicatorColor: AppColors.mainColor,
+              labelColor: AppColors.mainColor,
+              unselectedLabelColor: Colors.black,
+              isScrollable: true,
+              labelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
 
-          tabs: [
-            Tab(text: 'pending'.tr),
-            Tab(text: 'in_progress'.tr),
-            Tab(text: 'ready_to_dispatch'.tr),
-            Tab(text: 'completed'.tr),
-          ],
+              tabs: [
+                Tab(text: 'pending'.tr),
+                Tab(text: 'in_progress'.tr),
+                Tab(text: 'ready_to_dispatch'.tr),
+                Tab(text: 'completed'.tr),
+              ],
+            ),
+          ),
         ),
       ),
       body: TabBarView(
