@@ -9,6 +9,7 @@ import 'package:texmunimx/models/order_status_enum.dart';
 import 'package:texmunimx/models/purchase_order_list_response.dart';
 import 'package:texmunimx/models/purchase_order_options_response.dart';
 import 'package:texmunimx/screens/purchase_order/change_order_status/change_order_status_screen.dart';
+import 'package:texmunimx/screens/purchase_order/order_history/order_history_list.dart';
 import 'package:texmunimx/screens/purchase_order/widgets/status_tag_row.dart';
 import 'package:texmunimx/utils/app_colors.dart';
 import 'package:texmunimx/utils/app_const.dart';
@@ -279,6 +280,12 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
                     );
                   },
                   child: Text('Completed'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Get.to(() => OrderHistoryListScreen(id: widget.order.id));
+                  },
+                  child: MyText('history'),
                 ),
               ],
             ),
