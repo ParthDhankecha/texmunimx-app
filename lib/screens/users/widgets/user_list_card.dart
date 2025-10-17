@@ -64,9 +64,6 @@ class UserListCard extends StatelessWidget {
                       right: 0,
                       top: 0,
                       child: Switch.adaptive(
-                        activeThumbColor: Colors.green,
-                        trackOutlineWidth: WidgetStatePropertyAll(1),
-
                         value: user.isActive,
                         onChanged: onStatusChange,
                       ),

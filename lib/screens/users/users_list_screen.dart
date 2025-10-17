@@ -36,7 +36,6 @@ class _UsersListScreenState extends State<UsersListScreen> {
       ),
       body: Column(
         children: [
-          Divider(color: Colors.grey.shade500, thickness: 1),
           Obx(() {
             if (userController.isLoading.value) {
               return const Center(child: CircularProgressIndicator());

@@ -9,7 +9,6 @@ import 'package:texmunimx/common_widgets/show_error_snackbar.dart';
 import 'package:texmunimx/controllers/user_controller.dart';
 import 'package:texmunimx/models/roles_model.dart';
 import 'package:texmunimx/models/user_list_response.dart';
-import 'package:texmunimx/screens/users/widgets/user_active_switch.dart';
 import 'package:texmunimx/utils/app_colors.dart';
 
 class CreateUsersScreen extends StatefulWidget {
@@ -68,7 +67,6 @@ class _CreateUsersScreenState extends State<CreateUsersScreen> {
         key: formKey,
         child: Column(
           children: [
-            Divider(),
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
@@ -144,11 +142,22 @@ class _CreateUsersScreenState extends State<CreateUsersScreen> {
                           hintText: 'enter_password'.tr,
                         ),
                         Obx(
-                          () => UserActiveSwitch(
-                            isActive: isActive.value,
-                            onChanged: (value) {
-                              isActive.value = value;
-                            },
+                          () => Row(
+                            children: [
+                              Text(
+                                'is_active'.tr,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Switch(
+                                value: isActive.value,
+                                onChanged: (value) {
+                                  isActive.value = value;
+                                },
+                              ),
+                            ],
                           ),
                         ),
 

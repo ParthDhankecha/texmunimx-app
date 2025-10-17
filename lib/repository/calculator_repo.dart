@@ -1,6 +1,8 @@
 import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:texmunimx/models/calculator_get_response.dart';
 import 'package:texmunimx/repository/api_client.dart';
 import 'package:texmunimx/repository/base_model.dart';
@@ -48,6 +50,32 @@ class CalculatorRepo {
       return true;
     } else {
       return false;
+    }
+  }
+
+  Future<Uint8List> getImageBytes(String imageUrl) async {
+    try {
+      //   if (imageUrl != null && imageUrl.isNotEmpty) {
+      //   try {
+      //     final response = await http.get(Uri.parse(imageUrl));
+      //     if (response.statusCode == 200) {
+      //       designImageBytes = response.bodyBytes;
+      //     } else {
+      //       print('Failed to load image from $imageUrl: ${response.statusCode}');
+      //     }
+      //   } catch (e) {
+      //     print('Error loading image: $e');
+      //   }
+      // }
+
+      final response = await http.get(Uri.parse(imageUrl));
+      if (response.statusCode == 200) {
+        return response.bodyBytes;
+      } else {
+        throw Exception('Failed to load image from $imageUrl');
+      }
+    } catch (e) {
+      throw Exception('Error fetching image: $e');
     }
   }
 }

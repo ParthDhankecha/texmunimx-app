@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:texmunimx/common_widgets/app_text_styles.dart';
 import 'package:texmunimx/common_widgets/custom_network_image.dart';
 import 'package:texmunimx/controllers/calculator_controller.dart';
+import 'package:texmunimx/utils/app_const.dart';
 
 class CalculatorPdfViewScreen extends StatefulWidget {
   const CalculatorPdfViewScreen({super.key});
@@ -45,7 +46,8 @@ class _CalculatorPdfViewScreenState extends State<CalculatorPdfViewScreen> {
                 children: [
                   CustomNetworkImage(
                     imageUrl:
-                        controller.selectedDesign.value?.designImage ?? '',
+                        AppConst.imageBaseUrl +
+                        (controller.selectedDesign.value?.designImage ?? ''),
                     height: 56,
                     width: 56,
                     fit: BoxFit.cover,

@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ import 'package:texmunimx/models/labour_cost_model.dart';
 import 'package:texmunimx/repository/api_exception.dart';
 import 'package:texmunimx/repository/calculator_repo.dart';
 import 'package:texmunimx/screens/auth_screens/login_screen.dart';
+import 'package:texmunimx/utils/app_const.dart';
 
 class CalculatorController extends GetxController implements GetxService {
   RxBool isLoading = false.obs;
@@ -72,6 +74,9 @@ class CalculatorController extends GetxController implements GetxService {
 
   //labour cost
   RxList<LabourCostModel> labourCostList = RxList();
+
+  //for pdf imaage
+  Uint8List? designImageBytes;
 
   //set selected design and load data
   setSelectedDesign(DesignModel design) {
@@ -508,18 +513,60 @@ class CalculatorController extends GetxController implements GetxService {
         });
   }
 
-  Future<void> generateAndDownloadPdf() async {
-    final pdf = pw.Document();
+  //pdf validations
+  bool pdfValidations() {
+    if (getDesign == null) {
+      showErrorSnackbar('Please select a design first');
+      return false;
+    }
 
-    // 1. Load a font that supports bold/regular if you need consistent styling
-    // If you don't load a font, the default might not support bolding.
-    // final font = await PdfGoogleFonts.openSansRegular();
-    // final boldFont = await PdfGoogleFonts.openSansBold();
+    if (designCardCont.text.isEmpty || designCard.value <= 0) {
+      showErrorSnackbar('design_card_required'.tr);
+      return false;
+    }
+
+    if (totalWeftCost.value <= 0) {
+      showErrorSnackbar('atleast_one_feeder_is_required'.tr);
+      return false;
+    }
+
+    if (designCard.value <= 0) {
+      showErrorSnackbar('design_card_required'.tr);
+      return false;
+    }
+
+    return true;
+  }
+
+  Future<void> generateAndDownloadPdf() async {
+    final String imageUrl =
+        AppConst.imageBaseUrl + (selectedDesign.value?.designImage ?? '');
+    try {
+      designImageBytes = await repository.getImageBytes(imageUrl);
+    } catch (e) {
+      log('Error fetching design image: $e');
+      designImageBytes = null;
+    }
+
+    // Download the image if a URL exists
+    final pdf = pw.Document();
 
     // Create the PDF content
     pdf.addPage(
-      pw.Page(
+      pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
+        header: (pw.Context context) {
+          // Optional: Add a repeating header (e.g., app name, page number)
+          if (context.pageNumber > 1) {
+            return pw.Center(
+              child: pw.Text(
+                'Continuation - Page ${context.pageNumber}',
+                style: pw.TextStyle(fontSize: 10, color: PdfColors.grey),
+              ),
+            );
+          }
+          return pw.Container();
+        },
         build: (pw.Context context) {
           // Use a custom function to build the main content
           return _buildPdfContent(
@@ -563,7 +610,7 @@ class CalculatorController extends GetxController implements GetxService {
   // --- PDF Widget Builders ---
 
   // A helper function to build the main content structure
-  pw.Widget _buildPdfContent({pw.Font? font, pw.Font? boldFont}) {
+  List<pw.Widget> _buildPdfContent() {
     // Define Text Styles for PDF
     final pw.TextStyle titlePdfStyle = pw.TextStyle(
       fontSize: 16,
@@ -584,51 +631,49 @@ class CalculatorController extends GetxController implements GetxService {
       // font: font,
     );
 
-    return pw.ListView(
-      children: [
-        // Design Details
-        _buildPdfDesignDetails(
-          titlePdfStyle: titlePdfStyle,
-          normalPdfStyle: normalPdfStyle,
-          designName: selectedDesign.value?.designName ?? 'N/A',
-          designNumber: selectedDesign.value?.designNumber ?? 'N/A',
-        ),
-        pw.SizedBox(height: 10),
+    return [
+      // Design Details
+      _buildPdfDesignDetails(
+        titlePdfStyle: titlePdfStyle,
+        normalPdfStyle: normalPdfStyle,
+        designName: selectedDesign.value?.designName ?? 'N/A',
+        designNumber: selectedDesign.value?.designNumber ?? 'N/A',
+      ),
+      pw.SizedBox(height: 2),
 
-        // Wrap Details
-        _buildPdfWrapDetails(
-          titlePdfStyle: titlePdfStyle,
-          bodyPdfStyle: bodyPdfStyle,
-          smallNormalPdfStyle: smallNormalPdfStyle,
-          quality: qualityCont.text.trim().toString(),
-          denier: denierCont.text.trim().toString(),
-          tar: tarCont.text.trim().toString(),
-          meter: meterCont.text.trim().toString(),
-          ratePerKg: ratePerKgCont.text.trim().toString(),
-          totalWarpCost: warpCost.value.toStringAsFixed(2),
-        ),
-        pw.SizedBox(height: 10),
+      // Wrap Details
+      _buildPdfWrapDetails(
+        titlePdfStyle: titlePdfStyle,
+        bodyPdfStyle: bodyPdfStyle,
+        smallNormalPdfStyle: smallNormalPdfStyle,
+        quality: qualityCont.text.trim().toString(),
+        denier: denierCont.text.trim().toString(),
+        tar: tarCont.text.trim().toString(),
+        meter: meterCont.text.trim().toString(),
+        ratePerKg: ratePerKgCont.text.trim().toString(),
+        totalWarpCost: warpCost.value.toStringAsFixed(2),
+      ),
+      pw.SizedBox(height: 2),
 
-        // Weft Details
-        _buildPdfWeftDetails(
-          titlePdfStyle: titlePdfStyle,
-          bodyPdfStyle: bodyPdfStyle,
-          smallNormalPdfStyle: smallNormalPdfStyle,
-          weftList: weftList,
-          totalWeftCost: totalWeftCost.toStringAsFixed(2),
-        ),
-        pw.SizedBox(height: 10),
+      // Weft Details
+      _buildPdfWeftDetails(
+        titlePdfStyle: titlePdfStyle,
+        bodyPdfStyle: bodyPdfStyle,
+        smallNormalPdfStyle: smallNormalPdfStyle,
+        weftList: weftList,
+        totalWeftCost: totalWeftCost.toStringAsFixed(2),
+      ),
+      pw.SizedBox(height: 2),
 
-        // Labour Details
-        _buildPdfLabourDetails(
-          titlePdfStyle: titlePdfStyle,
-          bodyPdfStyle: bodyPdfStyle,
-          smallNormalPdfStyle: smallNormalPdfStyle,
-          designCard: designCardCont.text,
-          labourCostList: labourCostList,
-        ),
-      ],
-    );
+      // Labour Details
+      _buildPdfLabourDetails(
+        titlePdfStyle: titlePdfStyle,
+        bodyPdfStyle: bodyPdfStyle,
+        smallNormalPdfStyle: smallNormalPdfStyle,
+        designCard: designCardCont.text,
+        labourCostList: labourCostList,
+      ),
+    ];
   }
 
   // Mimics your buildKeyValueRow in PDF
@@ -697,7 +742,31 @@ class CalculatorController extends GetxController implements GetxService {
       child: pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: [
-          pw.Text('Design: $designName ($designNumber)', style: normalPdfStyle),
+          pw.Row(
+            children: [
+              if (designImageBytes != null) // Conditionally show image
+                pw.Padding(
+                  padding: const pw.EdgeInsets.only(right: 10),
+                  child: pw.Container(
+                    height: 56, // Match your Flutter widget height
+                    width: 56, // Match your Flutter widget width
+                    child: pw.ClipRRect(
+                      horizontalRadius: 10, // Apply border radius if desired
+                      verticalRadius: 10,
+                      child: pw.Image(
+                        pw.MemoryImage(designImageBytes!),
+                        fit: pw.BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+              pw.Text(
+                'Design: $designName ($designNumber)',
+                style: normalPdfStyle,
+              ),
+            ],
+          ),
+
           // NOTE: Image loading in pw.Image is complex (needs Uint8List).
           // For simplicity, I'm excluding the image here.
         ],
@@ -818,6 +887,10 @@ class CalculatorController extends GetxController implements GetxService {
             String panno = element.panno?.toStringAsFixed(2) ?? 'N/A';
             String meter = element.meter?.toStringAsFixed(2) ?? 'N/A';
             String rate = element.rate?.toStringAsFixed(2) ?? 'N/A';
+
+            if (rate == 'N/A') {
+              return pw.SizedBox.shrink();
+            }
 
             return pw.Column(
               children: [
@@ -958,7 +1031,7 @@ class CalculatorController extends GetxController implements GetxService {
                 ),
               ],
             );
-          }).toList(),
+          }),
         ],
       ),
     );

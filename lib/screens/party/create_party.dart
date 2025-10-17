@@ -295,15 +295,21 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                                 ),
                               ),
                       ),
-                      SizedBox(height: 12),
 
                       if (partyModel != null)
-                        CustomBtnRed(
-                          title: 'delete'.tr,
-                          onTap: () {
-                            Get.dialog(DeletePartyDialog());
-                          },
-                          isOutline: true,
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 8.0,
+                            right: 8.0,
+                            bottom: 8.0,
+                          ),
+                          child: CustomBtnRed(
+                            title: 'delete'.tr,
+                            onTap: () {
+                              Get.dialog(DeletePartyDialog());
+                            },
+                            isOutline: true,
+                          ),
                         ),
 
                       SizedBox(height: 12),

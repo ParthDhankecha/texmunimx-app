@@ -45,7 +45,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              Get.to(() => const CalculatorPdfViewScreen());
+              if (controller.pdfValidations()) {
+                Get.to(() => const CalculatorPdfViewScreen());
+              }
             },
             child: Text('pdf'.tr),
           ),
