@@ -39,7 +39,7 @@ class _FirmListScreenState extends State<FirmListScreen> {
             if (firmController.isLoading.value) {
               return const Center(child: CircularProgressIndicator());
             } else if (firmController.firms.isEmpty) {
-              return Center(child: Text('no_firms_found'.tr));
+              return Center(child: Text('no_firm_found'.tr));
             } else {
               return Expanded(
                 child: ListView.builder(

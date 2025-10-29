@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:texmunimx/common_widgets/show_error_snackbar.dart';
 import 'package:texmunimx/controllers/app_update_controller.dart';
 import 'package:texmunimx/repository/api_client.dart';
