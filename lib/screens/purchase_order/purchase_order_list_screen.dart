@@ -69,76 +69,80 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
         children: [
           //pending
           Obx(
-            () => ListView.builder(
-              itemCount: controller.purchaseOrdersList.length,
-              itemBuilder: (context, index) {
-                final order = controller.purchaseOrdersList[index];
+            () => controller.purchaseOrdersList.isEmpty
+                ? Center(child: Text('No records found!'))
+                : ListView.builder(
+                    itemCount: controller.purchaseOrdersList.length,
+                    itemBuilder: (context, index) {
+                      final order = controller.purchaseOrdersList[index];
 
-                final design = controller.designList.firstWhere(
-                  (d) => d.id == order.designId,
-                  orElse: () => Design(
-                    id: '',
-                    designName: 'Unknown Design',
-                    designImage: '',
-                    designNumber: '',
+                      final design = controller.designList.firstWhere(
+                        (d) => d.id == order.designId,
+                        orElse: () => Design(
+                          id: '',
+                          designName: 'Unknown Design',
+                          designImage: '',
+                          designNumber: '',
+                        ),
+                      );
+
+                      final party = controller.partyList.firstWhere(
+                        (p) => p.id == order.partyId,
+                        orElse: () => Party(
+                          id: '',
+                          partyName: 'Unknown Party',
+
+                          partyNumber: '',
+                          mobile: '',
+                        ),
+                      );
+                      return PurchaseOrderCard(
+                        order: order,
+                        design: design,
+                        party: party,
+                        isEditvisible:
+                            sp.userRole == sp.admin || sp.userRole == sp.owner,
+                      );
+                    },
                   ),
-                );
-
-                final party = controller.partyList.firstWhere(
-                  (p) => p.id == order.partyId,
-                  orElse: () => Party(
-                    id: '',
-                    partyName: 'Unknown Party',
-
-                    partyNumber: '',
-                    mobile: '',
-                  ),
-                );
-                return PurchaseOrderCard(
-                  order: order,
-                  design: design,
-                  party: party,
-                  isEditvisible:
-                      sp.userRole == sp.admin || sp.userRole == sp.owner,
-                );
-              },
-            ),
           ),
 
           //In Process
           Obx(
-            () => ListView.builder(
-              itemCount: controller.inProcessList.length,
-              itemBuilder: (context, index) {
-                final order = controller.inProcessList[index];
+            () => controller.inProcessList.isEmpty
+                ? Center(child: Text('No records found!'))
+                : ListView.builder(
+                    itemCount: controller.inProcessList.length,
+                    itemBuilder: (context, index) {
+                      final order = controller.inProcessList[index];
 
-                final design = controller.designList.firstWhere(
-                  (d) => d.id == order.designId,
-                  orElse: () => Design(
-                    id: '',
-                    designName: 'Unknown Design',
-                    designImage: '',
-                    designNumber: '',
+                      final design = controller.designList.firstWhere(
+                        (d) => d.id == order.designId,
+                        orElse: () => Design(
+                          id: '',
+                          designName: 'Unknown Design',
+                          designImage: '',
+                          designNumber: '',
+                        ),
+                      );
+
+                      final party = controller.partyList.firstWhere(
+                        (p) => p.id == order.partyId,
+                        orElse: () => Party(
+                          id: '',
+                          partyName: 'Unknown Party',
+
+                          partyNumber: '',
+                          mobile: '',
+                        ),
+                      );
+                      return InProcessCard(
+                        order: controller.inProcessList[index],
+                        design: design,
+                        party: party,
+                      );
+                    },
                   ),
-                );
-
-                final party = controller.partyList.firstWhere(
-                  (p) => p.id == order.partyId,
-                  orElse: () => Party(
-                    id: '',
-                    partyName: 'Unknown Party',
-
-                    partyNumber: '',
-                    mobile: '',
-                  ),
-                );
-                return InProcessCard(
-                  order: controller.inProcessList[index],
-                  design: design,
-                  party: party,
-                );
-              },
-            ),
           ),
 
           //Ready to dispatch

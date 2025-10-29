@@ -1,3 +1,4 @@
+import 'package:texmunimx/controllers/app_update_controller.dart';
 import 'package:texmunimx/controllers/calculator_controller.dart';
 import 'package:texmunimx/controllers/create_design_controller.dart';
 import 'package:texmunimx/controllers/firm_controller.dart';
@@ -57,4 +58,5 @@ Future<void> init() async {
   Get.lazyPut(() => CalculatorController());
   Get.lazyPut(() => UserController());
   Get.lazyPut(() => FirmController());
+  Get.lazyPut(() => AppUpdateController());
 }

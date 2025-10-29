@@ -57,6 +57,10 @@ class Sharedprefs {
   set currentLanguage(String value) => _saveData('USER_LAN', value);
   String get currentLanguage => _getData('USER_LAN') ?? 'en';
 
+  set lastUpdatePromptTime(int value) =>
+      _saveData('LAST_UPDATE_PROMPT_TIME', value);
+  int get lastUpdatePromptTime => _getData('LAST_UPDATE_PROMPT_TIME') ?? 0;
+
   // Clear all data from shared preferences
   void clearAll() {
     pref.clear();

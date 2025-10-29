@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:texmunimx/common_widgets/show_error_snackbar.dart';
+import 'package:texmunimx/controllers/app_update_controller.dart';
 import 'package:texmunimx/repository/api_client.dart';
 import 'package:texmunimx/repository/api_exception.dart';
 import 'package:texmunimx/screens/auth_screens/login_screen.dart';
@@ -32,6 +35,7 @@ class SplashController extends GetxController implements GetxService {
     try {
       var response = await apiClient.request(AppConst.defaultConfig);
       var data = jsonDecode(response);
+
       String placeHolderImg = data['data']['placeHolderImg'] ?? '';
       String publicUrl = data['data']['publicUrl'] ?? '';
 
@@ -44,6 +48,21 @@ class SplashController extends GetxController implements GetxService {
       AppConst.placeHolderImage = placeHolderImg;
       AppConst.imageBaseUrl = publicUrl;
       checkUser();
+
+      //checking for app updates
+      Get.find<AppUpdateController>().setData(
+        Platform.isAndroid
+            ? data['data']['androidVersion'] ?? '1.0.0'
+            : data['data']['iosVersion'] ?? '1.0.0',
+
+        Platform.isAndroid
+            ? data['data']['androidForceUpdate'] ?? false
+            : data['data']['iosForceUpdate'] ?? false,
+
+        Platform.isAndroid
+            ? data['data']['androidShowPopup'] ?? false
+            : data['data']['iosShowPopup'] ?? false,
+      );
     } on ApiException catch (e) {
       log('error : $e');
 
