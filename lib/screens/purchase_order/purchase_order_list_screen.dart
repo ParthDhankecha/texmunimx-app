@@ -25,7 +25,7 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
   @override
   void initState() {
     super.initState();
-    controller.getPurchaseList();
+    controller.getPurchaseList(isRefresh: true);
     tabController = TabController(initialIndex: 0, length: 4, vsync: this);
     tabController.addListener(onTabChanging);
   }
