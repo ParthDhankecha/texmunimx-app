@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:texmunimx/common_widgets/app_text_styles.dart';
 import 'package:texmunimx/controllers/splash_controller.dart';
 import 'package:texmunimx/utils/app_colors.dart';
-import 'package:texmunimx/utils/app_const.dart';
 import 'package:texmunimx/utils/app_strings.dart';
 import 'package:get/get.dart';
 

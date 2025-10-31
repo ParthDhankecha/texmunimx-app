@@ -29,7 +29,6 @@ class _OrderHistoryListScreenState extends State<OrderHistoryListScreen> {
 
       body: Column(
         children: [
-          Divider(color: Colors.grey.shade500, thickness: 1),
           Obx(() {
             if (purchaseOrderController.isLoading.value) {
               return const Center(child: CircularProgressIndicator());

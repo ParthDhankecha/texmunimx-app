@@ -21,7 +21,7 @@ class _OrderHistoryCardState extends State<OrderHistoryCard> {
   PurchaseOrderController controller = Get.find<PurchaseOrderController>();
   @override
   Widget build(BuildContext context) {
-    log('order history: ${widget.order.userId}');
+    log('order history: ${widget.order.status}');
     return Padding(
       padding: const EdgeInsets.only(top: 2.0, left: 8.0, right: 8.0),
       child: Card(
@@ -41,6 +41,20 @@ class _OrderHistoryCardState extends State<OrderHistoryCard> {
                 title: 'moved_by',
                 value: widget.order.movedBy.capitalizeFirst!,
               ),
+              if (widget.order.quantity > 0)
+                _buildRow(
+                  title:
+                      "${widget.order.status == 'inProcess'
+                          ? 'pending'.tr
+                          : widget.order.status == "readyToDispatch"
+                          ? 'ready_to_dispatch'.tr
+                          : widget.order.status == "delivered"
+                          ? 'delivered'.tr
+                          : widget.order.status == "delivered"
+                          ? 'delivered'.tr
+                          : ''} ${'quantity'.tr}",
+                  value: widget.order.quantity.toString(),
+                ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
