@@ -47,15 +47,5 @@ AppBar searchDesignAppBar() {
         ),
       ),
     ),
-    actions: [
-      IconButton(
-        onPressed: () {},
-        icon: Icon(
-          Icons.notifications_outlined,
-          color: AppColors.mainColor,
-          size: 32,
-        ),
-      ),
-    ],
   );
 }

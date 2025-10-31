@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:texmunimx/common_widgets/custom_btn.dart';
+import 'package:texmunimx/common_widgets/custom_icon_btn.dart';
 import 'package:texmunimx/common_widgets/custom_network_image.dart';
 import 'package:texmunimx/common_widgets/my_text_field.dart';
 import 'package:texmunimx/controllers/purchase_order_controller.dart';
@@ -225,7 +226,7 @@ class _InProcessCardState extends State<InProcessCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                CustomBtn(
+                CustomIconBtn(
                   onTap: () {
                     showModalBottomSheet(
                       context: context,
@@ -248,9 +249,10 @@ class _InProcessCardState extends State<InProcessCard> {
                   title: 'pending'.tr,
                   isSmall: true,
                   isOutline: true,
+                  icon: 'move',
                 ),
                 SizedBox(width: 8),
-                CustomBtn(
+                CustomIconBtn(
                   onTap: () {
                     showModalBottomSheet(
                       context: context,
@@ -271,6 +273,7 @@ class _InProcessCardState extends State<InProcessCard> {
                   },
                   title: 'ready_to_dispatch'.tr,
                   isSmall: true,
+                  icon: 'move',
                   isOutline: true,
                 ),
                 SizedBox(width: 8),

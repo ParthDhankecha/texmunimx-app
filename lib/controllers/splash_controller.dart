@@ -48,7 +48,6 @@ class SplashController extends GetxController implements GetxService {
       AppConst.placeHolderImage = placeHolderImg;
 
       AppConst.imageBaseUrl = '$publicUrl/';
-      checkUser();
 
       //checking for app updates
       Get.find<AppUpdateController>().setData(
@@ -64,11 +63,14 @@ class SplashController extends GetxController implements GetxService {
             ? data['data']['androidShowPopup'] ?? false
             : data['data']['iosShowPopup'] ?? false,
       );
+
+      checkUser();
     } on ApiException catch (e) {
       log('error : $e');
 
       switch (e.statusCode) {
         case 401:
+          sp.clearAll();
           Get.offAll(() => LoginScreen());
           break;
         default:

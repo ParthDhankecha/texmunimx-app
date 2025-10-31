@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:texmunimx/common_widgets/animated_active_switch.dart';
 import 'package:texmunimx/common_widgets/custom_btn.dart';
 import 'package:texmunimx/common_widgets/custom_btn_red.dart';
 import 'package:texmunimx/common_widgets/custom_dropdown.dart';
@@ -151,12 +152,22 @@ class _CreateUsersScreenState extends State<CreateUsersScreen> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              Switch(
-                                value: isActive.value,
-                                onChanged: (value) {
-                                  isActive.value = value;
-                                },
+                              SizedBox(width: 14),
+                              SizedBox(
+                                width: 120,
+                                child: AnimatedActiveSwitch(
+                                  current: isActive.value,
+                                  onChanged: (value) {
+                                    isActive.value = value;
+                                  },
+                                ),
                               ),
+                              // Switch(
+                              //   value: isActive.value,
+                              //   onChanged: (value) {
+                              //     isActive.value = value;
+                              //   },
+                              // ),
                             ],
                           ),
                         ),

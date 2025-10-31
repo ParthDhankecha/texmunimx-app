@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:texmunimx/common_widgets/animated_active_switch.dart';
 import 'package:texmunimx/common_widgets/app_text_styles.dart';
 import 'package:texmunimx/models/user_list_response.dart';
 import 'package:texmunimx/utils/app_colors.dart';
@@ -60,12 +61,23 @@ class UserListCard extends StatelessWidget {
                       ],
                     ),
 
+                    // Positioned(
+                    //   right: 0,
+                    //   top: 0,
+                    //   child: Switch.adaptive(
+                    //     value: user.isActive,
+                    //     onChanged: onStatusChange,
+                    //   ),
+                    // ),
                     Positioned(
                       right: 0,
                       top: 0,
-                      child: Switch.adaptive(
-                        value: user.isActive,
-                        onChanged: onStatusChange,
+                      child: SizedBox(
+                        width: 120,
+                        child: AnimatedActiveSwitch(
+                          current: user.isActive,
+                          onChanged: onStatusChange!,
+                        ),
                       ),
                     ),
                   ],

@@ -141,7 +141,7 @@ class AppTranslations extends Translations {
       'cancel': 'Cancel',
       'password': 'Password',
       'enter_password': 'Enter your password',
-      'login_with_username_and_password': 'Login with User Name and Password.',
+      'login_with_username_and_password': 'Login',
 
       'is_active': 'Is Active',
       'name': 'Name',
@@ -185,6 +185,10 @@ class AppTranslations extends Translations {
       'order_history': 'Order History',
       'pdf': 'PDF',
       'no_firm_found': 'No Firm Found',
+      'change_password': 'Change Password',
+      'confirm_password': 'Confirm Password',
+      'active': 'Active',
+      'inactive': 'Inactive',
     },
     'hi_IN': {
       'language_change': 'भाषा बदलें',
@@ -308,9 +312,7 @@ class AppTranslations extends Translations {
       'cancel': 'रद्द करें',
       'password': 'पासवर्ड',
       'enter_password': 'अपना पासवर्ड दर्ज करें',
-      'login_with_username_and_password':
-          'उपयोगकर्ता नाम और पासवर्ड के साथ लॉगिन करें।',
-
+      'login_with_username_and_password': 'लॉगिन',
       'is_active': 'सक्रिय है',
       'name': 'नाम',
       'phone': 'फोन',
@@ -350,6 +352,10 @@ class AppTranslations extends Translations {
       'view_details': 'विवरण देखें',
       'pdf': 'पीडीएफ',
       'no_firm_found': 'कोई फर्म नहीं मिली',
+      'change_password': 'पासवर्ड बदलें',
+      'confirm_password': 'पासवर्ड की पुष्टि करें',
+      'active': 'सक्रिय',
+      'inactive': 'निष्क्रिय',
     },
 
     'gu_IN': {
@@ -476,8 +482,7 @@ class AppTranslations extends Translations {
       'cancel': 'રદ કરો',
       'password': 'પાસવર્ડ',
       'enter_password': 'તમારો પાસવર્ડ દાખલ કરો',
-      'login_with_username_and_password':
-          'વપરાશકર્તા નામ અને પાસવર્ડ સાથે લૉગિન કરો.',
+      'login_with_username_and_password': 'લૉગિન કરો',
       'is_active': 'સક્રિય છે',
       'name': 'નામ',
       'phone': 'ફોન',
@@ -514,6 +519,10 @@ class AppTranslations extends Translations {
       'view_details': 'વિગતો જુઓ',
       'pdf': 'પીડીએફ',
       'no_firm_found': 'કોઈ ફર્મ મળ્યો નથી',
+      'change_password': 'પાસવર્ડ બદલો',
+      'confirm_password': 'પાસવર્ડની પુષ્ટિ કરો',
+      'active': 'સક્રિય',
+      'inactive': 'નિષ્ક્રિય',
     },
   };
 }

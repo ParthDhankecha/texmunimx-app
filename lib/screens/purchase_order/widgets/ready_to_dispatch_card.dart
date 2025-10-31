@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:texmunimx/common_widgets/custom_btn.dart';
+import 'package:texmunimx/common_widgets/custom_icon_btn.dart';
 import 'package:texmunimx/common_widgets/custom_network_image.dart';
 import 'package:texmunimx/common_widgets/my_text_field.dart';
 import 'package:texmunimx/controllers/purchase_order_controller.dart';
@@ -231,7 +232,7 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                CustomBtn(
+                CustomIconBtn(
                   onTap: () {
                     showModalBottomSheet(
                       context: context,
@@ -256,10 +257,11 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
                   title: 'in_progress'.tr,
                   isOutline: true,
                   isSmall: true,
+                  icon: 'move',
                 ),
                 SizedBox(width: 8),
 
-                CustomBtn(
+                CustomIconBtn(
                   isOutline: true,
                   isSmall: true,
                   onTap: () {
@@ -283,6 +285,7 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
                     );
                   },
                   title: 'completed'.tr,
+                  icon: 'move',
                 ),
                 SizedBox(width: 8),
                 CustomBtn(

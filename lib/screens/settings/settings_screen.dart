@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:texmunimx/screens/auth_screens/change_password.dart';
 import 'package:texmunimx/screens/calculator/calculator_screen.dart';
 import 'package:texmunimx/screens/create_design/design_list_screen.dart';
 import 'package:texmunimx/screens/firms/firm_list_screen.dart';
@@ -94,6 +95,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       _buildDivider(),
                     ],
                   ),
+
+                SettingsCard(
+                  icon: Icons.lock_outline,
+                  iconColor: Colors.indigo,
+                  title: 'change_password'.tr,
+                  onTap: () {
+                    Get.to(() => const ChangePassword());
+                  },
+                ),
 
                 SettingsCard(
                   icon: Icons.language,

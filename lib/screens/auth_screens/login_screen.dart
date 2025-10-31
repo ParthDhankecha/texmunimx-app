@@ -75,16 +75,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('email'.tr, style: bodyStyle),
+                      Text('user_name'.tr, style: bodyStyle),
                       SizedBox(height: 8),
                       InputField(
                         textEditingController: loginController.emailCont,
 
-                        hintText: 'Enter your email',
+                        hintText: 'user_name'.tr,
                         textInputType: TextInputType.emailAddress,
                         onValidator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
+                            return 'Please enter your username';
                           }
                           // // Simple email validation
                           // if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {

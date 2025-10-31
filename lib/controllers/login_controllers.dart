@@ -23,6 +23,8 @@ class LoginControllers extends GetxController implements GetxService {
   TextEditingController emailCont = TextEditingController();
   TextEditingController passwordCont = TextEditingController();
 
+  TextEditingController confirmPasswordCont = TextEditingController();
+
   LoginControllers({required this.sp, required this.repo});
 
   void setLoading(bool load) {

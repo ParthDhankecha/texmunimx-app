@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:texmunimx/common_widgets/custom_btn.dart';
+import 'package:texmunimx/common_widgets/custom_icon_btn.dart';
 import 'package:texmunimx/common_widgets/custom_network_image.dart';
 import 'package:texmunimx/common_widgets/my_text_field.dart';
 import 'package:texmunimx/models/order_status_enum.dart';
@@ -151,7 +152,7 @@ class PurchaseOrderCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                CustomBtn(
+                CustomIconBtn(
                   onTap: () {
                     showModalBottomSheet(
                       context: context,
@@ -173,6 +174,7 @@ class PurchaseOrderCard extends StatelessWidget {
                   },
                   title: 'in_progress'.tr,
                   isSmall: true,
+                  icon: 'move',
                   isOutline: true,
                 ),
                 SizedBox(width: 10),
