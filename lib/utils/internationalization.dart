@@ -142,6 +142,9 @@ class AppTranslations extends Translations {
       'password': 'Password',
       'enter_password': 'Enter your password',
       'login_with_username_and_password': 'Login',
+      'old_password': 'Old Password',
+      'new_password': 'New Password',
+      'confirm_new_password': 'Confirm New Password',
 
       'is_active': 'Is Active',
       'name': 'Name',
@@ -356,6 +359,9 @@ class AppTranslations extends Translations {
       'confirm_password': 'पासवर्ड की पुष्टि करें',
       'active': 'सक्रिय',
       'inactive': 'निष्क्रिय',
+      'old_password': 'पुराना पासवर्ड',
+      'new_password': 'नया पासवर्ड',
+      'confirm_new_password': 'नए पासवर्ड की पुष्टि करें',
     },
 
     'gu_IN': {
@@ -523,6 +529,9 @@ class AppTranslations extends Translations {
       'confirm_password': 'પાસવર્ડની પુષ્ટિ કરો',
       'active': 'સક્રિય',
       'inactive': 'નિષ્ક્રિય',
+      'old_password': 'જૂનો પાસવર્ડ',
+      'new_password': 'નવો પાસવર્ડ',
+      'confirm_new_password': 'નવા પાસવર્ડની પુષ્ટિ કરો',
     },
   };
 }

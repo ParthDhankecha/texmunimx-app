@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:texmunimx/models/user_list_response.dart';
@@ -10,8 +11,24 @@ class UsersRepository {
   Sharedprefs sp = Get.find<Sharedprefs>();
   ApiClient apiClient = Get.find<ApiClient>();
 
-  //get all users
+  //function to change current user password
+  Future<bool> changePassword({
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+    final reqBody = {'oldPassword': oldPassword, 'newPassword': newPassword};
 
+    var data = await apiClient.requestPut(
+      AppConst.changePassword,
+      body: reqBody,
+      headers: {'authorization': sp.userToken},
+    );
+    var response = jsonDecode(data);
+    log('onChangePasswrd ${response['code'] == 'OK'}');
+    return response['code'] == 'OK';
+  }
+
+  //get all users
   Future<List<UserModel>> getAllUsers() async {
     var response = await apiClient.requestPost(
       AppConst.users,

@@ -22,7 +22,8 @@ class _ChangePasswordState extends State<ChangePassword> {
   @override
   initState() {
     super.initState();
-    loginController.passwordCont.text = '';
+    loginController.oldPasswordCont.text = '';
+    loginController.newPasswordCont.text = '';
     loginController.confirmPasswordCont.text = '';
   }
 
@@ -43,10 +44,26 @@ class _ChangePasswordState extends State<ChangePassword> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('password'.tr, style: bodyStyle),
+                  Text('old_password'.tr, style: bodyStyle),
                   SizedBox(height: 8),
                   PasswordTextField(
-                    controller: loginController.passwordCont,
+                    controller: loginController.oldPasswordCont,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a password';
+                      }
+                      if (value.length < 6) {
+                        return 'Password must be at least 6 characters long';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 16),
+                  Text('new_password'.tr, style: bodyStyle),
+                  SizedBox(height: 8),
+
+                  PasswordTextField(
+                    controller: loginController.newPasswordCont,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter a password';
@@ -88,9 +105,11 @@ class _ChangePasswordState extends State<ChangePassword> {
                             onTap: () {
                               if (formKey.currentState!.validate()) {
                                 // Call login function
-                                if (loginController.passwordCont.text ==
+                                if (loginController.newPasswordCont.text ==
                                     loginController.confirmPasswordCont.text) {
                                   // Proceed with password change logic
+                                  loginController.changePassword();
+                                  FocusManager.instance.primaryFocus?.unfocus();
                                 } else {
                                   showErrorSnackbar(
                                     'Passwords and Confirm Password do not match',

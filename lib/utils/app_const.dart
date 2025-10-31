@@ -13,6 +13,7 @@ class AppConst {
   //users
   static String users = 'users/pagination'; // post
   static String usersCreate = 'users'; // post
+  static String changePassword = 'users/change-password'; // put - {id}
 
   // design
   static String createDesign = 'design/create';
