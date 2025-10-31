@@ -49,6 +49,7 @@ class ApiClient extends GetxService {
           return response.body;
 
         case 401:
+        case 403:
           throw ApiException(statusCode: 401, message: 'Unauthorized');
 
         case 404:

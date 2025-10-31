@@ -10,4 +10,8 @@ class HomeController extends GetxController implements GetxService {
   void changeIndex(int i) {
     selectedIndex.value = i;
   }
+
+  resetSelectedTab() {
+    selectedIndex.value = 0;
+  }
 }

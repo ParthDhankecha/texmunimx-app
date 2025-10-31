@@ -7,6 +7,7 @@ import 'package:texmunimx/common_widgets/password_input.dart';
 import 'package:texmunimx/controllers/login_controllers.dart';
 import 'package:texmunimx/screens/auth_screens/widgets/privacy_bar.dart';
 import 'package:get/get.dart';
+import 'package:texmunimx/utils/app_colors.dart';
 import 'package:texmunimx/utils/app_strings.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -31,12 +32,40 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  AppStrings.appName,
-                  style: titleStyle.copyWith(fontSize: 20),
-                ),
-                SizedBox(height: 56),
+                Hero(
+                  tag: 'logoHero',
+                  child: SizedBox(
+                    height: 130,
 
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: SizedBox(
+                            height: 120,
+                            width: 120,
+                            child: Image.asset(
+                              'assets/images/logo_tr.png',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ),
+
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Text(
+                            AppStrings.appName,
+                            style: titleStyle.copyWith(
+                              fontSize: 20,
+                              color: AppColors.mainColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
                 Text(
                   'login_with_username_and_password'.tr,
                   style: headingStyle,

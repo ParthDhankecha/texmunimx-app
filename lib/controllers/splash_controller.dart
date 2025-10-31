@@ -34,9 +34,10 @@ class SplashController extends GetxController implements GetxService {
     try {
       var response = await apiClient.request(AppConst.defaultConfig);
       var data = jsonDecode(response);
+      log('default config : $data');
 
       String placeHolderImg = data['data']['placeHolderImg'] ?? '';
-      String publicUrl = data['data']['publicUrl'] ?? '';
+      String publicUrl = data['data']['s3BaseUrl'] ?? '';
 
       Map<String, dynamic> userRoles = data['data']['roles'] ?? {};
       sp.owner = userRoles['OWNER'] ?? 1;
@@ -45,7 +46,8 @@ class SplashController extends GetxController implements GetxService {
       sp.job = userRoles['JOB'] ?? 4;
 
       AppConst.placeHolderImage = placeHolderImg;
-      AppConst.imageBaseUrl = publicUrl;
+
+      AppConst.imageBaseUrl = '$publicUrl/';
       checkUser();
 
       //checking for app updates

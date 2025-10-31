@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const SettingsScreen(),
   ];
   List<Widget> adminWidgetList = [
-    const Center(child: Text('Home Screen')),
+    //const Center(child: Text('Home Screen')),
     const PurchaseOrderListPage(),
     const CreatePurchaseOrder(),
     const SettingsScreen(),
@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    homeController.selectedIndex.value = 1;
+    homeController.selectedIndex.value = 0;
   }
 
   @override
@@ -55,11 +55,10 @@ class _HomeScreenState extends State<HomeScreen> {
             homeController.changeIndex(value);
           },
           items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              label: 'home'.tr,
-            ),
-
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.home_outlined),
+            //   label: 'home'.tr,
+            // ),
             BottomNavigationBarItem(
               icon: Icon(Icons.list_outlined),
               label: 'po_list'.tr,

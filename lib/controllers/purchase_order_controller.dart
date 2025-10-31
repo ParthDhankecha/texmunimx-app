@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:texmunimx/common_widgets/show_error_snackbar.dart';
 import 'package:texmunimx/common_widgets/show_success_snackbar.dart';
+import 'package:texmunimx/controllers/home_controller.dart';
 import 'package:texmunimx/models/design_list_response.dart';
 import 'package:texmunimx/models/get_po_response.dart';
 import 'package:texmunimx/models/in_process_model.dart';
@@ -909,6 +910,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
         decs: 'New Order Created Successfully.',
       );
       resetInputs();
+      Get.find<HomeController>().resetSelectedTab();
       //  getPartyList(isRefresh: true);
     } on ApiException catch (e) {
       if (kDebugMode) {
