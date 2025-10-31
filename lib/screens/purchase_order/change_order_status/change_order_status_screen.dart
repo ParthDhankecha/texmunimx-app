@@ -205,16 +205,25 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                   style: TextStyle(color: Colors.grey[700]),
                 ),
                 const SizedBox(height: 8),
-                TextFormField(
-                  initialValue: widget.moveTo.displayValue,
-                  readOnly: true,
-                  decoration: const InputDecoration(
-                    hintText: 'In Process',
-                    border: OutlineInputBorder(),
-                    filled: true,
-                    fillColor: Color.fromARGB(255, 240, 240, 240),
+                Container(
+                  padding: EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color.fromARGB(255, 240, 240, 240),
                   ),
+                  child: Row(children: [Text(widget.moveTo.displayValue)]),
                 ),
+                // TextFormField(
+                //   initialValue: widget.moveTo.displayValue,
+                //   readOnly: true,
+                //   decoration: const InputDecoration(
+                //     hintText: 'In Process',
+                //     border: OutlineInputBorder(),
+                //     filled: true,
+                //     fillColor: Color.fromARGB(255, 240, 240, 240),
+                //   ),
+                // ),
                 const SizedBox(height: 10),
 
                 // Quantity field with validation
