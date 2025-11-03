@@ -93,6 +93,7 @@ class ApiClient extends GetxService {
 
     try {
       response = await http.post(url, body: jsonBody, headers: finalHeaders);
+      log('res : ${response.body}');
       switch (response.statusCode) {
         case 200:
         case 201:
