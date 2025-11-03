@@ -20,6 +20,7 @@ import 'package:texmunimx/repository/api_exception.dart';
 import 'package:texmunimx/repository/purchase_order_repository.dart';
 import 'package:texmunimx/screens/auth_screens/login_screen.dart';
 import 'package:texmunimx/utils/date_formate_extension.dart';
+import 'package:texmunimx/utils/shared_pref.dart';
 
 class PurchaseOrderController extends GetxController implements GetxService {
   PurchaseOrderController();
@@ -307,6 +308,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
       log('error : $e');
       switch (e.statusCode) {
         case 401:
+          Get.find<Sharedprefs>().clearAll();
           Get.offAll(() => LoginScreen());
           break;
         default:
