@@ -148,6 +148,7 @@ class CreateDesignController extends GetxController implements GetxService {
             : null,
       );
       resetInputs();
+      Get.back();
       showSuccessSnackbar('New Design Create.');
       getDesignList(isRefresh: true);
     } on ApiException catch (e) {
@@ -201,6 +202,7 @@ class CreateDesignController extends GetxController implements GetxService {
 
       Get.back();
       showSuccessSnackbar('New Design Create.');
+
       getDesignList(isRefresh: true);
     } on ApiException catch (e) {
       switch (e.statusCode) {
