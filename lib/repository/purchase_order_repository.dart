@@ -25,10 +25,8 @@ class PurchaseOrderRepository {
       headers: {'authorization': sp.userToken},
     );
 
-    if (kDebugMode) {
-      print('token : ${sp.userToken}');
-      print('data : $data');
-    }
+    log('token : ${sp.userToken}');
+
     return purchaseOrderOptionsResponseFromMap(data).data;
   }
 
@@ -47,9 +45,8 @@ class PurchaseOrderRepository {
       if (pageCount != null) 'page': pageCount,
     };
 
-    if (kDebugMode) {
-      print('token : ${sp.userToken}');
-    }
+    log('token : ${sp.userToken}');
+
     var data = await apiClient.requestPost(
       endPoint,
       body: body,

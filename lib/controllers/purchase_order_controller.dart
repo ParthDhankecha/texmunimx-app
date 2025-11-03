@@ -887,24 +887,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
             };
           }).toList(),
       };
-      // } else if (selectedOrderType.value == orderTypes[1]) {
-      //sari
-      //  }
 
-      // body = {
-      //   "quantity": 100,
-      //   "rate": 5,
-      //   "panna": 42,
-      //   "partyPoNumber": "12341",
-      //   "process": "print",
-      //   "designId": "68e88d0bbb41a102c1d09725",
-      //   "partyId": "68e88cc5bb41a102c1d096f9",
-      //   "deliveryDate": "2025-10-17",
-      //   "isHighPriority": false,
-      //   "note": "notes",
-      //   "orderType": "garment",
-      //   "isJobPo": false,
-      // };
       await repository.createPurchaseOrder(reqBody: body);
 
       showSuccessSnackbar(
