@@ -214,21 +214,28 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                                 Obx(
                                   () => Switch(
                                     value: controller.isJobPoEnabled.value,
-                                    onChanged: (value) {
-                                      log(
-                                        'job type: ${controller.selectedOrderType.value}',
-                                      );
-                                      if (controller
-                                          .selectedOrderType
-                                          .value
-                                          .isEmpty) {
-                                        controller.err.value =
-                                            'Select Order Type';
-                                        showErrorSnackbar(controller.err.value);
-                                        return;
-                                      }
-                                      controller.changeJobPoEnabled(value);
-                                    },
+                                    inactiveTrackColor: AppColors.lightGray,
+                                    onChanged: widget.po!.isLocked == true
+                                        ? null
+                                        : (value) {
+                                            log(
+                                              'job type: ${controller.selectedOrderType.value}',
+                                            );
+                                            if (controller
+                                                .selectedOrderType
+                                                .value
+                                                .isEmpty) {
+                                              controller.err.value =
+                                                  'Select Order Type';
+                                              showErrorSnackbar(
+                                                controller.err.value,
+                                              );
+                                              return;
+                                            }
+                                            controller.changeJobPoEnabled(
+                                              value,
+                                            );
+                                          },
                                   ),
                                 ),
                               ],
