@@ -7,7 +7,7 @@ import 'package:texmunimx/repository/api_client.dart';
 import 'package:texmunimx/utils/app_const.dart';
 import 'package:texmunimx/utils/shared_pref.dart';
 
-class UsersRepository {
+class UsersRepository extends GetxService {
   Sharedprefs sp = Get.find<Sharedprefs>();
   ApiClient apiClient = Get.find<ApiClient>();
 
