@@ -179,20 +179,22 @@ class PurchaseOrderCard extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 isEditvisible
-                    ? CustomBtn(
+                    ? CustomIconBtn(
                         onTap: () {
                           Get.to(() => CreatePurchaseOrder(po: order));
                         },
+                        icon: 'edit',
                         title: 'edit'.tr,
                         isSmall: true,
                         isOutline: true,
                       )
                     : SizedBox.shrink(),
                 isEditvisible ? SizedBox(width: 10) : SizedBox.shrink(),
-                CustomBtn(
+                CustomIconBtn(
                   onTap: () {
                     Get.to(() => OrderHistoryListScreen(id: order.id));
                   },
+                  icon: 'history',
                   title: 'history'.tr,
                   isSmall: true,
                   isOutline: true,

@@ -288,13 +288,14 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
                   icon: 'move',
                 ),
                 SizedBox(width: 8),
-                CustomBtn(
+                CustomIconBtn(
                   isOutline: true,
                   isSmall: true,
                   onTap: () {
                     Get.to(() => OrderHistoryListScreen(id: widget.order.id));
                   },
                   title: 'history'.tr,
+                  icon: 'history',
                 ),
               ],
             ),

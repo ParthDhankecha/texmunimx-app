@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:texmunimx/common_widgets/custom_btn.dart';
+import 'package:texmunimx/common_widgets/custom_icon_btn.dart';
 import 'package:texmunimx/common_widgets/custom_network_image.dart';
 import 'package:texmunimx/common_widgets/my_text_field.dart';
 import 'package:texmunimx/controllers/purchase_order_controller.dart';
@@ -221,11 +222,12 @@ class _DeliveredCardState extends State<DeliveredCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                CustomBtn(
+                CustomIconBtn(
                   onTap: () {
                     Get.to(() => OrderHistoryListScreen(id: widget.order.id));
                   },
                   title: 'history'.tr,
+                  icon: 'history',
                   isOutline: true,
                   isSmall: true,
                 ),

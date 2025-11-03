@@ -277,11 +277,12 @@ class _InProcessCardState extends State<InProcessCard> {
                   isOutline: true,
                 ),
                 SizedBox(width: 8),
-                CustomBtn(
+                CustomIconBtn(
                   onTap: () {
                     Get.to(() => OrderHistoryListScreen(id: widget.order.id));
                   },
                   title: 'history'.tr,
+                  icon: 'history',
                   isOutline: true,
                   isSmall: true,
                 ),
