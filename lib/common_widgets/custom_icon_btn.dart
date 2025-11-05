@@ -41,13 +41,13 @@ class CustomIconBtn extends StatelessWidget {
                     children: [
                       Image.asset(
                         AppConst.getAssetPng(icon),
-                        height: 18,
-                        width: 18,
+                        height: 14,
+                        width: 14,
                         color: isOutline
                             ? AppColors.mainColor
                             : AppColors.whiteColor,
                       ),
-                      SizedBox(width: 10),
+                      SizedBox(width: 6),
                       Text(
                         title,
                         style: TextStyle(

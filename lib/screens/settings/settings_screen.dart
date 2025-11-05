@@ -104,7 +104,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     Get.to(() => const ChangePassword());
                   },
                 ),
-
+                _buildDivider(),
                 SettingsCard(
                   icon: Icons.language,
                   iconColor: Colors.green,

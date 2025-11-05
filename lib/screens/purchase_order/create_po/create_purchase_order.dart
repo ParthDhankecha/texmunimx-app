@@ -118,6 +118,7 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                                   if (value != null) {
                                     controller.selectedOrderType.value = value;
                                     controller.jobPoList.value = [];
+                                    controller.isJobPoEnabled.value = false;
 
                                     if (value == controller.orderTypes[1]) {
                                       controller.generateDefaultBoxes();
@@ -212,31 +213,40 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                                 ),
 
                                 Obx(
-                                  () => Switch(
-                                    value: controller.isJobPoEnabled.value,
-                                    inactiveTrackColor: AppColors.lightGray,
-                                    onChanged: widget.po!.isLocked == true
-                                        ? null
-                                        : (value) {
-                                            log(
-                                              'job type: ${controller.selectedOrderType.value}',
-                                            );
-                                            if (controller
-                                                .selectedOrderType
-                                                .value
-                                                .isEmpty) {
-                                              controller.err.value =
-                                                  'Select Order Type';
-                                              showErrorSnackbar(
-                                                controller.err.value,
-                                              );
-                                              return;
-                                            }
-                                            controller.changeJobPoEnabled(
-                                              value,
-                                            );
-                                          },
-                                  ),
+                                  () => widget.po?.isLocked == true
+                                      ? Switch(
+                                          value:
+                                              controller.isJobPoEnabled.value,
+                                          onChanged: null,
+                                          inactiveTrackColor:
+                                              AppColors.lightGray,
+                                        )
+                                      : Switch(
+                                          value:
+                                              controller.isJobPoEnabled.value,
+                                          // inactiveTrackColor: AppColors.lightGray,
+                                          onChanged: widget.po?.isLocked == true
+                                              ? null
+                                              : (value) {
+                                                  log(
+                                                    'job type: ${controller.selectedOrderType.value}',
+                                                  );
+                                                  if (controller
+                                                      .selectedOrderType
+                                                      .value
+                                                      .isEmpty) {
+                                                    controller.err.value =
+                                                        'Select Order Type';
+                                                    showErrorSnackbar(
+                                                      controller.err.value,
+                                                    );
+                                                    return;
+                                                  }
+                                                  controller.changeJobPoEnabled(
+                                                    value,
+                                                  );
+                                                },
+                                        ),
                                 ),
                               ],
                             ),

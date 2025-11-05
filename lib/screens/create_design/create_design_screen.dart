@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
@@ -40,7 +41,8 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
       final file = File(image.path);
       final int fileSize = await file.length(); // in bytes
       final double fileSizeInMB = fileSize / (1024 * 1024); // convert to MB
-
+      log('File size: $fileSizeInMB MB');
+      log('File size limit: ${AppConst.imageSizeLimit} MB');
       if (fileSizeInMB > AppConst.imageSizeLimit) {
         // Show error message or snackbar
         showErrorSnackbar(

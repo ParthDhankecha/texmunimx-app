@@ -222,70 +222,75 @@ class _InProcessCardState extends State<InProcessCard> {
             ),
             const SizedBox(height: 6),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                CustomIconBtn(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  CustomIconBtn(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
 
-                      builder: (context) => UpdateStatusBottomSheet(
-                        po: widget.order,
-                        orderQuantity: widget.order.quantity,
-                        pendingQuantity: widget.order.inProcess?.quantity ?? 0,
-                        moveTo: OrderStatus.pending,
-                        currentStatus: OrderStatus.inProcess,
-                        purchaseId: widget.order.id,
-                        quantityTitle: 'In Progress',
-                        firmId: widget.order.inProcess?.firmId ?? '',
-                        userId: widget.order.inProcess?.userId ?? '',
-                        machineNo: widget.order.inProcess?.machineNo ?? '',
-                      ),
-                    );
-                  },
-                  title: 'pending'.tr,
-                  isSmall: true,
-                  isOutline: true,
-                  icon: 'move',
-                ),
-                SizedBox(width: 8),
-                CustomIconBtn(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (context) => UpdateStatusBottomSheet(
-                        po: widget.order,
-                        orderQuantity: widget.order.quantity,
-                        pendingQuantity: widget.order.inProcess?.quantity ?? 0,
-                        moveTo: OrderStatus.readyToDispatch,
-                        currentStatus: OrderStatus.inProcess,
-                        purchaseId: widget.order.id,
-                        quantityTitle: 'In Progress',
-                        firmId: widget.order.inProcess?.firmId ?? '',
-                        userId: widget.order.inProcess?.userId ?? '',
-                        machineNo: widget.order.inProcess?.machineNo ?? '',
-                      ),
-                    );
-                  },
-                  title: 'ready_to_dispatch'.tr,
-                  isSmall: true,
-                  icon: 'move',
-                  isOutline: true,
-                ),
-                SizedBox(width: 8),
-                CustomIconBtn(
-                  onTap: () {
-                    Get.to(() => OrderHistoryListScreen(id: widget.order.id));
-                  },
-                  title: 'history'.tr,
-                  icon: 'history',
-                  isOutline: true,
-                  isSmall: true,
-                ),
-              ],
+                        builder: (context) => UpdateStatusBottomSheet(
+                          po: widget.order,
+                          orderQuantity: widget.order.quantity,
+                          pendingQuantity:
+                              widget.order.inProcess?.quantity ?? 0,
+                          moveTo: OrderStatus.pending,
+                          currentStatus: OrderStatus.inProcess,
+                          purchaseId: widget.order.id,
+                          quantityTitle: 'In Progress',
+                          firmId: widget.order.inProcess?.firmId ?? '',
+                          userId: widget.order.inProcess?.userId ?? '',
+                          machineNo: widget.order.inProcess?.machineNo ?? '',
+                        ),
+                      );
+                    },
+                    title: 'pending'.tr,
+                    isSmall: true,
+                    isOutline: true,
+                    icon: 'move',
+                  ),
+                  SizedBox(width: 8),
+                  CustomIconBtn(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (context) => UpdateStatusBottomSheet(
+                          po: widget.order,
+                          orderQuantity: widget.order.quantity,
+                          pendingQuantity:
+                              widget.order.inProcess?.quantity ?? 0,
+                          moveTo: OrderStatus.readyToDispatch,
+                          currentStatus: OrderStatus.inProcess,
+                          purchaseId: widget.order.id,
+                          quantityTitle: 'In Progress',
+                          firmId: widget.order.inProcess?.firmId ?? '',
+                          userId: widget.order.inProcess?.userId ?? '',
+                          machineNo: widget.order.inProcess?.machineNo ?? '',
+                        ),
+                      );
+                    },
+                    title: 'ready_to_dispatch'.tr,
+                    isSmall: true,
+                    icon: 'move',
+                    isOutline: true,
+                  ),
+                  SizedBox(width: 8),
+                  CustomIconBtn(
+                    onTap: () {
+                      Get.to(() => OrderHistoryListScreen(id: widget.order.id));
+                    },
+                    title: 'history'.tr,
+                    icon: 'history',
+                    isOutline: true,
+                    isSmall: true,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

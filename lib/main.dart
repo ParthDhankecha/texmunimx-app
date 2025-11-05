@@ -17,7 +17,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  // This widget is the root of your application.
   final ThemeController themeController = Get.find<ThemeController>();
 
   final LocalizationController localizationController = Get.find();
