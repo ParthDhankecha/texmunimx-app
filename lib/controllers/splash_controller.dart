@@ -44,7 +44,8 @@ class SplashController extends GetxController implements GetxService {
       sp.admin = userRoles['ADMIN'] ?? 2;
       sp.manager = userRoles['MANAGER'] ?? 3;
       sp.job = userRoles['JOB'] ?? 4;
-
+      AppConst.imageSizeLimit = data['data']['designImageMaxSize'] ?? 15;
+      log('Image Size Limit: ${AppConst.imageSizeLimit} MB');
       AppConst.placeHolderImage = placeHolderImg;
 
       AppConst.imageBaseUrl = '$publicUrl/';

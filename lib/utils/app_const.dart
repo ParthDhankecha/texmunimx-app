@@ -64,4 +64,6 @@ class AppConst {
 
   //UaserRoles List
   static List<String> userRoles = [superAdmin, owner, admin, manager];
+
+  static int imageSizeLimit = 10;
 }

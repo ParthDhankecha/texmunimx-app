@@ -85,41 +85,14 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
         children: [
           PreferredSize(
             preferredSize: Size.fromHeight(40),
-            // child: TabBar(
-            //   controller: tabController,
-            //   indicatorColor: AppColors.mainColor,
-            //   labelColor: AppColors.mainColor,
-            //   unselectedLabelColor: Colors.black,
-            //   isScrollable: true,
-            //   labelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-            //   padding: EdgeInsets.zero,
 
-            //   tabs: [
-            //     Tab(text: 'pending'.tr, iconMargin: EdgeInsets.only(right: 0)),
-            //     Tab(
-            //       text: 'in_progress'.tr,
-            //       iconMargin: EdgeInsets.only(right: 0),
-            //     ),
-            //     Tab(
-            //       text: 'ready_to_dispatch'.tr,
-            //       iconMargin: EdgeInsets.only(right: 0),
-            //     ),
-            //     Tab(
-            //       text: 'completed'.tr,
-            //       iconMargin: EdgeInsets.only(right: 0),
-            //     ),
-            //   ],
-            // ),
             child: Container(
               color:
                   Theme.of(context).appBarTheme.backgroundColor ?? Colors.white,
-              // Use SingleChildScrollView to allow for scrollable tabs
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
 
-                // Use a Row to lay out the custom tabs horizontally
                 child: Row(
-                  // Crucially set this to start, forcing tabs to the left edge
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children:
@@ -151,7 +124,9 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
               children: [
                 //pending
                 Obx(
-                  () => controller.purchaseOrdersList.isEmpty
+                  () => controller.purchaseListLoading.value
+                      ? Center(child: CircularProgressIndicator())
+                      : controller.purchaseOrdersList.isEmpty
                       ? Center(child: Text('No records found!'))
                       : ListView.builder(
                           itemCount: controller.purchaseOrdersList.length,
@@ -192,7 +167,9 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
 
                 //In Process
                 Obx(
-                  () => controller.inProcessList.isEmpty
+                  () => controller.inProcessListLoading.value
+                      ? Center(child: CircularProgressIndicator())
+                      : controller.inProcessList.isEmpty
                       ? Center(child: Text('No records found!'))
                       : ListView.builder(
                           itemCount: controller.inProcessList.length,
@@ -230,7 +207,9 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
 
                 //Ready to dispatch
                 Obx(
-                  () => controller.readyToDispatchList.isEmpty
+                  () => controller.readyToDispatchListLoading.value
+                      ? Center(child: CircularProgressIndicator())
+                      : controller.readyToDispatchList.isEmpty
                       ? Center(child: Text('No records found!'))
                       : ListView.builder(
                           itemCount: controller.readyToDispatchList.length,
@@ -269,7 +248,9 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
 
                 //Completed
                 Obx(
-                  () => controller.deliveredList.isEmpty
+                  () => controller.deliveredListLoading.value
+                      ? Center(child: CircularProgressIndicator())
+                      : controller.deliveredList.isEmpty
                       ? Center(child: Text('No records found!'))
                       : ListView.builder(
                           itemCount: controller.deliveredList.length,

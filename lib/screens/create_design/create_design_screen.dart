@@ -10,6 +10,7 @@ import 'package:texmunimx/common_widgets/custom_network_image.dart';
 import 'package:texmunimx/common_widgets/custom_progress_btn_.dart';
 import 'package:texmunimx/common_widgets/error_row.dart';
 import 'package:texmunimx/common_widgets/input_field.dart';
+import 'package:texmunimx/common_widgets/show_error_snackbar.dart';
 import 'package:texmunimx/controllers/create_design_controller.dart';
 import 'package:texmunimx/controllers/home_controller.dart';
 import 'package:texmunimx/models/design_list_response.dart';
@@ -36,6 +37,19 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
     // Pick an image.
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
+      final file = File(image.path);
+      final int fileSize = await file.length(); // in bytes
+      final double fileSizeInMB = fileSize / (1024 * 1024); // convert to MB
+
+      if (fileSizeInMB > AppConst.imageSizeLimit) {
+        // Show error message or snackbar
+        showErrorSnackbar(
+          'Image size should not exceed ${AppConst.imageSizeLimit} MB',
+        );
+        // Optionally show a dialog/snackbar/toast in Flutter UI
+        return;
+      }
+
       controller.setImage(image);
     }
   }

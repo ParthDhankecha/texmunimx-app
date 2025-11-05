@@ -47,6 +47,12 @@ class PurchaseOrderController extends GetxController implements GetxService {
   RxList<PurchaseOrderModel> readyToDispatchList = RxList();
   RxList<PurchaseOrderModel> deliveredList = RxList();
 
+  //loading
+  RxBool purchaseListLoading = false.obs;
+  RxBool inProcessListLoading = false.obs;
+  RxBool readyToDispatchListLoading = false.obs;
+  RxBool deliveredListLoading = false.obs;
+
   PurchaseOrderRepository repository = Get.find<PurchaseOrderRepository>();
 
   RxList<FirmId> firmList = RxList();
@@ -682,7 +688,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
   }) async {
     try {
       isLoading.value = true;
-
+      purchaseListLoading.value = true;
       PurchaseOrderListModel purchaseOrderListModel;
       await fetchOptionsData();
       if (isRefresh) {
@@ -691,11 +697,13 @@ class PurchaseOrderController extends GetxController implements GetxService {
       }
       if (search != null && search.isNotEmpty) {
         purchaseOrdersList.value = [];
+
         purchaseOrderListModel = await repository.getPurchaseOrderList(
           searchText: search,
           status: status,
         );
       } else {
+        inProcessListLoading.value = true;
         purchaseOrderListModel = await repository.getPurchaseOrderList(
           status: 'pending',
           searchText: search,
@@ -720,6 +728,8 @@ class PurchaseOrderController extends GetxController implements GetxService {
       }
     } finally {
       isLoading.value = false;
+      purchaseListLoading.value = false;
+      inProcessListLoading.value = false;
     }
   }
 
@@ -730,7 +740,13 @@ class PurchaseOrderController extends GetxController implements GetxService {
     bool isRefresh = false,
   }) async {
     try {
-      isLoading.value = true;
+      if (status == 'inProcess') {
+        inProcessListLoading.value = true;
+      } else if (status == 'readyToDispatch') {
+        readyToDispatchListLoading.value = true;
+      } else if (status == 'delivered') {
+        deliveredListLoading.value = true;
+      }
       PurchaseOrderListModel purchaseOrderListModel;
       if (isRefresh) {
         inProcessList.value = [];
@@ -771,6 +787,9 @@ class PurchaseOrderController extends GetxController implements GetxService {
       }
     } finally {
       isLoading.value = false;
+      inProcessListLoading.value = false;
+      readyToDispatchListLoading.value = false;
+      deliveredListLoading.value = false;
     }
   }
 
