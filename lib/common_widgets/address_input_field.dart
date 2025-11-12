@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:texmunimx/utils/app_colors.dart';
 
 class AddressInputField extends StatelessWidget {
   const AddressInputField({
@@ -15,11 +16,11 @@ class AddressInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        color: const Color(0xffF9F9FA),
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.black26),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.mainColor),
       ),
       child: TextField(
         controller: textEditingController,

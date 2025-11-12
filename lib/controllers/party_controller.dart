@@ -34,6 +34,27 @@ class PartyController extends GetxController implements GetxService {
 
   RxList<PartyModel> partyList = RxList();
 
+  RxString searchQuery = ''.obs;
+
+  bool checkValidation() {
+    err.value = '';
+    if (partyNameCont.text.trim().isEmpty) {
+      err.value = 'please_enter_party_name'.tr;
+      return false;
+    }
+    if (partyNumberCont.text.trim().isEmpty) {
+      err.value = 'please_enter_party_number'.tr;
+      return false;
+    }
+
+    if (gstCont.text.trim().isEmpty) {
+      err.value = 'please_enter_gst_number'.tr;
+      return false;
+    }
+
+    return true;
+  }
+
   setDefaultFields(PartyModel? model) {
     if (model != null) {
       selectPartyId = model.id;
@@ -76,6 +97,18 @@ class PartyController extends GetxController implements GetxService {
   }
 
   @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+
+    debounce<String>(
+      searchQuery,
+      (_) => getPartyList(search: searchQuery.value),
+      time: const Duration(milliseconds: 500),
+    );
+  }
+
+  @override
   void dispose() {
     super.dispose();
     disposeControllers();
@@ -89,6 +122,17 @@ class PartyController extends GetxController implements GetxService {
         partyList.value = [];
         currentPage = 1;
       }
+
+      if ((search != null && search.isEmpty) || search == null) {
+        partyList.value = [];
+        currentPage = 1;
+
+        partyListModel = await partyRepo.getPartyList(
+          pageCount: '$currentPage',
+          limit: '$limit',
+        );
+      }
+
       if (search != null && search.isNotEmpty) {
         partyList.value = [];
         partyListModel = await partyRepo.getPartyList(searchText: search);

@@ -22,7 +22,7 @@ class CustomBtn extends StatelessWidget {
             onTap: onTap,
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
+                borderRadius: BorderRadius.circular(10),
                 color: isOutline ? null : AppColors.mainColor,
                 border: isOutline
                     ? Border.all(color: AppColors.mainColor, width: 0.75)

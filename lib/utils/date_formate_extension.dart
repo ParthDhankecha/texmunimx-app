@@ -19,6 +19,10 @@ extension DateFormatter on DateTime {
   String get ddMMyyyyhhmma {
     return DateFormat('dd-MMM-yyyy hh:mm a').format(this);
   }
+
+  String get ddMMyyyyhhmmssa {
+    return DateFormat('dd-MMM-yyyy hh:mm:ss a').format(this);
+  }
 }
 
 List<DateTime> getDatesInMonth(DateTime selectedDate) {

@@ -9,6 +9,7 @@ import 'package:texmunimx/models/purchase_order_options_response.dart';
 import 'package:texmunimx/screens/purchase_order/change_order_status/change_order_status_screen.dart';
 import 'package:texmunimx/screens/purchase_order/create_po/create_purchase_order.dart';
 import 'package:texmunimx/screens/purchase_order/order_history/order_history_list.dart';
+import 'package:texmunimx/screens/purchase_order/widgets/notes_row.dart';
 import 'package:texmunimx/screens/purchase_order/widgets/status_tag_row.dart';
 import 'package:texmunimx/utils/app_colors.dart';
 import 'package:texmunimx/utils/app_const.dart';
@@ -138,15 +139,10 @@ class PurchaseOrderCard extends StatelessWidget {
                 ),
               ],
             ),
+            const SizedBox(height: 10),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyText('note', append: ' : '),
-                Text(order.note ?? 'N/A', style: const TextStyle(fontSize: 14)),
-              ],
-            ),
-            const SizedBox(height: 4),
+            NotesRow(notes: order.note ?? 'N/A'),
+            const SizedBox(height: 10),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

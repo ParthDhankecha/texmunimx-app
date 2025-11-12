@@ -167,7 +167,7 @@ class JobPoCard extends StatelessWidget {
                         ),
                         InputField(
                           hintText: '',
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.left,
 
                           onTextChange: onQuantityChange,
                           textInputType: TextInputType.number,
@@ -190,7 +190,7 @@ class JobPoCard extends StatelessWidget {
                         Text('remarks'.tr, style: normalTextStyle),
                         InputField(
                           hintText: '',
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.left,
 
                           onTextChange: onRemarksChange,
                           textInputType: TextInputType.text,

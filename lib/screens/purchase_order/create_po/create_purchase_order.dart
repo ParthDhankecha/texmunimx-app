@@ -13,6 +13,7 @@ import 'package:texmunimx/common_widgets/red_mark.dart';
 import 'package:texmunimx/common_widgets/show_error_snackbar.dart';
 import 'package:texmunimx/controllers/purchase_order_controller.dart';
 import 'package:texmunimx/models/purchase_order_list_response.dart';
+import 'package:texmunimx/screens/purchase_order/create_po/widgets/delete_po_dialog.dart';
 import 'package:texmunimx/screens/purchase_order/create_po/widgets/get_garment_row.dart';
 import 'package:texmunimx/screens/purchase_order/create_po/widgets/job_po_widget.dart';
 import 'package:texmunimx/screens/purchase_order/create_po/widgets/sari_widget.dart';
@@ -87,6 +88,7 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                       padding: EdgeInsetsGeometry.all(6),
                       child: Form(
                         key: formKey,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         child: Column(
                           children: [
                             _buildPannaRow(),
@@ -288,8 +290,16 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                               SizedBox(height: 10),
                               CustomBtnRed(
                                 title: 'delete'.tr,
-                                onTap: () {
-                                  controller.deletePurchaseOrder(widget.po!.id);
+                                onTap: () async {
+                                  final result = await Get.dialog(
+                                    DeletePODialog(),
+                                  );
+                                  if (result == 'delete') {
+                                    controller.deletePurchaseOrder(
+                                      widget.po!.id,
+                                    );
+                                    // Get.back();
+                                  }
                                 },
                               ),
                             },

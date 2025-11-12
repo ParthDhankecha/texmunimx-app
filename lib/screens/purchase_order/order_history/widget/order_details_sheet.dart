@@ -66,7 +66,7 @@ class OrderHistoryDetailsSheet extends StatelessWidget {
                     // --- General History Info (Matching the Card) ---
                     _buildHistorySection(
                       title: 'updated_at'.tr,
-                      value: order.eventDate.ddMMyyyyhhmma,
+                      value: order.eventDate.toLocal().ddMMyyyyhhmmssa,
                       context: context,
                     ),
                     _buildHistorySection(

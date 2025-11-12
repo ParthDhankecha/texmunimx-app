@@ -28,6 +28,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
   @override
   void initState() {
     super.initState();
+    controller.err.value = '';
     partyModel = widget.partyModel;
     if (partyModel != null) {
       controller.setDefaultFields(partyModel!);
@@ -45,12 +46,12 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(partyModel != null ? 'update_party'.tr : 'create_party'.tr),
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: Icon(Icons.arrow_back_ios),
-        ),
+        // leading: IconButton(
+        //   onPressed: () {
+        //     Get.back();
+        //   },
+        //   icon: Icon(Icons.arrow_back_ios),
+        // ),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -94,14 +95,6 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                               hintText: 'enter_party_name'.tr,
                               textInputType: TextInputType.text,
                               textEditingController: controller.partyNameCont,
-                              onValidator: (value) {
-                                if (value!.isEmpty) {
-                                  controller.err.value =
-                                      'Party Name is Mandatory';
-                                  return '';
-                                }
-                                return null;
-                              },
                             ),
                             SizedBox(height: 14),
 
@@ -122,15 +115,6 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                                 ),
                                 SizedBox(height: 10),
                                 InputField(
-                                  onValidator: (value) {
-                                    if (value!.isEmpty) {
-                                      controller.err.value =
-                                          'Party Number is Mandatory';
-                                      return '';
-                                    }
-
-                                    return null;
-                                  },
                                   hintText: 'enter_party_number'.tr,
                                   textInputType: TextInputType.text,
                                   textEditingController:
@@ -154,6 +138,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                                         color: AppColors.blackColor,
                                       ),
                                     ),
+                                    _mark(),
                                   ],
                                 ),
                                 SizedBox(height: 10),
@@ -284,7 +269,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                                       : 'submit_party'.tr,
                                   onTap: () {
                                     controller.err.value = '';
-                                    if (formKey.currentState!.validate()) {
+                                    if (controller.checkValidation()) {
                                       if (partyModel != null) {
                                         controller.updateParty();
                                       } else {

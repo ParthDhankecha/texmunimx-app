@@ -51,7 +51,7 @@ class FirmController extends GetxController implements GetxService {
       await firmRepository.createFirm(body: body);
       fetchFirms();
       Get.back();
-      showSuccessSnackbar('User created successfully');
+      showSuccessSnackbar('Firm created successfully');
     } on ApiException catch (e) {
       // Handle error
       showErrorSnackbar(e.message);

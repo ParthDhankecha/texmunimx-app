@@ -76,12 +76,20 @@ class JobPoGarmentCard extends StatelessWidget {
                       isRequired: true,
                       isEnabled: !isLocked,
                       selectedValue: model.user == '' || model.user == null
+                          // ? null
+                          // : users.firstWhere(
+                          //     (element) => element.id.toString() == model.user,
+                          //     orElse: () =>
+                          //         User(id: '', fullname: 'Select User'),
+                          //   ),
                           ? null
-                          : users.firstWhere(
+                          : users.any(
                               (element) => element.id.toString() == model.user,
-                              orElse: () =>
-                                  User(id: '', fullname: 'Select User'),
-                            ),
+                            )
+                          ? users.firstWhere(
+                              (element) => element.id.toString() == model.user,
+                            )
+                          : null,
                       onChanged: (value) {
                         if (value != null) {
                           userChange?.call(value.id.toString());
@@ -100,13 +108,23 @@ class JobPoGarmentCard extends StatelessWidget {
                           isRequired: true,
                           isEnabled: !isLocked,
                           selectedValue: model.firm == '' || model.firm == null
+                              // ? null
+                              // : firms.firstWhere(
+                              //     (element) =>
+                              //         element.id.toString() == model.firm,
+                              //     orElse: () =>
+                              //         FirmId(id: '', firmName: 'Select Firm'),
+                              //   ),
                               ? null
-                              : firms.firstWhere(
+                              : firms.any(
                                   (element) =>
                                       element.id.toString() == model.firm,
-                                  orElse: () =>
-                                      FirmId(id: '', firmName: 'Select Firm'),
-                                ),
+                                )
+                              ? firms.firstWhere(
+                                  (element) =>
+                                      element.id.toString() == model.firm,
+                                )
+                              : null,
                           onChanged: (value) {
                             if (value != null) {
                               onFirmChange?.call(value.id.toString());
@@ -133,7 +151,7 @@ class JobPoGarmentCard extends StatelessWidget {
                         ),
                         InputField(
                           hintText: '',
-                          textAlign: TextAlign.start,
+                          textAlign: TextAlign.left,
 
                           onTextChange: onRemarksChange,
                           textInputType: TextInputType.text,
@@ -159,10 +177,9 @@ class JobPoGarmentCard extends StatelessWidget {
                         ),
                         InputField(
                           hintText: '',
-
                           onTextChange: onQuantityChange,
                           textInputType: TextInputType.number,
-
+                          textAlign: TextAlign.left,
                           initialValue: model.quantity?.toString() ?? '',
                         ),
                       ],

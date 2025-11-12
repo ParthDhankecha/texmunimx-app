@@ -50,6 +50,8 @@ class AppTranslations extends Translations {
       'party_name_is_mandatory': 'Party Name is Mandatory',
       'party_number_is_mandatory': 'Party Number is Mandatory',
       'delete': 'Delete',
+
+      'design_updated_successfully': 'Design updated successfully.',
       //quality
       'quality_specifications': 'Quality Specifications',
       'panna': 'Panna',
@@ -192,6 +194,16 @@ class AppTranslations extends Translations {
       'confirm_password': 'Confirm Password',
       'active': 'Active',
       'inactive': 'Inactive',
+
+      'exit': 'Exit',
+      'are_you_sure_you_want_to_exit_app':
+          'Are you sure you want to exit the app?',
+
+      'please_enter_party_name': 'Please enter party name.', //newly added
+      'please_enter_party_number': 'Please enter party number.',
+      'please_enter_gst_number': 'Please enter GST number.',
+
+      //newly added
     },
     'hi_IN': {
       'language_change': 'भाषा बदलें',
@@ -362,6 +374,12 @@ class AppTranslations extends Translations {
       'old_password': 'पुराना पासवर्ड',
       'new_password': 'नया पासवर्ड',
       'confirm_new_password': 'नए पासवर्ड की पुष्टि करें',
+
+      'exit': 'बाहर निकलें',
+      'are_you_sure_you_want_to_exit_app':
+          'क्या आप वाकई ऐप से बाहर निकलना चाहते हैं?',
+
+      'design_updated_successfully': 'डिज़ाइन सफलतापूर्वक अपडेट किया गया।',
     },
 
     'gu_IN': {
@@ -532,6 +550,10 @@ class AppTranslations extends Translations {
       'old_password': 'જૂનો પાસવર્ડ',
       'new_password': 'નવો પાસવર્ડ',
       'confirm_new_password': 'નવા પાસવર્ડની પુષ્ટિ કરો',
+      'exit': 'બહાર નીકળો',
+      'are_you_sure_you_want_to_exit_app':
+          'શું તમે ખરેખર એપ્લિકેશનમાંથી બહાર નીકળવા માંગો છો?',
+      'design_updated_successfully': 'ડિઝાઇન સફળતાપૂર્વક અપડેટ થઈ ગઈ છે.',
     },
   };
 }

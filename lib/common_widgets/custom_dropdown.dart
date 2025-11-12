@@ -35,11 +35,17 @@ class CustomDropdown<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 1. Create the list of items, prepended with a null entry for the placeholder.
-    final List<T?> dropdownItems = [null, ...items];
+    //final List<T?> dropdownItems = [null, ...items];
+    final List<T?> dropdownItems = selectedValue == null
+        ? [null, ...items]
+        : items;
 
     // Determine the currently displayed value. If selectedValue is null,
     // it will default to the null placeholder option.
-    final T? initialValue = selectedValue;
+    //final T? initialValue = selectedValue;
+    final T? initialValue = dropdownItems.contains(selectedValue)
+        ? selectedValue
+        : null;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +55,7 @@ class CustomDropdown<T> extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                '$title:',
+                title,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,

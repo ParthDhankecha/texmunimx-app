@@ -1008,14 +1008,15 @@ class PurchaseOrderController extends GetxController implements GetxService {
         "partyId": selectedParty.value!.id,
 
         if (selectedDate.value != null)
-          "deliveryDate": selectedDate.value.toString(),
+          "deliveryDate": selectedDate.value?.yyyymmddFormat,
 
         "isHighPriority": highPriority.value,
         if (notesCont.text.trim().isNotEmpty) "note": notesCont.text.trim(),
 
         "orderType": selectedOrderType.value.toLowerCase(),
 
-        if (isJobPoEnabled.value) "isJobPo": true,
+        //if (isJobPoEnabled.value) "isJobPo": true,
+        "isJobPo": isJobPoEnabled.value,
 
         if (selectedOrderType.value == orderTypes[1])
           //for sari section
@@ -1051,6 +1052,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
               "remarks": e.remarks,
               "userId": e.user,
               "firmId": e.firm,
+              "_id": e.jobId,
               if (selectedOrderType.value == orderTypes[1]) "matchingNo": e.mId,
             };
           }).toList(),

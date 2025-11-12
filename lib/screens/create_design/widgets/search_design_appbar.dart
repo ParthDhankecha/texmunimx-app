@@ -23,9 +23,11 @@ AppBar searchDesignAppBar() {
               child: SearchField(
                 hintText: 'search_design_by'.tr,
                 onChanged: (searchText) {
-                  Get.find<CreateDesignController>().getDesignList(
-                    search: searchText,
-                  );
+                  // Get.find<CreateDesignController>().getDesignList(
+                  //   search: searchText,
+                  // );
+                  Get.find<CreateDesignController>().searchQuery.value =
+                      searchText;
                 },
               ),
             ),

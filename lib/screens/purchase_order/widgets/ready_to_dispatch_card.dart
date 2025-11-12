@@ -11,6 +11,7 @@ import 'package:texmunimx/models/purchase_order_list_response.dart';
 import 'package:texmunimx/models/purchase_order_options_response.dart';
 import 'package:texmunimx/screens/purchase_order/change_order_status/change_order_status_screen.dart';
 import 'package:texmunimx/screens/purchase_order/order_history/order_history_list.dart';
+import 'package:texmunimx/screens/purchase_order/widgets/notes_row.dart';
 import 'package:texmunimx/screens/purchase_order/widgets/status_tag_row.dart';
 import 'package:texmunimx/utils/app_colors.dart';
 import 'package:texmunimx/utils/app_const.dart';
@@ -211,22 +212,9 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
                 ),
               ],
             ),
-            const SizedBox(height: 6),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyText('note', append: ' : '),
-                Text(
-                  widget.order.readyToDispatch?.remarks ?? 'N/A',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppColors.mainColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 10),
+            NotesRow(notes: widget.order.note ?? 'N/A'),
+            const SizedBox(height: 10),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

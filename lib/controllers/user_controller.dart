@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:texmunimx/common_widgets/show_error_snackbar.dart';
 import 'package:texmunimx/common_widgets/show_success_snackbar.dart';
@@ -162,14 +164,12 @@ class UserController extends GetxController implements GetxService {
     }
   }
 
-  void deleteUser({required String userId}) async {
+  Future<void> deleteUser({required String userId}) async {
     try {
       isLoading.value = true;
-
       await usersRepository.deleteUser(userId: userId);
-
-      Get.back();
       fetchAllUsers();
+      log('User deleted successfully');
       showSuccessSnackbar('User deleted successfully');
     } on ApiException catch (e) {
       // Handle error

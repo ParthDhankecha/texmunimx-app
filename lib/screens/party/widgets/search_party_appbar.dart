@@ -23,7 +23,7 @@ AppBar searchPartyAppbar() {
               child: SearchField(
                 hintText: 'search_party_by'.tr,
                 onChanged: (searchText) {
-                  Get.find<PartyController>().getPartyList(search: searchText);
+                  Get.find<PartyController>().searchQuery.value = searchText;
                 },
               ),
             ),

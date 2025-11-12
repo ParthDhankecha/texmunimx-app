@@ -22,7 +22,6 @@ class ApiClient extends GetxService {
     Map<String, String>? headers,
     Map<String, String>? body,
   }) async {
-    log('url : $baseUrl$endPoint');
     final url = Uri.parse('$baseUrl$endPoint');
     http.Response response;
 
@@ -42,6 +41,11 @@ class ApiClient extends GetxService {
         default:
           response = await http.get(url, headers: headers);
       }
+      log('url : $baseUrl$endPoint');
+
+      log('body : $body');
+      log('res : ${response.body}');
+      log('status code : ${response.statusCode}');
 
       switch (response.statusCode) {
         case 200:

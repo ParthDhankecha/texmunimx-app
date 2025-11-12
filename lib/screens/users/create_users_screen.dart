@@ -10,6 +10,7 @@ import 'package:texmunimx/common_widgets/show_error_snackbar.dart';
 import 'package:texmunimx/controllers/user_controller.dart';
 import 'package:texmunimx/models/roles_model.dart';
 import 'package:texmunimx/models/user_list_response.dart';
+import 'package:texmunimx/screens/users/widgets/delete_user_dialog.dart';
 import 'package:texmunimx/utils/app_colors.dart';
 
 class CreateUsersScreen extends StatefulWidget {
@@ -237,29 +238,20 @@ class _CreateUsersScreenState extends State<CreateUsersScreen> {
                                         child: CustomBtnRed(
                                           title: 'delete'.tr,
                                           isOutline: true,
-                                          onTap: () {
+                                          onTap: () async {
                                             // Handle delete user logic here
-                                            Get.defaultDialog(
-                                              title: 'confirm'.tr,
-                                              middleText:
-                                                  'are_you_sure_you_want_to_delete_user'
-                                                      .tr,
-                                              //textCancel: 'no'.tr,
-                                              textConfirm: 'delete'.tr,
-                                              confirmTextColor: Colors.white,
-                                              buttonColor: Colors.red,
-                                              cancel: TextButton(
-                                                onPressed: () => Get.back(),
-                                                child: Text('no'.tr),
+                                            await Get.dialog(
+                                              DeleteUserDialog(
+                                                userId: widget.user!.id
+                                                    .toString(),
                                               ),
-                                              onConfirm: () {
-                                                Get.back();
-                                                userController.deleteUser(
-                                                  userId: widget.user!.id
-                                                      .toString(),
-                                                );
-                                              },
                                             );
+                                            // if (result == 'delete') {
+                                            //   userController.deleteUser(
+                                            //     userId: widget.user!.id
+                                            //         .toString(),
+                                            //   );
+                                            // }
                                           },
                                         ),
                                       ),

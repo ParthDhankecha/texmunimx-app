@@ -31,7 +31,7 @@ class _OrderHistoryCardState extends State<OrderHistoryCard> {
             children: [
               _buildRow(
                 title: 'updated_at',
-                value: widget.order.eventDate.ddMMyyyyhhmma,
+                value: widget.order.eventDate.toLocal().ddMMyyyyhhmmssa,
               ),
               _buildRow(
                 title: 'user',

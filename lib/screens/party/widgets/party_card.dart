@@ -36,51 +36,75 @@ class PartyCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      party.partyName,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                    Column(
+                      children: [
+                        Text(
+                          party.partyName,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                      ],
                     ),
-                    const SizedBox(height: 8),
-                    _buildRow(
-                      'party_number'.tr,
-                      party.partyNumber,
-                      Icons.numbers,
+                    Column(
+                      children: [
+                        _buildRow(
+                          'party_number'.tr,
+                          party.partyNumber,
+                          Icons.numbers,
+                        ),
+                        const SizedBox(height: 8),
+                      ],
                     ),
-                    const SizedBox(height: 8),
                     if ((party.gstNo ?? '').isNotEmpty)
-                      _buildRow(
-                        'gst_number'.tr,
-                        party.gstNo ?? 'N/A',
-                        Icons.article_outlined,
+                      Column(
+                        children: [
+                          _buildRow(
+                            'gst_number'.tr,
+                            party.gstNo ?? 'N/A',
+                            Icons.article_outlined,
+                          ),
+                          const SizedBox(height: 8),
+                        ],
                       ),
 
-                    const SizedBox(height: 8),
                     if ((party.mobile ?? '').isNotEmpty)
-                      _buildRow(
-                        'phone_number'.tr,
-                        party.mobile ?? '',
-                        Icons.call_outlined,
+                      Column(
+                        children: [
+                          _buildRow(
+                            'phone_number'.tr,
+                            party.mobile ?? '',
+                            Icons.call_outlined,
+                          ),
+                          const SizedBox(height: 8),
+                        ],
                       ),
-                    const SizedBox(height: 8),
 
                     if ((party.email ?? '').isNotEmpty)
-                      _buildRow(
-                        'email'.tr,
-                        party.email ?? 'N/A',
-                        Icons.email_outlined,
+                      Column(
+                        children: [
+                          _buildRow(
+                            'email'.tr,
+                            party.email ?? 'N/A',
+                            Icons.email_outlined,
+                          ),
+                          const SizedBox(height: 8),
+                        ],
                       ),
 
-                    const SizedBox(height: 8),
                     if ((party.brokerName ?? '').isNotEmpty)
-                      _buildRow(
-                        'brokers_name'.tr,
-                        party.brokerName ?? '',
-                        Icons.person_outline,
+                      Column(
+                        children: [
+                          _buildRow(
+                            'brokers_name'.tr,
+                            party.brokerName ?? '',
+                            Icons.person_outline,
+                          ),
+                          const SizedBox(height: 8),
+                        ],
                       ),
-                    const SizedBox(height: 8),
                     if ((party.address ?? '').isNotEmpty)
                       _buildRow(
                         'address'.tr,
@@ -102,7 +126,7 @@ class PartyCard extends StatelessWidget {
   Widget _buildRow(String title, String value, IconData? icon) {
     return Row(
       children: [
-        if (icon != null) Icon(icon, color: Colors.grey),
+        if (icon != null) Icon(icon, color: Colors.grey, size: 18),
         if (icon != null) SizedBox(width: 10),
         Text(title, style: TextStyle(fontSize: 12, color: Colors.black)),
         SizedBox(width: 10),

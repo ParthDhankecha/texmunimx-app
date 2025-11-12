@@ -25,28 +25,32 @@ class InputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.black12),
-        borderRadius: BorderRadius.circular(10),
+        // color: Colors.white,
+        // border: Border.all(color: AppColors.mainColor),
+        // borderRadius: BorderRadius.circular(12),
       ),
-      child: TextFormField(
-        initialValue: initialValue,
-        validator: onValidator,
-        textAlign: textAlign ?? TextAlign.start,
-        controller: textEditingController,
-        keyboardType: textInputType,
-        style: TextStyle(fontSize: 14),
-        onChanged: onTextChange,
-        decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle: TextStyle(fontSize: 14),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: Colors.black38),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: AppColors.mainColor),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 0),
+        child: TextFormField(
+          initialValue: initialValue,
+          validator: onValidator,
+          textAlign: textAlign ?? TextAlign.start,
+          controller: textEditingController,
+          keyboardType: textInputType,
+          style: TextStyle(fontSize: 14),
+          onChanged: onTextChange,
+          decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: TextStyle(fontSize: 14),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: AppColors.mainColor),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: AppColors.mainColor),
+            ),
+            //border: InputBorder.none,
           ),
         ),
       ),

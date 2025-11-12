@@ -11,6 +11,7 @@ import 'package:texmunimx/common_widgets/custom_network_image.dart';
 import 'package:texmunimx/common_widgets/custom_progress_btn_.dart';
 import 'package:texmunimx/common_widgets/error_row.dart';
 import 'package:texmunimx/common_widgets/input_field.dart';
+import 'package:texmunimx/common_widgets/red_mark.dart';
 import 'package:texmunimx/common_widgets/show_error_snackbar.dart';
 import 'package:texmunimx/controllers/create_design_controller.dart';
 import 'package:texmunimx/controllers/home_controller.dart';
@@ -107,6 +108,8 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
                                   color: AppColors.blackColor,
                                 ),
                               ),
+                              SizedBox(width: 4),
+                              RedMark(),
                             ],
                           ),
                           SizedBox(height: 10),
@@ -132,6 +135,8 @@ class _CreateDesignScreenState extends State<CreateDesignScreen> {
                                   color: AppColors.blackColor,
                                 ),
                               ),
+                              SizedBox(width: 4),
+                              RedMark(),
                             ],
                           ),
                           SizedBox(height: 10),

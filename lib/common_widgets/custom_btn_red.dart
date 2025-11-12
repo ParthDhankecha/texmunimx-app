@@ -22,7 +22,7 @@ class CustomBtnRed extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           color: isOutline ? null : AppColors.errorColor,
           border: isOutline
-              ? Border.all(color: AppColors.errorColor, width: 2)
+              ? Border.all(color: AppColors.errorColor, width: 1.5)
               : null,
         ),
         child: Padding(

@@ -5,6 +5,7 @@ import 'package:texmunimx/common_widgets/custom_btn_red.dart';
 import 'package:texmunimx/common_widgets/input_field.dart';
 import 'package:texmunimx/controllers/firm_controller.dart';
 import 'package:texmunimx/models/firm_list_response.dart';
+import 'package:texmunimx/screens/firms/firm_delete_dialog.dart';
 
 class CreateFirmScreen extends StatefulWidget {
   final FirmModel? firm;
@@ -47,6 +48,7 @@ class _CreateFirmScreenState extends State<CreateFirmScreen> {
       ),
       body: Form(
         key: formKey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           children: [
             Divider(),
@@ -110,29 +112,15 @@ class _CreateFirmScreenState extends State<CreateFirmScreen> {
                                       title: 'delete'.tr,
                                       isOutline: true,
 
-                                      onTap: () {
-                                        // Handle delete user logic here
-                                        Get.defaultDialog(
-                                          title: 'confirm'.tr,
-                                          middleText:
-                                              'are_you_sure_you_want_to_delete_firm'
-                                                  .tr,
-                                          //textCancel: 'no'.tr,
-                                          textConfirm: 'delete'.tr,
-                                          confirmTextColor: Colors.white,
-                                          buttonColor: Colors.red,
-                                          cancel: TextButton(
-                                            onPressed: () => Get.back(),
-                                            child: Text('no'.tr),
-                                          ),
-                                          onConfirm: () {
-                                            Get.back();
-                                            firmController.deleteFirm(
-                                              firmId: widget.firm!.id
-                                                  .toString(),
-                                            );
-                                          },
+                                      onTap: () async {
+                                        var result = await Get.dialog(
+                                          const FirmDeleteDialog(),
                                         );
+                                        if (result == 'delete') {
+                                          firmController.deleteFirm(
+                                            firmId: widget.firm!.id.toString(),
+                                          );
+                                        }
                                       },
                                     ),
                                   ),

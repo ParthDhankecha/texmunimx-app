@@ -33,6 +33,8 @@ class CreateDesignController extends GetxController implements GetxService {
   String imageBasePath = '';
   RxList<DesignModel> designList = RxList();
 
+  RxString searchQuery = ''.obs;
+
   setDefaultFields(DesignModel design) {
     designNameCont.text = design.designName;
     designNumberCont.text = design.designNumber;
@@ -64,6 +66,17 @@ class CreateDesignController extends GetxController implements GetxService {
   }
 
   @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    debounce<String>(
+      searchQuery,
+      (_) => getDesignList(search: searchQuery.value),
+      time: const Duration(milliseconds: 500),
+    );
+  }
+
+  @override
   void dispose() {
     super.dispose();
     designNameCont.dispose();
@@ -84,6 +97,15 @@ class CreateDesignController extends GetxController implements GetxService {
       if (isRefresh) {
         designList.value = [];
         currentPage = 1;
+      }
+      if ((search != null && search.isEmpty) || search == null) {
+        designList.value = [];
+        currentPage = 1;
+
+        designListModel = await createDesignRepo.getDesignList(
+          pageCount: '$currentPage',
+          limit: '$limit',
+        );
       }
       if (search != null && search.isNotEmpty) {
         designList.value = [];
@@ -201,7 +223,7 @@ class CreateDesignController extends GetxController implements GetxService {
       resetInputs();
 
       Get.back();
-      showSuccessSnackbar('New Design Create.');
+      showSuccessSnackbar('design_updated_successfully'.tr);
 
       getDesignList(isRefresh: true);
     } on ApiException catch (e) {

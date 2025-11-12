@@ -72,7 +72,8 @@ class SariMatchingCard extends StatelessWidget {
                         Text('color1'.tr, style: normalTextStyle),
                         InputField(
                           hintText: '',
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.left,
+
                           onTextChange: onColor1Change,
                           // textEditingController: TextEditingController(
                           //   text: model.color1 ?? '',
@@ -91,10 +92,10 @@ class SariMatchingCard extends StatelessWidget {
                         Text('color2'.tr, style: normalTextStyle),
                         InputField(
                           hintText: '',
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.left,
 
                           onTextChange: onColor2Change,
-                          textInputType: TextInputType.number,
+                          textInputType: TextInputType.text,
                           // textEditingController: TextEditingController(
                           //   text: model.color2?.toString() ?? '',
                           // ),
@@ -111,10 +112,10 @@ class SariMatchingCard extends StatelessWidget {
                         Text('color3'.tr, style: normalTextStyle),
                         InputField(
                           hintText: '',
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.left,
 
                           onTextChange: onColor3Change,
-                          textInputType: TextInputType.number,
+                          textInputType: TextInputType.text,
                           initialValue: model.color3?.toString() ?? '',
                         ),
                       ],
@@ -133,10 +134,10 @@ class SariMatchingCard extends StatelessWidget {
                         Text('color4'.tr, style: normalTextStyle),
                         InputField(
                           hintText: '',
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.left,
 
                           onTextChange: onColor4Change,
-                          textInputType: TextInputType.number,
+                          textInputType: TextInputType.text,
                           // textEditingController: TextEditingController(
                           //   text: model.color4?.toString() ?? '',
                           // ),
@@ -157,7 +158,7 @@ class SariMatchingCard extends StatelessWidget {
                         ),
                         InputField(
                           hintText: '',
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.left,
 
                           onTextChange: onRateChange,
                           textInputType: TextInputType.number,
@@ -178,7 +179,7 @@ class SariMatchingCard extends StatelessWidget {
                         ),
                         InputField(
                           hintText: '',
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.left,
 
                           onTextChange: onQuantityChange,
                           textInputType: TextInputType.number,

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:texmunimx/common_widgets/custom_btn.dart';
 import 'package:texmunimx/controllers/purchase_order_controller.dart';
 import 'package:texmunimx/models/job_po_model.dart';
+import 'package:texmunimx/screens/purchase_order/create_po/widgets/delete_job_or_matching_dialog.dart';
 import 'package:texmunimx/screens/purchase_order/create_po/widgets/job_po_card.dart';
 import 'package:texmunimx/screens/purchase_order/create_po/widgets/job_po_garment_card.dart';
 
@@ -41,7 +42,31 @@ class _JobPoWidgetState extends State<JobPoWidget> {
                   isLocked: model.isLocked ?? false,
 
                   onRemove: () {
-                    controller.removeJobPo(index);
+                    if (model.user == null) {
+                      controller.removeJobPo(index);
+                      return;
+                    }
+
+                    if (model.firm == null) {
+                      controller.removeJobPo(index);
+                      return;
+                    }
+
+                    if (model.quantity == null || model.quantity == 0) {
+                      controller.removeJobPo(index);
+                      return;
+                    }
+
+                    Get.dialog(
+                      DeleteJobOrMatchingDialog(
+                        isJob: true,
+                        onDelete: () {
+                          controller.removeJobPo(index);
+                        },
+                      ),
+                    );
+                    //
+                    // controller.removeJobPo(index);
                   },
 
                   onQuantityChange: (value) {
@@ -68,7 +93,29 @@ class _JobPoWidgetState extends State<JobPoWidget> {
                 isLocked: model.isLocked ?? false,
 
                 onRemove: () {
-                  controller.removeJobPo(index);
+                  if (model.user == null) {
+                    controller.removeJobPo(index);
+                    return;
+                  }
+
+                  if (model.firm == null) {
+                    controller.removeJobPo(index);
+                    return;
+                  }
+
+                  if (model.quantity == null || model.quantity == 0) {
+                    controller.removeJobPo(index);
+                    return;
+                  }
+                  Get.dialog(
+                    DeleteJobOrMatchingDialog(
+                      isJob: true,
+                      onDelete: () {
+                        controller.removeJobPo(index);
+                      },
+                    ),
+                  );
+                  //controller.removeJobPo(index);
                 },
 
                 onQuantityChange: (value) {
