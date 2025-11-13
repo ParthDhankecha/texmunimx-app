@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:texmunimx/common_widgets/custom_btn_red.dart';
-import 'package:texmunimx/controllers/create_design_controller.dart';
 
 class DeleteJobOrMatchingDialog extends StatelessWidget {
   final bool isJob;

@@ -285,14 +285,16 @@ class _CreateUsersScreenState extends State<CreateUsersScreen> {
               'password'.tr,
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
             ),
-            Text(
-              ' *',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: Colors.red,
-              ),
-            ),
+            widget.user == null
+                ? Text(
+                    ' *',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.red,
+                    ),
+                  )
+                : SizedBox.shrink(),
           ],
         ),
         SizedBox(height: 8),

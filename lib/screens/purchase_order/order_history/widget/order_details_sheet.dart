@@ -5,7 +5,6 @@ import 'package:texmunimx/screens/purchase_order/order_history/widget/build_job_
 import 'package:texmunimx/screens/purchase_order/order_history/widget/build_matchings_table.dart';
 import 'package:texmunimx/utils/app_colors.dart';
 import 'package:texmunimx/utils/date_formate_extension.dart';
-// Import your models and AppColors/extension file here
 
 class OrderHistoryDetailsSheet extends StatelessWidget {
   final OrderHistory order;
@@ -15,6 +14,8 @@ class OrderHistoryDetailsSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final details = order.remarksDetails;
+
+    //log('Order Remarks Details: ${details?.jobUser?[0].matchingNo}');
 
     return DraggableScrollableSheet(
       initialChildSize: 0.8, // Start at 80% height
@@ -85,7 +86,7 @@ class OrderHistoryDetailsSheet extends StatelessWidget {
                     if (details != null) ...[
                       // --- Matchings Table ---
                       Text(
-                        'Matchings',
+                        'matching'.tr,
                         style: context.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -98,14 +99,13 @@ class OrderHistoryDetailsSheet extends StatelessWidget {
                       if (details.jobUser != null &&
                           details.jobUser!.isNotEmpty) ...[
                         Text(
-                          'Job Users',
+                          'job_user'.tr,
                           style: context.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 8),
-                        // Note: JobUser structure is dynamic in your model.
-                        // Assuming it's a list of maps that we can display in a table.
+
                         BuildJobUsersTable(jobUsers: details.jobUser!),
                         const SizedBox(height: 20),
                       ],
@@ -118,7 +118,7 @@ class OrderHistoryDetailsSheet extends StatelessWidget {
                     if (order.remarks is String &&
                         order.remarks.toString().isNotEmpty)
                       _buildHistorySection(
-                        title: 'Remarks',
+                        title: 'remarks'.tr,
                         value: order.remarks.toString(),
                         context: context,
                       ),

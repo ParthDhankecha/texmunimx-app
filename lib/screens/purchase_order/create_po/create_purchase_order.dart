@@ -125,10 +125,6 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                                     if (value == controller.orderTypes[1]) {
                                       controller.generateDefaultBoxes();
                                     }
-
-                                    log(
-                                      'Selected Order Type: ${controller.selectedOrderType.value}',
-                                    );
                                   } else {
                                     controller.selectedOrderType.value = '';
                                   }
@@ -226,7 +222,6 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                                       : Switch(
                                           value:
                                               controller.isJobPoEnabled.value,
-                                          // inactiveTrackColor: AppColors.lightGray,
                                           onChanged: widget.po?.isLocked == true
                                               ? null
                                               : (value) {
@@ -238,7 +233,7 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                                                       .value
                                                       .isEmpty) {
                                                     controller.err.value =
-                                                        'Select Order Type';
+                                                        'select_order_type'.tr;
                                                     showErrorSnackbar(
                                                       controller.err.value,
                                                     );
@@ -267,11 +262,11 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                               onTap: () {
                                 controller.err.value = '';
                                 if (controller.selectedDesign.value == null) {
-                                  controller.err.value = 'Select Design';
+                                  controller.err.value = 'select_design'.tr;
                                 }
 
                                 if (controller.selectedParty.value == null) {
-                                  controller.err.value = 'Select Party';
+                                  controller.err.value = 'select_party'.tr;
                                 }
 
                                 if (formKey.currentState!.validate()) {
@@ -298,7 +293,6 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                                     controller.deletePurchaseOrder(
                                       widget.po!.id,
                                     );
-                                    // Get.back();
                                   }
                                 },
                               ),
@@ -338,7 +332,7 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
           textInputType: TextInputType.text,
           onValidator: (value) {
             if (value!.isEmpty) {
-              return 'Field is Required';
+              return 'field_required'.tr;
             }
 
             return null;
@@ -372,7 +366,7 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
           textInputType: TextInputType.text,
           onValidator: (value) {
             if (value!.isEmpty) {
-              return 'Field is Required';
+              return 'field_required'.tr;
             }
 
             return null;
@@ -406,7 +400,7 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
           textInputType: TextInputType.number,
           onValidator: (value) {
             if (value!.isEmpty) {
-              return 'Field is Required';
+              return 'field_required'.tr;
             }
 
             return null;

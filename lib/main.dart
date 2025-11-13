@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:texmunimx/controllers/localization_controller.dart';
 import 'package:texmunimx/screens/splash_screen.dart';
 import 'package:texmunimx/utils/app_strings.dart';
-import 'package:texmunimx/utils/internationalization.dart';
+import 'package:texmunimx/utils/app_translations.dart';
 import 'package:texmunimx/utils/my_theme_controller.dart';
 import 'utils/get_di.dart' as getit;
 

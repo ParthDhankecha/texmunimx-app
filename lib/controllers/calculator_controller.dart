@@ -463,6 +463,15 @@ class CalculatorController extends GetxController implements GetxService {
       return;
     }
 
+    weftList.removeWhere(
+      (weft) =>
+          weft.denier == null ||
+          weft.pick == null ||
+          weft.panno == null ||
+          weft.rate == null ||
+          weft.meter == null,
+    );
+
     Map<String, dynamic> body = {
       "designId": getDesign!.id,
       "warp": {
@@ -473,18 +482,16 @@ class CalculatorController extends GetxController implements GetxService {
         "ratePerKg": ratePerKg.value,
       },
 
-      "weft": weftList
-          .map(
-            (weft) => {
-              "quality": weft.quality,
-              "denier": weft.denier,
-              "pick": weft.pick,
-              "panno": weft.panno,
-              "rate": weft.rate,
-              "meter": weft.meter,
-            },
-          )
-          .toList(),
+      "weft": weftList.map((weft) {
+        return {
+          "quality": weft.quality ?? '',
+          "denier": weft.denier ?? 0.0,
+          "pick": weft.pick ?? 0.0,
+          "panno": weft.panno ?? 0.0,
+          "rate": weft.rate ?? 0.0,
+          "meter": weft.meter ?? 0.0,
+        };
+      }).toList(),
       "labour": {"designCard": designCard.value},
     };
     isLoading.value = true;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:texmunimx/models/order_history_response.dart';
 
 const matchingFlex = 1;
@@ -32,10 +33,14 @@ class _BuildMatchingsTableState extends State<BuildMatchingsTable> {
 
   // Header Titles
   final headers = [
-    {'title': 'Matching', 'flex': matchingFlex, 'align': Alignment.center},
-    {'title': 'Rate', 'flex': rateFlex, 'align': Alignment.center},
-    {'title': 'Quantity', 'flex': quantityFlex, 'align': Alignment.center},
-    {'title': 'Pending Qty', 'flex': pendingQtyFlex, 'align': Alignment.center},
+    {'title': 'matching'.tr, 'flex': matchingFlex, 'align': Alignment.center},
+    {'title': 'rate'.tr, 'flex': rateFlex, 'align': Alignment.center},
+    {'title': 'quantity'.tr, 'flex': quantityFlex, 'align': Alignment.center},
+    {
+      'title': 'pending_qty'.tr,
+      'flex': pendingQtyFlex,
+      'align': Alignment.center,
+    },
   ];
 
   // Helper to build the header row

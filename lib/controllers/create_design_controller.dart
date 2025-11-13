@@ -190,10 +190,7 @@ class CreateDesignController extends GetxController implements GetxService {
       isLoading.value = true;
       await createDesignRepo.deleteDesign(id: selectedDesignModelId);
       resetInputs();
-      showSuccessSnackbar(
-        'Design Delete.',
-        decs: 'Design Deleted Successfully.',
-      );
+      showSuccessSnackbar('Design Delete.');
       getDesignList(isRefresh: true);
     } on ApiException catch (e) {
       switch (e.statusCode) {

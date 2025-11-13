@@ -39,7 +39,7 @@ class PartyCard extends StatelessWidget {
                     Column(
                       children: [
                         Text(
-                          party.partyName,
+                          party.partyName.capitalizeFirst ?? '',
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,

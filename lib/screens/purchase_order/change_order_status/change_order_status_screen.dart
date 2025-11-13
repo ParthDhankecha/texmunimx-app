@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:texmunimx/common_widgets/red_mark.dart';
 import 'package:texmunimx/controllers/purchase_order_controller.dart';
 import 'package:texmunimx/models/in_process_model.dart';
 import 'package:texmunimx/models/order_status_enum.dart';
@@ -46,7 +47,6 @@ class UpdateStatusBottomSheet extends StatefulWidget {
 }
 
 class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
-  // Controllers and state for form management
   final _formKey = GlobalKey<FormState>();
   final _quantityController = TextEditingController();
   final _machineNoController = TextEditingController();
@@ -69,12 +69,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
   // Function to handle the save action
   void _saveStatus() {
     if (_formKey.currentState!.validate()) {
-      // Form is valid, perform the action
       final quantity = int.tryParse(_quantityController.text);
-
-      //moving from pending to in process
-      log('ready id = ${widget.po.readyToDispatch?.id}');
-      log('current = ${widget.currentStatus}');
 
       var body = {
         'id': widget.purchaseId,
@@ -124,13 +119,10 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
   @override
   void initState() {
     super.initState();
-    // _machineNoController.text = widget.machineNo ?? '';
   }
 
   @override
   Widget build(BuildContext context) {
-    log('ready to dispatch id - ${widget.po.readyToDispatch?.id}');
-
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.only(
@@ -152,8 +144,8 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'Update Purchase Order Status',
+                    Text(
+                      'update_po_status'.tr,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -165,13 +157,13 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(height: 10),
 
                 // Quantity headers
                 Row(
                   children: [
                     Text(
-                      'Order Quantity: ',
+                      'order_quantity'.tr,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const Spacer(),
@@ -184,7 +176,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                 Row(
                   children: [
                     Text(
-                      '${widget.quantityTitle} Quantity:',
+                      '${widget.quantityTitle}'.tr,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const Spacer(),
@@ -200,10 +192,12 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                 const SizedBox(height: 14),
 
                 // Move To field (pre-filled and not editable)
-                Text(
-                  'Move To * (Current Status: ${widget.currentStatus.displayValue})',
-                  style: TextStyle(color: Colors.grey[700]),
+                _buildTitleRow(
+                  'move_to'.trParams({
+                    'status': widget.currentStatus.displayValue,
+                  }),
                 ),
+
                 const SizedBox(height: 8),
                 Container(
                   padding: EdgeInsets.all(12),
@@ -218,7 +212,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                 const SizedBox(height: 10),
 
                 // Quantity field with validation
-                Text('Quantity *', style: TextStyle(color: Colors.grey[700])),
+                _buildTitleRow('quantity'.tr),
                 const SizedBox(height: 8),
                 TextFormField(
                   controller: _quantityController,
@@ -236,7 +230,8 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                       return 'Quantity must be greater than 0.';
                     }
                     if (quantity > widget.pendingQuantity) {
-                      return 'Quantity cannot exceed pending quantity.';
+                      String type = widget.quantityTitle ?? 'Pending';
+                      return 'quantity_cannot_exceed'.trParams({'type': type});
                     }
                     return null;
                   },
@@ -248,10 +243,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Firm Name *',
-                            style: TextStyle(color: Colors.grey[700]),
-                          ),
+                          _buildTitleRow('firm_name'.tr),
                           const SizedBox(height: 8),
                           DropdownButtonFormField<FirmId>(
                             decoration: const InputDecoration(
@@ -303,7 +295,10 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                       )
                     : SizedBox.shrink(),
                 // Machine No field
-                Text('Machine No', style: TextStyle(color: Colors.grey[700])),
+                Text(
+                  'machine_no'.tr,
+                  style: TextStyle(color: Colors.grey[700]),
+                ),
                 const SizedBox(height: 8),
                 TextFormField(
                   controller: _machineNoController,
@@ -314,7 +309,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                 ),
                 const SizedBox(height: 10),
                 // Remarks field
-                Text('Remarks', style: TextStyle(color: Colors.grey[700])),
+                Text('remarks'.tr, style: TextStyle(color: Colors.grey[700])),
                 const SizedBox(height: 8),
                 TextFormField(
                   controller: _remarksController,
@@ -365,6 +360,20 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTitleRow(String title) {
+    return Row(
+      children: [
+        Text(
+          // 'Move To * (Current Status: ${widget.currentStatus.displayValue})',
+          title,
+          style: TextStyle(color: Colors.grey[700]),
+        ),
+        SizedBox(width: 6),
+        const RedMark(),
+      ],
     );
   }
 }

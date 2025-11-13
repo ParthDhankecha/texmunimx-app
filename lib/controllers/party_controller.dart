@@ -182,10 +182,7 @@ class PartyController extends GetxController implements GetxService {
       );
       Get.back();
 
-      showSuccessSnackbar(
-        'New Party Created.',
-        decs: 'New Party with name ${partyNameCont.text} is created.',
-      );
+      showSuccessSnackbar('New Party Created.');
       resetInputs();
       getPartyList(isRefresh: true);
     } on ApiException catch (e) {
@@ -218,10 +215,7 @@ class PartyController extends GetxController implements GetxService {
       );
       Get.back();
 
-      showSuccessSnackbar(
-        'Party Updated.',
-        decs: 'Party with name ${partyNameCont.text} is Updated.',
-      );
+      showSuccessSnackbar(' Party with name ${partyNameCont.text} is Updated.');
       resetInputs();
       getPartyList(isRefresh: true);
     } on ApiException catch (e) {
@@ -245,10 +239,7 @@ class PartyController extends GetxController implements GetxService {
       await partyRepo.deleteParty(id: selectPartyId);
       Get.back();
 
-      showSuccessSnackbar(
-        'Party Deleted.',
-        decs: 'Party Deleted Successfully.',
-      );
+      showSuccessSnackbar('Party Deleted successfully.');
       resetInputs();
       getPartyList(isRefresh: true);
     } on ApiException catch (e) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:texmunimx/common_widgets/red_mark.dart';
 
 /// A reusable, generic dropdown widget for any data type (T).
@@ -27,7 +28,7 @@ class CustomDropdown<T> extends StatelessWidget {
     required this.items,
     required this.onChanged,
     required this.itemLabelBuilder,
-    this.placeholderText = 'Select', // Default placeholder text
+    this.placeholderText = 'select', // Default placeholder text
     this.isRequired = false,
     this.isEnabled = true,
   });
@@ -40,9 +41,7 @@ class CustomDropdown<T> extends StatelessWidget {
         ? [null, ...items]
         : items;
 
-    // Determine the currently displayed value. If selectedValue is null,
-    // it will default to the null placeholder option.
-    //final T? initialValue = selectedValue;
+    // 2. Determine the initial value for the dropdown.
     final T? initialValue = dropdownItems.contains(selectedValue)
         ? selectedValue
         : null;
@@ -90,7 +89,7 @@ class CustomDropdown<T> extends StatelessWidget {
                 // Use the placeholder text if the value is null,
                 // otherwise use the provided itemLabelBuilder function.
                 child: Text(
-                  value == null ? placeholderText : itemLabelBuilder(value),
+                  value == null ? placeholderText.tr : itemLabelBuilder(value),
                   style: TextStyle(fontSize: 14),
                 ),
               );

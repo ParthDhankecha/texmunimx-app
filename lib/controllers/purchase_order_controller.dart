@@ -72,7 +72,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
   RxList<OrderHistory> orderHistoryList = RxList();
 
   //orer type
-  List<String> orderTypes = ['Garment', 'Sari'];
+  List<String> orderTypes = ['garment'.tr, 'sari'.tr];
   RxString selectedOrderType = ''.obs;
 
   RxList<SariMatchingModel> sariMatchingList = RxList();
@@ -689,8 +689,8 @@ class PurchaseOrderController extends GetxController implements GetxService {
     try {
       isLoading.value = true;
       purchaseListLoading.value = true;
-      PurchaseOrderListModel purchaseOrderListModel;
-      await fetchOptionsData();
+      PurchaseOrderListModel newOrderList;
+
       if (isRefresh) {
         purchaseOrdersList.value = [];
         currentPage = 1;
@@ -698,13 +698,13 @@ class PurchaseOrderController extends GetxController implements GetxService {
       if (search != null && search.isNotEmpty) {
         purchaseOrdersList.value = [];
 
-        purchaseOrderListModel = await repository.getPurchaseOrderList(
+        newOrderList = await repository.getPurchaseOrderList(
           searchText: search,
           status: status,
         );
       } else {
         inProcessListLoading.value = true;
-        purchaseOrderListModel = await repository.getPurchaseOrderList(
+        newOrderList = await repository.getPurchaseOrderList(
           status: 'pending',
           searchText: search,
           pageCount: '$currentPage',
@@ -716,8 +716,12 @@ class PurchaseOrderController extends GetxController implements GetxService {
       firmList.value = data.firms;
       userList.value = data.users;
 
-      purchaseOrdersList.addAll(purchaseOrderListModel.list);
-      getTotalPage(purchaseOrderListModel.totalCount, limit);
+      purchaseOrdersList.addAll(newOrderList.list);
+      //clear other lists
+      inProcessList.value = [];
+      readyToDispatchList.value = [];
+      deliveredList.value = [];
+      getTotalPage(newOrderList.totalCount, limit);
     } on ApiException catch (e) {
       log('error : $e');
       switch (e.statusCode) {
@@ -749,6 +753,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
       }
       PurchaseOrderListModel purchaseOrderListModel;
       if (isRefresh) {
+        purchaseOrdersList.value = [];
         inProcessList.value = [];
         readyToDispatchList.value = [];
         deliveredList.value = [];
@@ -909,10 +914,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
 
       await repository.createPurchaseOrder(reqBody: body);
 
-      showSuccessSnackbar(
-        'New Order Created.',
-        decs: 'New Order Created Successfully.',
-      );
+      showSuccessSnackbar('New Order Created Successfully.');
       resetInputs();
       Get.find<HomeController>().resetSelectedTab();
       //  getPartyList(isRefresh: true);
@@ -1061,10 +1063,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
       await repository.updatePurchaseOrder(reqBody: body);
       Get.back();
 
-      showSuccessSnackbar(
-        'Order Updated Successfully.',
-        decs: 'Order Updated Successfully.',
-      );
+      showSuccessSnackbar('Order Updated Successfully.');
       resetInputs();
       getPurchaseList(isRefresh: true);
     } on ApiException catch (e) {

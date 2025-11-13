@@ -51,7 +51,6 @@ class _CreateFirmScreenState extends State<CreateFirmScreen> {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           children: [
-            Divider(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(

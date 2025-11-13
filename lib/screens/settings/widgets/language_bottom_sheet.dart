@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:texmunimx/controllers/localization_controller.dart';
-import 'package:texmunimx/utils/internationalization.dart';
+import 'package:texmunimx/utils/app_translations.dart';
 
 class LanguageBottomSheet extends StatelessWidget {
   LanguageBottomSheet({super.key});

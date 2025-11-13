@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:texmunimx/models/order_history_response.dart';
 
 class BuildJobUsersTable extends StatefulWidget {
-  final List<dynamic> jobUsers;
+  final List<HistoryJobUserModel> jobUsers;
 
   const BuildJobUsersTable({super.key, required this.jobUsers});
 
@@ -45,11 +47,7 @@ class _BuildJobUsersTableState extends State<BuildJobUsersTable> {
     );
   }
 
-  Widget _buildJobUsersTable(List<dynamic> jobUsers) {
-    final List<Map<String, dynamic>> jobUserList = jobUsers
-        .map((e) => e as Map<String, dynamic>)
-        .toList();
-
+  Widget _buildJobUsersTable(List<HistoryJobUserModel> jobUsers) {
     const userFlex = 1;
     const firmFlex = 2;
     const qtyFlex = 1;
@@ -60,80 +58,69 @@ class _BuildJobUsersTableState extends State<BuildJobUsersTable> {
       return Row(
         children: [
           buildCell(
-            'User',
+            'user'.tr,
             flex: userFlex,
             fontWeight: FontWeight.bold,
             backgroundColor: Colors.grey.shade300,
             alignment: Alignment.center,
           ),
           buildCell(
-            'Firm',
+            'firm'.tr,
             flex: firmFlex,
             fontWeight: FontWeight.bold,
             backgroundColor: Colors.grey.shade300,
             alignment: Alignment.center,
           ),
           buildCell(
-            'Qty',
+            'qty'.tr,
             flex: qtyFlex,
             fontWeight: FontWeight.bold,
             backgroundColor: Colors.grey.shade300,
             alignment: Alignment.center,
           ),
           buildCell(
-            'Pending',
+            'pending'.tr,
             flex: pendingQtyFlex,
             fontWeight: FontWeight.bold,
             backgroundColor: Colors.grey.shade300,
             alignment: Alignment.center,
           ),
-          buildCell(
-            'Matching',
-            flex: matchingFlex,
-            fontWeight: FontWeight.bold,
-            backgroundColor: Colors.grey.shade300,
-            alignment: Alignment.center,
-          ),
+          if (jobUsers.any((j) => j.matchingNo.isNotEmpty))
+            buildCell(
+              'matching'.tr,
+              flex: matchingFlex,
+              fontWeight: FontWeight.bold,
+              backgroundColor: Colors.grey.shade300,
+              alignment: Alignment.center,
+            ),
         ],
       );
     }
 
     List<Widget> buildDataRows() {
-      return jobUserList.map((j) {
-        // This is a rough mapping based on the screenshot, adjust keys if needed
-        final matchingNo = j['matchingNo'] ?? '';
-        final quantity = j['quantity'] ?? 0;
-        final pending = j['pending'] ?? 0;
-        final userId = j['userId'] ?? 'N/A';
-        final firmId = j['firmId'] ?? 'N/A';
-
-        // You'll likely need an extra API call or pre-loaded data to get User Name and Firm Name from their IDs.
-        // For now, I'll use the IDs as placeholders.
-        // Example: controller.getUserName(userId), controller.getFirmName(firmId)
+      return jobUsers.map((j) {
+        final matchingNo = j.matchingNo;
+        final quantity = j.quantity;
+        final pending = j.pending;
+        final userId = j.userId;
+        final firmId = j.firmId;
 
         return Row(
           children: [
-            buildCell(
-              userId,
-              flex: userFlex,
-              alignment: Alignment.center,
-            ), // Placeholder
-            buildCell(
-              firmId,
-              flex: firmFlex,
-              alignment: Alignment.center,
-            ), // Placeholder
+            buildCell(userId, flex: userFlex, alignment: Alignment.center),
+            buildCell(firmId, flex: firmFlex, alignment: Alignment.center),
             buildCell('$quantity', flex: qtyFlex, alignment: Alignment.center),
             buildCell(
               '$pending',
               flex: pendingQtyFlex,
               alignment: Alignment.center,
             ),
-            buildCell(
-              'Matching $matchingNo', // Placeholder
-              flex: matchingFlex,
-              alignment: Alignment.center,
-            ),
+            if (matchingNo.isNotEmpty)
+              buildCell(
+                matchingNo,
+                flex: matchingFlex,
+                alignment: Alignment.center,
+              ),
           ],
         );
       }).toList();
@@ -141,8 +128,7 @@ class _BuildJobUsersTableState extends State<BuildJobUsersTable> {
 
     return SingleChildScrollView(
       child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.stretch, // Ensures Column takes full width
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [buildHeaderRow(), ...buildDataRows()],
       ),
     );

@@ -127,7 +127,7 @@ class RemarksClass {
   bool? isJobPo;
   String? poNumber;
   List<Matching>? matchings;
-  List<dynamic>? jobUser;
+  List<HistoryJobUserModel>? jobUser;
 
   RemarksClass({
     this.panna,
@@ -146,28 +146,33 @@ class RemarksClass {
     this.jobUser,
   });
 
-  factory RemarksClass.fromMap(Map<String, dynamic> json) => RemarksClass(
-    panna: json["panna"],
-    partyPoNumber: json["partyPoNumber"],
-    process: json["process"],
-    designId: json["designId"],
-    partyId: json["partyId"],
-    isHighPriority: json["isHighPriority"],
-    orderType: json["orderType"],
-    deliveryDate: DateTime.parse(
-      json["deliveryDate"] ?? DateTime.now().toIso8601String(),
-    ),
-    createdBy: json["createdBy"],
-    workspaceId: json["workspaceId"],
-    isJobPo: json["isJobPo"],
-    poNumber: json["poNumber"],
-    matchings: List<Matching>.from(
-      json["matchings"].map((x) => Matching.fromMap(x)),
-    ),
-    jobUser: json["jobUser"] == null
-        ? []
-        : List<dynamic>.from(json["jobUser"]!.map((x) => x)),
-  );
+  factory RemarksClass.fromMap(Map<String, dynamic> json) {
+    log('Order Remarks Details Map: $json');
+    return RemarksClass(
+      panna: json["panna"],
+      partyPoNumber: json["partyPoNumber"],
+      process: json["process"],
+      designId: json["designId"],
+      partyId: json["partyId"],
+      isHighPriority: json["isHighPriority"],
+      orderType: json["orderType"],
+      deliveryDate: DateTime.parse(
+        json["deliveryDate"] ?? DateTime.now().toIso8601String(),
+      ),
+      createdBy: json["createdBy"],
+      workspaceId: json["workspaceId"],
+      isJobPo: json["isJobPo"],
+      poNumber: json["poNumber"],
+      matchings: List<Matching>.from(
+        json["matchings"].map((x) => Matching.fromMap(x)),
+      ),
+      jobUser: json["jobUser"] == null
+          ? []
+          : List<HistoryJobUserModel>.from(
+              json["jobUser"]!.map((x) => HistoryJobUserModel.fromMap(x)),
+            ),
+    );
+  }
 
   Map<String, dynamic> toMap() => {
     "panna": panna,
@@ -309,4 +314,40 @@ class Delivered {
     "_id": id,
     "movedOn": movedOn.toIso8601String(),
   };
+}
+
+class HistoryJobUserModel {
+  String userId;
+  String firmId;
+  int quantity;
+  int pending;
+  String remarks;
+  String matchingNo;
+  String id;
+  String uid;
+
+  HistoryJobUserModel({
+    required this.userId,
+    required this.firmId,
+    required this.quantity,
+    required this.pending,
+    required this.remarks,
+    required this.matchingNo,
+    required this.id,
+    required this.uid,
+  });
+
+  factory HistoryJobUserModel.fromMap(Map<String, dynamic> json) {
+    log('Order Remarks Details: $json');
+    return HistoryJobUserModel(
+      userId: json["userId"] ?? '',
+      firmId: json["firmId"] ?? '',
+      quantity: json["quantity"] ?? 0,
+      pending: json["pending"] ?? 0,
+      remarks: json["remarks"] ?? '',
+      matchingNo: json["matchingNo"] ?? '',
+      id: json["_id"] ?? '',
+      uid: json["uid"] ?? '',
+    );
+  }
 }

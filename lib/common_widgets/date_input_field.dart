@@ -1,5 +1,6 @@
 // Reusable widget for a date picker field
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:texmunimx/utils/date_formate_extension.dart';
 
 class DateInputField extends StatelessWidget {
@@ -32,7 +33,7 @@ class DateInputField extends StatelessWidget {
         },
         controller: TextEditingController(
           text: selectedDate == null
-              ? 'Select Date'
+              ? 'select_date'.tr
               : selectedDate!.ddmmyyFormat,
         ),
         decoration: InputDecoration(

@@ -27,6 +27,7 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
   @override
   void initState() {
     super.initState();
+    controller.fetchOptionsData();
     controller.getPurchaseList(isRefresh: true);
     tabController = TabController(initialIndex: 0, length: 4, vsync: this);
     tabController.addListener(onTabChanging);
@@ -43,24 +44,19 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
     required int index,
     required int selected,
   }) {
-    // Check if this tab is currently selected
     final isSelected = selected == index;
 
     return GestureDetector(
       onTap: () {
-        // Switch the TabBarView to the correct index
         tabController.animateTo(index);
         selectedIndex.value = index;
-        // setState is called in onTabChanging, so it will update the UI
       },
       child: Container(
         alignment: Alignment.center,
-        // Set your custom padding here. Horizontal: 16.0 provides breathing room.
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
         decoration: BoxDecoration(
           border: isSelected
               ? Border(
-                  // Use a bottom border as the indicator
                   bottom: BorderSide(color: AppColors.mainColor, width: 2.0),
                 )
               : null,

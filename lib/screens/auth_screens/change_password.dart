@@ -37,6 +37,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       ),
       body: Form(
         key: formKey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           children: [
             Padding(
@@ -104,10 +105,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                             label: 'change_password'.tr,
                             onTap: () {
                               if (formKey.currentState!.validate()) {
-                                // Call login function
                                 if (loginController.newPasswordCont.text ==
                                     loginController.confirmPasswordCont.text) {
-                                  // Proceed with password change logic
                                   loginController.changePassword();
                                   FocusManager.instance.primaryFocus?.unfocus();
                                 } else {

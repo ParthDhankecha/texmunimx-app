@@ -30,7 +30,12 @@ class BrowseParty extends StatelessWidget {
               children: [
                 Text(
                   controller.selectedParty.value != null
-                      ? controller.selectedParty.value!.partyName
+                      ? controller
+                                .selectedParty
+                                .value!
+                                .partyName
+                                .capitalizeFirst ??
+                            ''
                       : 'Select Party',
                   style: titleStyle.copyWith(fontSize: 22),
                 ),

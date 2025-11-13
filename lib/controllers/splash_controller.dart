@@ -77,7 +77,7 @@ class SplashController extends GetxController implements GetxService {
         default:
           showErrorSnackbar(
             'Unable to connect with Server.',
-            decs: 'Check your Internet connection and Restart App',
+            desc: 'Check your Internet connection and Restart App',
           );
       }
     } finally {
