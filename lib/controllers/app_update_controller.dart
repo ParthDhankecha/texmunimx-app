@@ -34,9 +34,6 @@ class AppUpdateController extends GetxController implements GetxService {
 
     showPopup.value = showPopupFlag;
 
-    log(
-      'getSettings : version : $currentVersionInt , latestVersionInt: $latestVersionInt',
-    );
     isUpdateAvailable.value = latestVersionInt > currentVersionInt
         ? true
         : false;

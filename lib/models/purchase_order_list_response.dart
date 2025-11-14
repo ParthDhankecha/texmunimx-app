@@ -3,6 +3,7 @@
 //     final purchaseOrderListResponse = purchaseOrderListResponseFromMap(jsonString);
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:texmunimx/models/in_process_model.dart';
 
@@ -91,7 +92,9 @@ class PurchaseOrderModel {
   JobUserClass? jobUser;
   Matching? matching;
   bool? isLocked;
+
   bool isMasterEntry;
+  bool hideUposBtns;
 
   PurchaseOrderModel({
     required this.id,
@@ -123,55 +126,62 @@ class PurchaseOrderModel {
     this.note,
     this.isLocked,
     this.isMasterEntry = false,
+    this.hideUposBtns = false,
   });
 
-  factory PurchaseOrderModel.fromMap(Map<String, dynamic> json) =>
-      PurchaseOrderModel(
-        id: json["_id"],
-        panna: double.parse(json["panna"].toString()),
-        partyPoNumber: json["partyPoNumber"],
-        poNumber: json["poNumber"],
-        process: json["process"],
-        designId: json["designId"],
-        partyId: json["partyId"],
-        quantity: json["quantity"] ?? 0,
-        rate: double.parse(json["rate"] ?? '0'),
-        pending: json["pending"] ?? 0,
-        isCompleted: json["isCompleted"],
-        completedAt: json["completedAt"],
-        deliveryDate: json["deliveryDate"] == null
-            ? null
-            : DateTime.parse(json["deliveryDate"]).toLocal(),
-        isHighPriority: json["isHighPriority"],
-        createdBy: json["createdBy"],
-        workspaceId: json["workspaceId"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
-        inProcess: json["inProcess"] == null
-            ? null
-            : InProcess.fromMap(json["inProcess"]),
-        readyToDispatch: json["readyToDispatch"] == null
-            ? null
-            : ReadyToDispatch.fromMap(json["readyToDispatch"]),
+  factory PurchaseOrderModel.fromMap(Map<String, dynamic> json) {
+    log('Parsing PurchaseOrderModel: ${json["_id"]}');
+    log('hideUposBtns: ${json["hideUposBtns"]}');
+    log('isMasterEntry: ${json["isMasterEntry"]}');
+    log('-----------');
+    return PurchaseOrderModel(
+      id: json["_id"],
+      panna: double.parse(json["panna"].toString()),
+      partyPoNumber: json["partyPoNumber"],
+      poNumber: json["poNumber"],
+      process: json["process"],
+      designId: json["designId"],
+      partyId: json["partyId"],
+      quantity: json["quantity"] ?? 0,
+      rate: double.parse(json["rate"] ?? '0'),
+      pending: json["pending"] ?? 0,
+      isCompleted: json["isCompleted"],
+      completedAt: json["completedAt"],
+      deliveryDate: json["deliveryDate"] == null
+          ? null
+          : DateTime.parse(json["deliveryDate"]).toLocal(),
+      isHighPriority: json["isHighPriority"],
+      createdBy: json["createdBy"],
+      workspaceId: json["workspaceId"],
+      createdAt: DateTime.parse(json["createdAt"]),
+      updatedAt: DateTime.parse(json["updatedAt"]),
+      inProcess: json["inProcess"] == null
+          ? null
+          : InProcess.fromMap(json["inProcess"]),
+      readyToDispatch: json["readyToDispatch"] == null
+          ? null
+          : ReadyToDispatch.fromMap(json["readyToDispatch"]),
 
-        delivered: json["delivered"] == null
-            ? null
-            : Delivered.fromMap(json["delivered"]),
+      delivered: json["delivered"] == null
+          ? null
+          : Delivered.fromMap(json["delivered"]),
 
-        jobUser: json['jobUser'] == null
-            ? null
-            : json["jobUser"] is List
-            ? null
-            : JobUserClass.fromMap(json["jobUser"]),
-        orderType: json["orderType"] ?? '',
-        isJobPo: json["isJobPo"] ?? false,
-        matching: json["matching"] == null
-            ? null
-            : Matching.fromMap(json["matching"]),
-        note: json["note"] ?? '',
-        isLocked: json["isLocked"] ?? false,
-        isMasterEntry: json["isMasterEntry"] ?? false,
-      );
+      jobUser: json['jobUser'] == null
+          ? null
+          : json["jobUser"] is List
+          ? null
+          : JobUserClass.fromMap(json["jobUser"]),
+      orderType: json["orderType"] ?? '',
+      isJobPo: json["isJobPo"] ?? false,
+      matching: json["matching"] == null
+          ? null
+          : Matching.fromMap(json["matching"]),
+      note: json["note"] ?? '',
+      isLocked: json["isLocked"] ?? false,
+      isMasterEntry: json["isMasterEntry"] ?? false,
+      hideUposBtns: json["hideUposBtns"] ?? false,
+    );
+  }
 
   Map<String, dynamic> toMap() => {
     "_id": id,

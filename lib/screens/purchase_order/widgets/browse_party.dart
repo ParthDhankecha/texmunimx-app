@@ -37,11 +37,11 @@ class BrowseParty extends StatelessWidget {
                                 .capitalizeFirst ??
                             ''
                       : 'Select Party',
-                  style: titleStyle.copyWith(fontSize: 22),
+                  style: titleStyle.copyWith(fontSize: 18),
                 ),
               ],
             ),
-            SizedBox(height: 8),
+
             // controller.selectedParty.value != null
             //     ? Row(
             //         children: [

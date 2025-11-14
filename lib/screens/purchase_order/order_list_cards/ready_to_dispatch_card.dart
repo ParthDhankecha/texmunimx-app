@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:texmunimx/common_widgets/custom_icon_btn.dart';
@@ -43,7 +41,6 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
 
   @override
   Widget build(BuildContext context) {
-    log('ready_to_dispatch id - ${widget.order.readyToDispatch?.id}');
     return Card(
       elevation: 4.0,
       margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
@@ -100,6 +97,14 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
               title: 'delivery_date',
               value: widget.order.deliveryDate?.ddmmyyFormat ?? 'N/A',
               isVisible: widget.order.deliveryDate != null,
+              valueColor:
+                  (widget.order.deliveryDate
+                              ?.difference(DateTime.now())
+                              .inDays ??
+                          0) <
+                      3
+                  ? Colors.red
+                  : null,
             ),
 
             BuildValueRow(
@@ -176,61 +181,47 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                CustomIconBtn(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
+                if (!widget.order.hideUposBtns)
+                  CustomIconBtn(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
 
-                      builder: (context) => UpdateStatusBottomSheet(
-                        po: widget.order,
-                        // orderQuantity: widget.order.matching?.quantity ?? 0,
-                        //  pendingQuantity:
-                        //       widget.order.readyToDispatch?.quantity ?? 0,
-                        moveTo: OrderStatus.inProcess,
-                        currentStatus: OrderStatus.readyToDispatch,
-                        //   purchaseId: widget.order.id,
-                        //   quantityTitle: 'Ready To Dispatch'.tr,
-                        //   firmId: widget.order.readyToDispatch?.firmId ?? '',
-                        //   userId: widget.order.readyToDispatch?.userId ?? '',
-                        //    machineNo:
-                        //      widget.order.readyToDispatch?.machineNo ?? '',
-                      ),
-                    );
-                  },
-                  title: 'in_progress'.tr,
-                  isOutline: true,
-                  isSmall: true,
-                  icon: 'move',
-                ),
+                        builder: (context) => UpdateStatusBottomSheet(
+                          po: widget.order,
+
+                          moveTo: OrderStatus.inProcess,
+                          currentStatus: OrderStatus.readyToDispatch,
+                        ),
+                      );
+                    },
+                    title: 'in_progress'.tr,
+                    isOutline: true,
+                    isSmall: true,
+                    icon: 'move',
+                  ),
                 SizedBox(width: 8),
 
-                CustomIconBtn(
-                  isOutline: true,
-                  isSmall: true,
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (context) => UpdateStatusBottomSheet(
-                        po: widget.order,
-                        // orderQuantity: widget.order.matching?.quantity ?? 0,
-                        // pendingQuantity:
-                        //      widget.order.readyToDispatch?.quantity ?? 0,
-                        moveTo: OrderStatus.delivered,
-                        currentStatus: OrderStatus.readyToDispatch,
-                        //   purchaseId: widget.order.id,
-                        //   quantityTitle: 'Ready To Dispatch'.tr,
-                        //   firmId: widget.order.readyToDispatch?.firmId ?? '',
-                        //   userId: widget.order.readyToDispatch?.userId ?? '',
-                        //   machineNo:
-                        //      widget.order.readyToDispatch?.machineNo ?? '',
-                      ),
-                    );
-                  },
-                  title: 'completed'.tr,
-                  icon: 'move',
-                ),
+                if (!widget.order.hideUposBtns)
+                  CustomIconBtn(
+                    isOutline: true,
+                    isSmall: true,
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (context) => UpdateStatusBottomSheet(
+                          po: widget.order,
+
+                          moveTo: OrderStatus.delivered,
+                          currentStatus: OrderStatus.readyToDispatch,
+                        ),
+                      );
+                    },
+                    title: 'completed'.tr,
+                    icon: 'move',
+                  ),
                 SizedBox(width: 8),
                 CustomIconBtn(
                   isOutline: true,

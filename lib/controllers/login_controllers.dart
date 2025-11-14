@@ -44,8 +44,6 @@ class LoginControllers extends GetxController implements GetxService {
         newPassword: newPassword,
       );
 
-      log('change password response :::');
-
       if (data) {
         Get.back();
         showSuccessSnackbar('Password changed successfully');

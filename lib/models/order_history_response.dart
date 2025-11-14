@@ -128,6 +128,7 @@ class RemarksClass {
   String? poNumber;
   List<Matching>? matchings;
   List<HistoryJobUserModel>? jobUser;
+  String? note;
 
   RemarksClass({
     this.panna,
@@ -144,10 +145,11 @@ class RemarksClass {
     this.poNumber,
     this.matchings,
     this.jobUser,
+    this.note,
   });
 
   factory RemarksClass.fromMap(Map<String, dynamic> json) {
-    log('Order Remarks Details Map: $json');
+    log('RemarksClass $json');
     return RemarksClass(
       panna: json["panna"],
       partyPoNumber: json["partyPoNumber"],
@@ -171,6 +173,8 @@ class RemarksClass {
           : List<HistoryJobUserModel>.from(
               json["jobUser"]!.map((x) => HistoryJobUserModel.fromMap(x)),
             ),
+
+      note: json["note"],
     );
   }
 
@@ -199,7 +203,7 @@ class RemarksClass {
 class Matching {
   int quantity;
   int pending;
-  int rate;
+  double rate;
   List<dynamic>? colors;
   int? mid;
   String? id;
@@ -224,7 +228,7 @@ class Matching {
   factory Matching.fromMap(Map<String, dynamic> json) => Matching(
     quantity: json["quantity"],
     pending: json["pending"],
-    rate: json["rate"],
+    rate: double.tryParse(json["rate"].toString()) ?? 0.0,
     colors: json["colors"] == null
         ? []
         : List<dynamic>.from(json["colors"]!.map((x) => x)),

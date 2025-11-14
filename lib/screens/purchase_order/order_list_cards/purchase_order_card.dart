@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:texmunimx/common_widgets/custom_icon_btn.dart';
@@ -35,6 +37,8 @@ class PurchaseOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log('Hide Upos Btns: ${order.hideUposBtns}');
+    log('Is Master Entry: ${order.isMasterEntry}');
     return Card(
       elevation: 4.0,
       margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),

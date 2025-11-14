@@ -81,6 +81,13 @@ class OrderHistoryDetailsSheet extends StatelessWidget {
                       context: context,
                     ),
 
+                    if (details?.note != null && details!.note!.isNotEmpty)
+                      _buildHistorySection(
+                        title: 'note'.tr,
+                        value: details.note!,
+                        context: context,
+                      ),
+
                     const SizedBox(height: 10),
                     // --- Details Section ---
                     if (details != null) ...[
