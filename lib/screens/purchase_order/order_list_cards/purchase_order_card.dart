@@ -1,16 +1,14 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:texmunimx/common_widgets/custom_icon_btn.dart';
 import 'package:texmunimx/common_widgets/custom_network_image.dart';
-import 'package:texmunimx/common_widgets/my_text_field.dart';
 import 'package:texmunimx/models/order_status_enum.dart';
 import 'package:texmunimx/models/purchase_order_list_response.dart';
 import 'package:texmunimx/models/purchase_order_options_response.dart';
 import 'package:texmunimx/screens/purchase_order/change_order_status/change_order_status_screen.dart';
 import 'package:texmunimx/screens/purchase_order/create_po/create_purchase_order.dart';
 import 'package:texmunimx/screens/purchase_order/order_history/order_history_list.dart';
+import 'package:texmunimx/screens/purchase_order/widgets/build_value_row.dart';
 import 'package:texmunimx/screens/purchase_order/widgets/notes_row.dart';
 import 'package:texmunimx/screens/purchase_order/widgets/status_tag_row.dart';
 import 'package:texmunimx/utils/app_colors.dart';
@@ -37,9 +35,6 @@ class PurchaseOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int diff = order.deliveryDate?.difference(DateTime.now()).inDays ?? 0;
-
-    log('diff==$diff');
     return Card(
       elevation: 4.0,
       margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
@@ -88,7 +83,7 @@ class PurchaseOrderCard extends StatelessWidget {
             ),
             const SizedBox(height: 10),
 
-            _buildValueRow(
+            BuildValueRow(
               title: 'delivery_date',
               value: order.deliveryDate?.ddmmyyFormat ?? 'N/A',
               isVisible: order.deliveryDate != null,
@@ -99,18 +94,18 @@ class PurchaseOrderCard extends StatelessWidget {
                   : null,
             ),
 
-            _buildValueRow(
+            BuildValueRow(
               title: 'party_name',
               value: order.partyId.isNotEmpty ? party.partyName : 'N/A',
             ),
 
-            _buildValueRow(
+            BuildValueRow(
               title: 'party_number',
               value: order.partyId.isNotEmpty ? party.partyNumber : 'N/A',
             ),
-            _buildValueRow(title: 'panna', value: formatDouble(order.panna)),
+            BuildValueRow(title: 'panna', value: formatDouble(order.panna)),
 
-            _buildValueRow(
+            BuildValueRow(
               title: 'job_user',
               value: jobUser ?? 'N/A',
               isVisible:
@@ -119,7 +114,7 @@ class PurchaseOrderCard extends StatelessWidget {
                       Get.find<Sharedprefs>().userRole == 2),
             ),
 
-            _buildValueRow(
+            BuildValueRow(
               title: 'order_quantity',
               value: order.isJobPo
                   ? '${order.jobUser?.quantity ?? "0"}'
@@ -127,7 +122,7 @@ class PurchaseOrderCard extends StatelessWidget {
               isVisible: !order.isMasterEntry,
             ),
 
-            _buildValueRow(
+            BuildValueRow(
               title: 'pending_quantity'.tr,
               value: order.isJobPo
                   ? '${order.jobUser?.pending ?? "0"}'
@@ -190,34 +185,5 @@ class PurchaseOrderCard extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Widget _buildValueRow({
-    required String title,
-    required String value,
-    Color? valueColor,
-    bool isVisible = true,
-  }) {
-    return isVisible
-        ? Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  MyText(title, append: ' : '),
-                  Text(
-                    value,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: valueColor ?? Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 4),
-            ],
-          )
-        : SizedBox.shrink();
   }
 }

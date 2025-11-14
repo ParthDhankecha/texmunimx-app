@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
@@ -14,6 +15,21 @@ import 'package:texmunimx/utils/shared_pref.dart';
 class PurchaseOrderRepository {
   ApiClient apiClient = Get.find<ApiClient>();
   Sharedprefs sp = Get.find<Sharedprefs>();
+
+  ///get next po number
+  Future<String> getNextPo() async {
+    var endPoint = AppConst.nextPoNumber;
+
+    var data = await apiClient.request(
+      endPoint,
+      body: {},
+      headers: {'authorization': sp.userToken},
+    );
+
+    log('nextpo : $data');
+
+    return jsonDecode(data)['data']['poNumber'];
+  }
 
   // get purchase status options
   Future<PurchaseOptionsModel> getOptionsList() async {

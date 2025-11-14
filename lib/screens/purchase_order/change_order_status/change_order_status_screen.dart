@@ -194,7 +194,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                 Row(
                   children: [
                     Text(
-                      '${widget.currentStatus.name}'.tr,
+                      widget.currentStatus.name.tr,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const Spacer(),

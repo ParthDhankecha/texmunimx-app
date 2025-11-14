@@ -79,6 +79,8 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                           ? ErrorRow(title: controller.err.value)
                           : SizedBox.shrink(),
                     ),
+                    _buildPORow(),
+                    SizedBox(height: 20),
                     BrowseDesign(controller: controller),
                     SizedBox(height: 20),
                     BrowseParty(controller: controller),
@@ -407,6 +409,47 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
           },
         ),
       ],
+    );
+  }
+
+  Widget _buildPORow() {
+    return Obx(
+      () => Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                'po_number'.tr,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.blackColor,
+                ),
+              ),
+              SizedBox(width: 6),
+              RedMark(),
+            ],
+          ),
+          SizedBox(height: 10),
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: AppColors.mainColor),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              controller.poNumber.value,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

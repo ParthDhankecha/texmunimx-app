@@ -29,6 +29,7 @@ class AppConst {
   static String updateParty = 'party/update';
 
   //purchase orders
+  static String nextPoNumber = 'purchase-order/po-number'; //get
   static String purchaseOrderCreate = 'purchase-order/create'; //post
   static String purchaseOrderList = 'purchase-order/list'; // post
   static String purchaseOrderUpdate = 'purchase-order/update'; // put - {id}

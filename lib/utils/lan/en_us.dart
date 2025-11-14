@@ -209,4 +209,6 @@ Map<String, String> get enUs => {
   'quantity_cannot_exceed': 'Quantity cannot exceed @type quantity.',
   'update_po_status': 'Update PO Status',
   'move_to': 'Move To (Current Status: @status)',
+
+  'po_number': 'PO Number',
 };

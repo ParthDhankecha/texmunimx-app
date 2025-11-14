@@ -51,7 +51,7 @@ class PartyCard extends StatelessWidget {
                     Column(
                       children: [
                         _buildRow(
-                          'party_number'.tr,
+                          'customer_name'.tr,
                           party.partyNumber,
                           Icons.numbers,
                         ),

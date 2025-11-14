@@ -130,7 +130,7 @@ class Party {
   factory Party.fromMap(Map<String, dynamic> json) => Party(
     id: json["_id"],
     partyName: json["partyName"],
-    partyNumber: json["partyNumber"],
+    partyNumber: json["partyNumber"] ?? '',
     mobile: json["mobile"],
   );
 

@@ -86,7 +86,7 @@ class PartyModel {
     email: json["email"],
     id: json["_id"],
     partyName: json["partyName"],
-    partyNumber: json["partyNumber"],
+    partyNumber: json["customerName"],
     gstNo: json["GSTNo"],
     address: json["address"],
     contactDetails: json["contactDetails"],

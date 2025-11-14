@@ -35,7 +35,7 @@ class GetGarmentRow extends StatelessWidget {
             InputField(
               textEditingController: controller.quantityCont,
               hintText: 'enter_total_quantity'.tr,
-              textInputType: TextInputType.number,
+              textInputType: TextInputType.numberWithOptions(decimal: false),
               onValidator: (value) {
                 //validation only for garment
                 if (controller.selectedOrderType.value ==

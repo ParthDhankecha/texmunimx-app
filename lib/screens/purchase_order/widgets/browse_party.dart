@@ -14,14 +14,14 @@ class BrowseParty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 12, right: 12),
+      padding: const EdgeInsets.only(left: 10, right: 10),
 
       child: Obx(
         () => Column(
           children: [
             Row(
               children: [
-                Text('Party  Details', style: bodyStyle),
+                Text('party_details'.tr, style: bodyStyle),
                 SizedBox(width: 6),
                 RedMark(),
               ],
@@ -42,22 +42,26 @@ class BrowseParty extends StatelessWidget {
               ],
             ),
             SizedBox(height: 8),
+            // controller.selectedParty.value != null
+            //     ? Row(
+            //         children: [
+            //           Text('Party No: ', style: normalTextStyle.copyWith()),
+            //           Text(
+            //             controller.selectedParty.value?.partyNumber ?? '',
+            //             style: titleStyle.copyWith(),
+            //           ),
+            //         ],
+            //       )
+            //     : SizedBox.shrink(),
+            // SizedBox(height: 8),
             controller.selectedParty.value != null
                 ? Row(
                     children: [
-                      Text('Party No: ', style: normalTextStyle.copyWith()),
                       Text(
-                        controller.selectedParty.value?.partyNumber ?? '',
-                        style: titleStyle.copyWith(),
+                        'phone_number'.tr,
+                        style: normalTextStyle.copyWith(),
                       ),
-                    ],
-                  )
-                : SizedBox.shrink(),
-            SizedBox(height: 8),
-            controller.selectedParty.value != null
-                ? Row(
-                    children: [
-                      Text('Phone: ', style: normalTextStyle.copyWith()),
+                      SizedBox(width: 8),
                       Text(
                         controller.selectedParty.value?.mobile ?? '',
                         style: titleStyle.copyWith(),

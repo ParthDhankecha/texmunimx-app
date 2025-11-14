@@ -80,6 +80,8 @@ class PurchaseOrderController extends GetxController implements GetxService {
 
   RxBool isJobPoEnabled = false.obs;
 
+  RxString poNumber = ''.obs;
+
   changeJobPoEnabled(bool value) {
     isJobPoEnabled.value = value;
 
@@ -310,6 +312,10 @@ class PurchaseOrderController extends GetxController implements GetxService {
       designList.value = data.designs;
 
       partyList.value = data.parties;
+
+      for (var p in data.parties) {
+        log('party in list: ${p.partyName} with id: ${p.id}');
+      }
     } on ApiException catch (e) {
       log('error : $e');
       switch (e.statusCode) {
@@ -390,8 +396,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
       fetchOptionsData();
 
       selectDesign(null);
-      //generateDefaultBoxes();
-      //generateJobPoDefaultBoxes();
+      getNextPoNumber();
       selectedOrderType.value = '';
       err.value = '';
     } on ApiException catch (e) {
@@ -1125,6 +1130,17 @@ class PurchaseOrderController extends GetxController implements GetxService {
         print('error : $e');
       }
       showErrorSnackbar('Something went wrong, please try again later.');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> getNextPoNumber() async {
+    try {
+      isLoading.value = true;
+      poNumber.value = await repository.getNextPo();
+    } on ApiException catch (e) {
+      log('error : $e');
     } finally {
       isLoading.value = false;
     }

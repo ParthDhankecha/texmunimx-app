@@ -7,6 +7,7 @@ import 'package:texmunimx/controllers/purchase_order_controller.dart';
 import 'package:texmunimx/models/purchase_order_list_response.dart';
 import 'package:texmunimx/models/purchase_order_options_response.dart';
 import 'package:texmunimx/screens/purchase_order/order_history/order_history_list.dart';
+import 'package:texmunimx/screens/purchase_order/widgets/build_value_row.dart';
 import 'package:texmunimx/screens/purchase_order/widgets/notes_row.dart';
 import 'package:texmunimx/screens/purchase_order/widgets/status_tag_row.dart';
 import 'package:texmunimx/utils/app_colors.dart';
@@ -35,35 +36,6 @@ class DeliveredCard extends StatefulWidget {
 
 class _DeliveredCardState extends State<DeliveredCard> {
   PurchaseOrderController controller = Get.find<PurchaseOrderController>();
-
-  Widget _buildValueRow({
-    required String title,
-    required String value,
-    Color? valueColor,
-    bool isVisible = true,
-  }) {
-    return isVisible
-        ? Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  MyText(title, append: ' : '),
-                  Text(
-                    value,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: valueColor ?? Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 4),
-            ],
-          )
-        : SizedBox.shrink();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,50 +93,50 @@ class _DeliveredCardState extends State<DeliveredCard> {
             ),
             const SizedBox(height: 10),
 
-            _buildValueRow(
+            BuildValueRow(
               title: 'delivery_date',
               value: widget.order.deliveryDate?.ddmmyyFormat ?? 'N/A',
               isVisible: widget.order.deliveryDate != null,
             ),
 
-            _buildValueRow(
+            BuildValueRow(
               title: 'party_name',
               value: widget.order.partyId.isNotEmpty
                   ? widget.party.partyName
                   : 'N/A',
             ),
 
-            _buildValueRow(
+            BuildValueRow(
               title: 'party_number',
               value: widget.order.partyId.isNotEmpty
                   ? widget.party.partyNumber
                   : 'N/A',
             ),
-            _buildValueRow(
+            BuildValueRow(
               title: 'panna',
               value: formatDouble(widget.order.panna),
             ),
 
-            _buildValueRow(
+            BuildValueRow(
               title: 'firm_name',
               value: controller.firmNameById(
                 widget.order.delivered?.firmId ?? '',
               ),
             ),
 
-            _buildValueRow(
+            BuildValueRow(
               title: 'moved_by',
               value: controller
                   .getMovedUserById(widget.order.delivered?.movedBy ?? '')
                   .capitalizeFirst!,
             ),
 
-            _buildValueRow(
+            BuildValueRow(
               title: 'machine_no',
               value: widget.order.delivered?.machineNo ?? 'N/A',
             ),
 
-            _buildValueRow(
+            BuildValueRow(
               title: 'job_user',
               value: widget.jobUser,
               isVisible:
