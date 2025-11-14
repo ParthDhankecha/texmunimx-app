@@ -88,9 +88,10 @@ class PurchaseOrderModel {
 
   String orderType;
   bool isJobPo;
-  dynamic jobUser;
+  JobUserClass? jobUser;
   Matching? matching;
   bool? isLocked;
+  bool isMasterEntry;
 
   PurchaseOrderModel({
     required this.id,
@@ -121,6 +122,7 @@ class PurchaseOrderModel {
     this.matching,
     this.note,
     this.isLocked,
+    this.isMasterEntry = false,
   });
 
   factory PurchaseOrderModel.fromMap(Map<String, dynamic> json) =>
@@ -139,7 +141,7 @@ class PurchaseOrderModel {
         completedAt: json["completedAt"],
         deliveryDate: json["deliveryDate"] == null
             ? null
-            : DateTime.parse(json["deliveryDate"]),
+            : DateTime.parse(json["deliveryDate"]).toLocal(),
         isHighPriority: json["isHighPriority"],
         createdBy: json["createdBy"],
         workspaceId: json["workspaceId"],
@@ -168,6 +170,7 @@ class PurchaseOrderModel {
             : Matching.fromMap(json["matching"]),
         note: json["note"] ?? '',
         isLocked: json["isLocked"] ?? false,
+        isMasterEntry: json["isMasterEntry"] ?? false,
       );
 
   Map<String, dynamic> toMap() => {
@@ -196,6 +199,8 @@ class PurchaseOrderModel {
     "isJobPo": isJobPo,
     "jobUser": jobUser,
     "matching": matching?.toMap(),
+
+    "isMasterEntry": isMasterEntry,
   };
 }
 

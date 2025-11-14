@@ -103,7 +103,9 @@ class _WarpScreenState extends State<WarpScreen> {
                       controller.setDenier = val;
                       controller.calculateWarpCost();
                     },
-                    textInputType: TextInputType.number,
+                    textInputType: TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
                     onValidator: (value) {
                       if (value!.isEmpty) {
                         return 'denier_required'.tr;
@@ -139,7 +141,9 @@ class _WarpScreenState extends State<WarpScreen> {
                       controller.setTar = val;
                       controller.calculateWarpCost();
                     },
-                    textInputType: TextInputType.number,
+                    textInputType: TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
                     onValidator: (value) {
                       if (value!.isEmpty) {
                         return 'tar_required'.tr;
@@ -176,7 +180,9 @@ class _WarpScreenState extends State<WarpScreen> {
                       controller.setMeter = val;
                       controller.calculateWarpCost();
                     },
-                    textInputType: TextInputType.number,
+                    textInputType: TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
                     onValidator: (value) {
                       if (value!.isEmpty) {
                         return 'meter_required'.tr;
@@ -213,7 +219,9 @@ class _WarpScreenState extends State<WarpScreen> {
                       controller.setRatePerKg = val;
                       controller.calculateWarpCost();
                     },
-                    textInputType: TextInputType.number,
+                    textInputType: TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
                     onValidator: (value) {
                       if (value!.isEmpty) {
                         return 'rate_per_kg_required'.tr;
@@ -226,19 +234,6 @@ class _WarpScreenState extends State<WarpScreen> {
               ],
             ),
             SizedBox(height: 12),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     CustomBtn(
-            //       title: 'save_and_next'.tr,
-            //       onTap: () {
-            //         if (formKey.currentState!.validate()) {
-            //           controller.onSaveWarp();
-            //         } else {}
-            //       },
-            //     ),
-            //   ],
-            // ),
           ],
         ),
       ),

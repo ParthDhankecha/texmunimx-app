@@ -11,34 +11,16 @@ import 'package:texmunimx/models/purchase_order_options_response.dart';
 import 'package:texmunimx/utils/app_colors.dart';
 
 class UpdateStatusBottomSheet extends StatefulWidget {
-  final int orderQuantity;
-  final int pendingQuantity;
-  final OrderStatus currentStatus;
   final OrderStatus moveTo;
-  final String purchaseId;
-  final String firmId;
-  final String userId;
-  final String? quantityTitle;
-  final String? machineNo;
-  final String? machinObjId;
-  final bool isJobPo;
+  final OrderStatus currentStatus;
 
   final PurchaseOrderModel po;
 
   const UpdateStatusBottomSheet({
     super.key,
     required this.po,
-    required this.orderQuantity,
-    required this.pendingQuantity,
     required this.moveTo,
     required this.currentStatus,
-    required this.purchaseId,
-    this.quantityTitle = 'Pending',
-    required this.firmId,
-    required this.userId,
-    this.machineNo,
-    this.machinObjId,
-    this.isJobPo = true,
   });
 
   @override
@@ -57,6 +39,11 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
 
   PurchaseOrderController controller = Get.find();
 
+  late PurchaseOrderModel po;
+
+  int currentQty = 0;
+  String currentLabel = 'pending'.tr;
+
   @override
   void dispose() {
     _quantityController.dispose();
@@ -66,23 +53,50 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
     super.dispose();
   }
 
+  void currentPendingQuantity() {
+    switch (widget.currentStatus) {
+      case OrderStatus.pending:
+        if (po.isJobPo) {
+          currentQty = po.jobUser?.pending ?? 0;
+        } else {
+          currentQty = po.matching?.pending ?? 0;
+        }
+        currentLabel = 'pending'.tr;
+        break;
+
+      case OrderStatus.inProcess:
+        currentQty = po.inProcess?.quantity ?? 0;
+        currentLabel = 'in_process'.tr;
+        break;
+
+      case OrderStatus.readyToDispatch:
+        currentQty = po.readyToDispatch?.quantity ?? 0;
+        currentLabel = 'ready_to_dispatch'.tr;
+        break;
+
+      default:
+        currentQty = po.jobUser?.pending ?? 0;
+        break;
+    }
+  }
+
   // Function to handle the save action
   void _saveStatus() {
     if (_formKey.currentState!.validate()) {
       final quantity = int.tryParse(_quantityController.text);
 
       var body = {
-        'id': widget.purchaseId,
+        'id': po.id,
         'status': widget.moveTo.name,
         'quantity': quantity ?? 1,
         if (_machineNoController.text.isNotEmpty)
           'machineNo': _machineNoController.text.trim(),
         if (_remarksController.text.isNotEmpty)
           'remarks': _remarksController.text.trim(),
-        if (widget.isJobPo) ...{
-          if (widget.machinObjId != null) 'jobUserId': widget.po.jobUser?.id,
+        if (po.isJobPo) ...{
+          'jobUserId': widget.po.jobUser?.id,
         } else ...{
-          'matchingObjId': widget.po.matching?.id,
+          'matchingObjId': po.matching?.id,
           'firmId': _selectedFirm?.id,
           'userId': _selectedUser?.id,
         },
@@ -91,22 +105,22 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
           'sourceId': widget.currentStatus == OrderStatus.inProcess
               ? widget.po.inProcess?.id
               : null,
-          'matchingObjId': widget.po.matching?.id,
-          if (!widget.isJobPo) 'firmId': widget.po.inProcess?.firmId,
-          if (!widget.isJobPo) 'userId': widget.po.inProcess?.userId,
+          'matchingObjId': po.matching?.id,
+          if (!po.isJobPo) 'firmId': po.inProcess?.firmId,
+          if (!po.isJobPo) 'userId': po.inProcess?.userId,
         },
         //ready to dispatch
         if (widget.currentStatus == OrderStatus.readyToDispatch) ...{
-          'sourceId': widget.po.readyToDispatch?.id,
-          'matchingObjId': widget.po.matching?.id,
-          if (!widget.isJobPo) 'firmId': widget.po.readyToDispatch?.firmId,
-          if (!widget.isJobPo) 'userId': widget.po.readyToDispatch?.userId,
+          'sourceId': po.readyToDispatch?.id,
+          'matchingObjId': po.matching?.id,
+          if (!po.isJobPo) 'firmId': po.readyToDispatch?.firmId,
+          if (!po.isJobPo) 'userId': po.readyToDispatch?.userId,
         },
       };
 
       log('update status body - $body');
       controller.updateStatusWithJobPo(
-        id: widget.purchaseId,
+        id: po.id,
         status: widget.moveTo,
         current: widget.currentStatus,
         body: body,
@@ -119,6 +133,8 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
   @override
   void initState() {
     super.initState();
+    po = widget.po;
+    currentPendingQuantity();
   }
 
   @override
@@ -168,7 +184,9 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                     ),
                     const Spacer(),
                     Text(
-                      '${widget.po.matching?.quantity ?? widget.orderQuantity}',
+                      po.isJobPo
+                          ? '${po.jobUser?.quantity ?? 0}'
+                          : '${po.matching?.quantity ?? 0}',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -176,12 +194,12 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                 Row(
                   children: [
                     Text(
-                      '${widget.quantityTitle}'.tr,
+                      '${widget.currentStatus.name}'.tr,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const Spacer(),
                     Text(
-                      '${widget.pendingQuantity}',
+                      '$currentQty',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: AppColors.mainColor,
@@ -229,8 +247,8 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                     if (quantity == null || quantity <= 0) {
                       return 'Quantity must be greater than 0.';
                     }
-                    if (quantity > widget.pendingQuantity) {
-                      String type = widget.quantityTitle ?? 'Pending';
+                    if (quantity > currentQty) {
+                      String type = widget.currentStatus.displayValue;
                       return 'quantity_cannot_exceed'.trParams({'type': type});
                     }
                     return null;
@@ -239,7 +257,7 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                 const SizedBox(height: 10),
 
                 // Firm Name dropdown
-                widget.moveTo == OrderStatus.inProcess && !widget.isJobPo
+                widget.moveTo == OrderStatus.inProcess && !po.isJobPo
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

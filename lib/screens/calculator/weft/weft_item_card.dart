@@ -81,7 +81,9 @@ class WeftItemCard extends StatelessWidget {
                           textAlign: TextAlign.center,
 
                           onTextChange: onDenierChange,
-                          textInputType: TextInputType.number,
+                          textInputType: TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
                           textEditingController: TextEditingController(
                             text: model.denier?.toString() ?? '',
                           ),
@@ -99,7 +101,9 @@ class WeftItemCard extends StatelessWidget {
                           textAlign: TextAlign.center,
 
                           onTextChange: onPickChange,
-                          textInputType: TextInputType.number,
+                          textInputType: TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
                           textEditingController: TextEditingController(
                             text: model.pick?.toString() ?? '',
                           ),
@@ -122,7 +126,9 @@ class WeftItemCard extends StatelessWidget {
                           textAlign: TextAlign.center,
 
                           onTextChange: onPannoChange,
-                          textInputType: TextInputType.number,
+                          textInputType: TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
                           textEditingController: TextEditingController(
                             text: model.panno?.toString() ?? '',
                           ),
@@ -140,7 +146,9 @@ class WeftItemCard extends StatelessWidget {
                           textAlign: TextAlign.center,
 
                           onTextChange: onRateChange,
-                          textInputType: TextInputType.number,
+                          textInputType: TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
                           textEditingController: TextEditingController(
                             text: model.rate?.toString() ?? '',
                           ),
@@ -158,7 +166,9 @@ class WeftItemCard extends StatelessWidget {
                           textAlign: TextAlign.center,
 
                           onTextChange: onMeterChange,
-                          textInputType: TextInputType.number,
+                          textInputType: TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
                           textEditingController: TextEditingController(
                             text: model.meter?.toString() ?? '',
                           ),

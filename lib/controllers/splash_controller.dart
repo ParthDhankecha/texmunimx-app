@@ -71,8 +71,8 @@ class SplashController extends GetxController implements GetxService {
 
       switch (e.statusCode) {
         case 401:
-          sp.clearAll();
-          Get.offAll(() => LoginScreen());
+          // sp.clearAll();
+          /// Get.offAll(() => LoginScreen());
           break;
         default:
           showErrorSnackbar(

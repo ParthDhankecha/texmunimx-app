@@ -359,6 +359,14 @@ class PurchaseOrderController extends GetxController implements GetxService {
     }
   }
 
+  String jobUserNameById(String id) {
+    try {
+      return jobUserList.firstWhere((element) => element.id == id).fullname;
+    } catch (e) {
+      return 'N/A';
+    }
+  }
+
   String getMovedUserById(String id) {
     try {
       return userList.firstWhere((element) => element.id == id).fullname;

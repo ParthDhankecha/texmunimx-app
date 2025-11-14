@@ -161,7 +161,9 @@ class SariMatchingCard extends StatelessWidget {
                           textAlign: TextAlign.left,
 
                           onTextChange: onRateChange,
-                          textInputType: TextInputType.number,
+                          textInputType: TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
                           initialValue: model.rate?.toString() ?? '',
                         ),
                       ],

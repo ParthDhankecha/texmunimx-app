@@ -13,18 +13,22 @@ import 'package:texmunimx/screens/purchase_order/widgets/notes_row.dart';
 import 'package:texmunimx/screens/purchase_order/widgets/status_tag_row.dart';
 import 'package:texmunimx/utils/app_colors.dart';
 import 'package:texmunimx/utils/app_const.dart';
+import 'package:texmunimx/utils/date_formate_extension.dart';
 import 'package:texmunimx/utils/formate_double.dart';
+import 'package:texmunimx/utils/shared_pref.dart';
 
 class InProcessCard extends StatefulWidget {
   final PurchaseOrderModel order;
   final Design design;
   final Party party;
+  final String jobUser;
 
   const InProcessCard({
     super.key,
     required this.order,
     required this.design,
     required this.party,
+    required this.jobUser,
   });
 
   @override
@@ -34,6 +38,35 @@ class InProcessCard extends StatefulWidget {
 class _InProcessCardState extends State<InProcessCard> {
   final PurchaseOrderController controller =
       Get.find<PurchaseOrderController>();
+
+  Widget _buildValueRow({
+    required String title,
+    required String value,
+    Color? valueColor,
+    bool isVisible = true,
+  }) {
+    return isVisible
+        ? Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  MyText(title, append: ' : '),
+                  Text(
+                    value,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: valueColor ?? Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 4),
+            ],
+          )
+        : SizedBox.shrink();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,121 +123,68 @@ class _InProcessCardState extends State<InProcessCard> {
             ),
             const SizedBox(height: 10),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyText('customer', append: ' : '),
-                Text(
-                  widget.order.partyId.isNotEmpty
-                      ? widget.party.partyName
-                      : 'N/A',
-                  style: const TextStyle(fontSize: 14),
-                ),
-              ],
+            _buildValueRow(
+              title: 'delivery_date',
+              value: widget.order.deliveryDate?.ddmmyyFormat ?? 'N/A',
+              isVisible: widget.order.deliveryDate != null,
             ),
-            const SizedBox(height: 6),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-              children: [
-                MyText('customer_id', append: ' : '),
-                Text(
-                  widget.order.partyId.isNotEmpty
-                      ? widget.party.partyNumber
-                      : 'N/A',
-                  style: const TextStyle(fontSize: 14, color: Colors.black),
-                ),
-              ],
+            _buildValueRow(
+              title: 'party_name',
+              value: widget.order.partyId.isNotEmpty
+                  ? widget.party.partyName
+                  : 'N/A',
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyText('panna', append: ' : '),
-                Text(
-                  formatDouble(widget.order.panna),
-                  style: const TextStyle(fontSize: 14),
-                ),
-              ],
-            ),
-            const SizedBox(height: 6),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyText('firm_name', append: ' : '),
-                Text(
-                  controller.firmNameById(widget.order.inProcess?.firmId ?? ''),
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ],
+            _buildValueRow(
+              title: 'party_number',
+              value: widget.order.partyId.isNotEmpty
+                  ? widget.party.partyNumber
+                  : 'N/A',
             ),
-            const SizedBox(height: 6),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyText('moved_by', append: ' : '),
-                Text(
-                  controller
-                      .getMovedUserById(widget.order.inProcess?.movedBy ?? '')
-                      .capitalizeFirst!,
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ],
+            _buildValueRow(
+              title: 'panna',
+              value: formatDouble(widget.order.panna),
             ),
-            const SizedBox(height: 6),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyText('machine_no', append: ' : '),
-                Text(
-                  widget.order.inProcess?.machineNo ?? 'N/A',
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ],
-            ),
-            const SizedBox(height: 6),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyText('order_quantity', append: ' : '),
-                Text(
-                  '${widget.order.matching?.quantity ?? "0"}',
-                  style: TextStyle(fontSize: 14),
-                ),
-              ],
+            _buildValueRow(
+              title: 'firm_name',
+              value: controller.firmNameById(
+                widget.order.inProcess?.firmId ?? '',
+              ),
             ),
-            const SizedBox(height: 6),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyText('pending_quantity', append: ' : '),
-                Text(
-                  '${widget.order.matching?.pending ?? "0"}',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppColors.mainColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+            _buildValueRow(
+              title: 'moved_by',
+              value: controller
+                  .getMovedUserById(widget.order.inProcess?.movedBy ?? '')
+                  .capitalizeFirst!,
             ),
-            const SizedBox(height: 6),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyText('in_process_quantity', append: ' : '),
-                Text(
-                  '${widget.order.inProcess?.quantity ?? 0}',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppColors.mainColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+            _buildValueRow(
+              title: 'machine_no',
+              value: widget.order.inProcess?.machineNo ?? 'N/A',
+            ),
+
+            _buildValueRow(
+              title: 'job_user',
+              value: widget.jobUser,
+              isVisible:
+                  widget.order.isJobPo &&
+                  (Get.find<Sharedprefs>().userRole == 1 ||
+                      Get.find<Sharedprefs>().userRole == 2),
+            ),
+
+            _buildValueRow(
+              title: 'order_quantity',
+              value: widget.order.isJobPo
+                  ? '${widget.order.jobUser?.quantity ?? "0"}'
+                  : '${widget.order.quantity}',
+            ),
+
+            _buildValueRow(
+              title: 'in_process_quantity',
+              value: '${widget.order.inProcess?.quantity ?? 0}',
             ),
             const SizedBox(height: 10),
             NotesRow(notes: widget.order.inProcess?.remarks ?? 'N/A'),
@@ -223,16 +203,16 @@ class _InProcessCardState extends State<InProcessCard> {
 
                         builder: (context) => UpdateStatusBottomSheet(
                           po: widget.order,
-                          orderQuantity: widget.order.quantity,
-                          pendingQuantity:
-                              widget.order.inProcess?.quantity ?? 0,
+                          // orderQuantity: widget.order.quantity,
+                          // pendingQuantity:
+                          //        widget.order.inProcess?.quantity ?? 0,
                           moveTo: OrderStatus.pending,
                           currentStatus: OrderStatus.inProcess,
-                          purchaseId: widget.order.id,
-                          quantityTitle: 'In Progress',
-                          firmId: widget.order.inProcess?.firmId ?? '',
-                          userId: widget.order.inProcess?.userId ?? '',
-                          machineNo: widget.order.inProcess?.machineNo ?? '',
+                          //  purchaseId: widget.order.id,
+                          //  quantityTitle: 'In Progress',
+                          //  firmId: widget.order.inProcess?.firmId ?? '',
+                          //  userId: widget.order.inProcess?.userId ?? '',
+                          //  machineNo: widget.order.inProcess?.machineNo ?? '',
                         ),
                       );
                     },
@@ -249,16 +229,16 @@ class _InProcessCardState extends State<InProcessCard> {
                         isScrollControlled: true,
                         builder: (context) => UpdateStatusBottomSheet(
                           po: widget.order,
-                          orderQuantity: widget.order.quantity,
-                          pendingQuantity:
-                              widget.order.inProcess?.quantity ?? 0,
+                          // orderQuantity: widget.order.quantity,
+                          //   pendingQuantity:
+                          //      widget.order.inProcess?.quantity ?? 0,
                           moveTo: OrderStatus.readyToDispatch,
                           currentStatus: OrderStatus.inProcess,
-                          purchaseId: widget.order.id,
-                          quantityTitle: 'In Progress',
-                          firmId: widget.order.inProcess?.firmId ?? '',
-                          userId: widget.order.inProcess?.userId ?? '',
-                          machineNo: widget.order.inProcess?.machineNo ?? '',
+                          //  purchaseId: widget.order.id,
+                          //  quantityTitle: 'In Progress',
+                          //   firmId: widget.order.inProcess?.firmId ?? '',
+                          //   userId: widget.order.inProcess?.userId ?? '',
+                          //   machineNo: widget.order.inProcess?.machineNo ?? '',
                         ),
                       );
                     },

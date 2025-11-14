@@ -79,7 +79,7 @@ class GetGarmentRow extends StatelessWidget {
         InputField(
           textEditingController: controller.rateCont,
           hintText: 'enter_rate_per_unit'.tr,
-          textInputType: TextInputType.number,
+          textInputType: TextInputType.numberWithOptions(decimal: true),
           onValidator: (value) {
             if (controller.selectedOrderType.value ==
                 controller.orderTypes[0]) {

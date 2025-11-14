@@ -50,7 +50,9 @@ class _LabourCostListState extends State<LabourCostList> {
                       controller.setDesignCard = double.tryParse(value) ?? 0.0;
                       controller.addLabourCost();
                     },
-                    textInputType: TextInputType.number,
+                    textInputType: TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
                     onValidator: (value) {
                       // if (value!.isEmpty) {
                       //   return 'design_card_required'.tr;
@@ -83,7 +85,9 @@ class _LabourCostListState extends State<LabourCostList> {
                       controller.setEnterPaisa = p;
                       controller.labourCostByPaisa(p);
                     },
-                    textInputType: TextInputType.number,
+                    textInputType: TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
                   ),
                 ),
               ],

@@ -149,10 +149,16 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
                                 mobile: '',
                               ),
                             );
+
+                            final jobUser = controller.jobUserNameById(
+                              order.jobUser?.userId ?? '',
+                            );
+
                             return PurchaseOrderCard(
                               order: order,
                               design: design,
                               party: party,
+                              jobUser: jobUser,
                               isEditvisible:
                                   sp.userRole == sp.admin ||
                                   sp.userRole == sp.owner,
@@ -192,10 +198,16 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
                                 mobile: '',
                               ),
                             );
+
+                            final jobUser = controller.jobUserNameById(
+                              order.jobUser?.userId ?? '',
+                            );
+
                             return InProcessCard(
                               order: controller.inProcessList[index],
                               design: design,
                               party: party,
+                              jobUser: jobUser,
                             );
                           },
                         ),
@@ -233,10 +245,15 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
                               ),
                             );
 
+                            final jobUser = controller.jobUserNameById(
+                              order.jobUser?.userId ?? '',
+                            );
+
                             return ReadyToDispatchCard(
                               order: order,
                               design: design,
                               party: party,
+                              jobUser: jobUser,
                             );
                           },
                         ),
@@ -273,10 +290,15 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
                                 mobile: '',
                               ),
                             );
+
+                            final jobUser = controller.jobUserNameById(
+                              order.jobUser?.userId ?? '',
+                            );
                             return DeliveredCard(
                               order: controller.deliveredList[index],
                               design: design,
                               party: party,
+                              jobUser: jobUser,
                             );
                           },
                         ),

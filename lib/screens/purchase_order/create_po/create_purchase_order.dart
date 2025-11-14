@@ -397,7 +397,7 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
         InputField(
           textEditingController: controller.pannaCont,
           hintText: 'enter_panna_width'.tr,
-          textInputType: TextInputType.number,
+          textInputType: TextInputType.numberWithOptions(decimal: true),
           onValidator: (value) {
             if (value!.isEmpty) {
               return 'field_required'.tr;
