@@ -322,7 +322,7 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
               ),
             ),
             SizedBox(width: 6),
-            RedMark(),
+            //RedMark(),
           ],
         ),
         SizedBox(height: 10),
@@ -330,13 +330,13 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
           textEditingController: controller.partyPoCont,
           hintText: 'enter_partys_po_number'.tr,
           textInputType: TextInputType.text,
-          onValidator: (value) {
-            if (value!.isEmpty) {
-              return 'field_required'.tr;
-            }
+          // onValidator: (value) {
+          //   if (value!.isEmpty) {
+          //     return 'field_required'.tr;
+          //   }
 
-            return null;
-          },
+          //   return null;
+          // },
         ),
       ],
     );

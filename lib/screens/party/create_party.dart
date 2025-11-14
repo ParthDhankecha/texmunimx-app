@@ -103,19 +103,18 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                                 Row(
                                   children: [
                                     Text(
-                                      'party_number'.tr,
+                                      'customer_name'.tr,
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                         color: AppColors.blackColor,
                                       ),
                                     ),
-                                    _mark(),
                                   ],
                                 ),
                                 SizedBox(height: 10),
                                 InputField(
-                                  hintText: 'enter_party_number'.tr,
+                                  hintText: 'enter_customer_name'.tr,
                                   textInputType: TextInputType.text,
                                   textEditingController:
                                       controller.partyNumberCont,
@@ -138,7 +137,6 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                                         color: AppColors.blackColor,
                                       ),
                                     ),
-                                    _mark(),
                                   ],
                                 ),
                                 SizedBox(height: 10),

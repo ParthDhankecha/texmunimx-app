@@ -42,15 +42,15 @@ class PartyController extends GetxController implements GetxService {
       err.value = 'please_enter_party_name'.tr;
       return false;
     }
-    if (partyNumberCont.text.trim().isEmpty) {
-      err.value = 'please_enter_party_number'.tr;
-      return false;
-    }
+    // if (partyNumberCont.text.trim().isEmpty) {
+    //   err.value = 'please_enter_party_number'.tr;
+    //   return false;
+    // }
 
-    if (gstCont.text.trim().isEmpty) {
-      err.value = 'please_enter_gst_number'.tr;
-      return false;
-    }
+    // if (gstCont.text.trim().isEmpty) {
+    //   err.value = 'please_enter_gst_number'.tr;
+    //   return false;
+    // }
 
     return true;
   }

@@ -73,6 +73,8 @@ Map<String, String> get enUs => {
   'completed': 'Completed',
   'customer': 'Customer',
   'customer_id': 'Customer Id',
+  'customer_name': 'Customer Name',
+  'enter_customer_name': 'Enter Customer Name',
 
   'edit': 'Edit',
   'home': 'Home',

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:texmunimx/controllers/home_controller.dart';
@@ -22,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Sharedprefs sp = Get.find<Sharedprefs>();
 
   List<Widget> widgetList = [
-    const Center(child: Text('Home Screen')),
+    //    const Center(child: Text('Home Screen')),
     const PurchaseOrderListPage(),
     const SettingsScreen(),
   ];
@@ -37,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     homeController.selectedIndex.value = 0;
+    log('User Role in Home Screen: ${sp.userRole}');
   }
 
   @override

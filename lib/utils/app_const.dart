@@ -62,9 +62,10 @@ class AppConst {
   static const String owner = 'OWNER'; //1
   static const String admin = 'ADMIN'; // 2
   static const String manager = 'MANAGER'; //3
+  static const String job = 'JOB'; //4
 
   //UaserRoles List
-  static List<String> userRoles = [superAdmin, owner, admin, manager];
+  static List<String> userRoles = [superAdmin, owner, admin, manager, job];
 
   static int imageSizeLimit = 10;
 }
