@@ -131,7 +131,7 @@ class Party {
     id: json["_id"],
     partyName: json["partyName"],
     partyNumber: json["partyNumber"] ?? '',
-    mobile: json["mobile"],
+    mobile: json["mobile"] ?? '',
   );
 
   Map<String, dynamic> toMap() => {
