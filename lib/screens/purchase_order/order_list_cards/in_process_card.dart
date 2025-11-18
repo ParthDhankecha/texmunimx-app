@@ -15,6 +15,7 @@ import 'package:texmunimx/utils/app_colors.dart';
 import 'package:texmunimx/utils/app_const.dart';
 import 'package:texmunimx/utils/date_formate_extension.dart';
 import 'package:texmunimx/utils/formate_double.dart';
+import 'package:texmunimx/utils/list_helper.dart';
 import 'package:texmunimx/utils/shared_pref.dart';
 
 class InProcessCard extends StatefulWidget {
@@ -95,6 +96,12 @@ class _InProcessCardState extends State<InProcessCard> {
             const SizedBox(height: 10),
 
             BuildValueRow(
+              title: 'order_date',
+              value: widget.order.orderDate?.ddmmyyFormat ?? '',
+              isVisible: widget.order.orderDate != null,
+            ),
+
+            BuildValueRow(
               title: 'delivery_date',
               value: widget.order.deliveryDate?.ddmmyyFormat ?? 'N/A',
               isVisible: widget.order.deliveryDate != null,
@@ -165,6 +172,13 @@ class _InProcessCardState extends State<InProcessCard> {
               title: 'in_process_quantity',
               value: '${widget.order.inProcess?.quantity ?? 0}',
             ),
+            if (widget.order.orderType == 'sari' &&
+                widget.order.matching != null &&
+                widget.order.matching!.colors != null)
+              BuildValueRow(
+                title: 'matching_colors'.tr,
+                value: (widget.order.matching!.colors ?? []).toNonNullString(),
+              ),
             const SizedBox(height: 10),
             NotesRow(notes: widget.order.inProcess?.remarks ?? 'N/A'),
 

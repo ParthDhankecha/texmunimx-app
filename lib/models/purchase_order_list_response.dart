@@ -71,7 +71,10 @@ class PurchaseOrderModel {
   int pending;
   bool isCompleted;
   dynamic completedAt;
+
+  DateTime? orderDate;
   DateTime? deliveryDate;
+
   bool? isHighPriority;
   String? note;
 
@@ -109,7 +112,10 @@ class PurchaseOrderModel {
     required this.pending,
     required this.isCompleted,
     required this.completedAt,
-    required this.deliveryDate,
+
+    this.orderDate,
+    this.deliveryDate,
+
     required this.isHighPriority,
     required this.createdBy,
     required this.workspaceId,
@@ -147,6 +153,11 @@ class PurchaseOrderModel {
       pending: json["pending"] ?? 0,
       isCompleted: json["isCompleted"],
       completedAt: json["completedAt"],
+
+      orderDate: json["orderDate"] == null
+          ? null
+          : DateTime.parse(json["orderDate"]).toLocal(),
+
       deliveryDate: json["deliveryDate"] == null
           ? null
           : DateTime.parse(json["deliveryDate"]).toLocal(),
@@ -293,6 +304,7 @@ class Matching {
   int quantity;
   int pending;
   double? rate;
+  List<String>? colors;
 
   Matching({
     required this.id,
@@ -301,6 +313,7 @@ class Matching {
     required this.quantity,
     required this.pending,
     this.rate,
+    this.colors,
   });
 
   factory Matching.fromMap(Map<String, dynamic> json) => Matching(
@@ -310,6 +323,9 @@ class Matching {
     quantity: json["quantity"],
     pending: json["pending"],
     rate: json["rate"] != null ? double.parse(json["rate"].toString()) : null,
+    colors: json["colors"] != null
+        ? List<String>.from(json["colors"]!.map((x) => x))
+        : null,
   );
 
   Map<String, dynamic> toMap() => {
@@ -319,6 +335,34 @@ class Matching {
     "quantity": quantity,
     "pending": pending,
   };
+}
+
+MatchingColors matchingColorsFromMap(String str) =>
+    MatchingColors.fromMap(json.decode(str));
+
+String matchingColorsToMap(MatchingColors data) => json.encode(data.toMap());
+
+class MatchingColors {
+  List<String>? colors;
+
+  MatchingColors({this.colors});
+
+  factory MatchingColors.fromMap(Map<String, dynamic> json) => MatchingColors(
+    colors: json["colors"] == null
+        ? []
+        : List<String>.from(json["colors"]!.map((x) => x)),
+  );
+
+  Map<String, dynamic> toMap() => {
+    "colors": colors == null ? [] : List<dynamic>.from(colors!.map((x) => x)),
+  };
+
+  String toDisplayString() {
+    if (colors == null || colors!.isEmpty) {
+      return 'N/A';
+    }
+    return colors!.join(', ');
+  }
 }
 
 class PartyId {

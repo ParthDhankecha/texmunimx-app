@@ -39,6 +39,8 @@ class PurchaseOrderController extends GetxController implements GetxService {
 
   Rx<DateTime?> selectedDate = Rx(null);
 
+  Rx<DateTime?> selectedOrderDate = Rx(null);
+
   Rx<DesignModel?> selectedDesign = Rx(null);
   Rx<PartyModel?> selectedParty = Rx(null);
 
@@ -877,7 +879,10 @@ class PurchaseOrderController extends GetxController implements GetxService {
         "partyId": selectedParty.value!.id,
 
         if (selectedDate.value != null)
-          "deliveryDate": selectedDate.value.toString(),
+          "deliveryDate": selectedDate.value?.yyyymmddFormat,
+
+        if (selectedOrderDate.value != null)
+          "orderDate": selectedOrderDate.value?.yyyymmddFormat,
 
         "isHighPriority": highPriority.value,
         if (notesCont.text.trim().isNotEmpty) "note": notesCont.text.trim(),
@@ -1021,6 +1026,9 @@ class PurchaseOrderController extends GetxController implements GetxService {
 
         "designId": selectedDesign.value!.id,
         "partyId": selectedParty.value!.id,
+
+        if (selectedOrderDate.value != null)
+          "orderDate": selectedOrderDate.value?.yyyymmddFormat,
 
         if (selectedDate.value != null)
           "deliveryDate": selectedDate.value?.yyyymmddFormat,

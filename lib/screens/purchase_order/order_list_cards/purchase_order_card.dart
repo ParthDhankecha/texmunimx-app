@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:texmunimx/common_widgets/custom_icon_btn.dart';
 import 'package:texmunimx/common_widgets/custom_network_image.dart';
+import 'package:texmunimx/controllers/purchase_order_controller.dart';
 import 'package:texmunimx/models/order_status_enum.dart';
 import 'package:texmunimx/models/purchase_order_list_response.dart';
 import 'package:texmunimx/models/purchase_order_options_response.dart';
@@ -17,6 +18,7 @@ import 'package:texmunimx/utils/app_colors.dart';
 import 'package:texmunimx/utils/app_const.dart';
 import 'package:texmunimx/utils/date_formate_extension.dart';
 import 'package:texmunimx/utils/formate_double.dart';
+import 'package:texmunimx/utils/list_helper.dart';
 import 'package:texmunimx/utils/shared_pref.dart';
 
 class PurchaseOrderCard extends StatelessWidget {
@@ -26,7 +28,7 @@ class PurchaseOrderCard extends StatelessWidget {
   final String? jobUser;
   final bool isEditvisible;
 
-  const PurchaseOrderCard({
+  PurchaseOrderCard({
     super.key,
     required this.order,
     required this.design,
@@ -35,10 +37,10 @@ class PurchaseOrderCard extends StatelessWidget {
     this.jobUser,
   });
 
+  PurchaseOrderController purchaseOrderController =
+      Get.find<PurchaseOrderController>();
   @override
   Widget build(BuildContext context) {
-    log('Hide Upos Btns: ${order.hideUposBtns}');
-    log('Is Master Entry: ${order.isMasterEntry}');
     return Card(
       elevation: 4.0,
       margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
@@ -88,6 +90,12 @@ class PurchaseOrderCard extends StatelessWidget {
             const SizedBox(height: 10),
 
             BuildValueRow(
+              title: 'order_date',
+              value: order.orderDate?.ddmmyyFormat ?? '',
+              isVisible: order.orderDate != null,
+            ),
+
+            BuildValueRow(
               title: 'delivery_date',
               value: order.deliveryDate?.ddmmyyFormat ?? 'N/A',
               isVisible: order.deliveryDate != null,
@@ -133,7 +141,13 @@ class PurchaseOrderCard extends StatelessWidget {
                   : '${order.matching?.pending ?? "0"}',
               isVisible: !order.isMasterEntry,
             ),
-            const SizedBox(height: 6),
+            if (order.orderType == 'sari' &&
+                order.matching != null &&
+                order.matching!.colors != null)
+              BuildValueRow(
+                title: 'matching_colors'.tr,
+                value: (order.matching!.colors ?? []).toNonNullString(),
+              ),
 
             NotesRow(notes: order.note ?? 'N/A'),
             const SizedBox(height: 6),

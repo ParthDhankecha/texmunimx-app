@@ -16,6 +16,7 @@ import 'package:texmunimx/utils/app_colors.dart';
 import 'package:texmunimx/utils/app_const.dart';
 import 'package:texmunimx/utils/date_formate_extension.dart';
 import 'package:texmunimx/utils/formate_double.dart';
+import 'package:texmunimx/utils/list_helper.dart';
 import 'package:texmunimx/utils/shared_pref.dart';
 
 class ReadyToDispatchCard extends StatefulWidget {
@@ -93,6 +94,12 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
               ],
             ),
             const SizedBox(height: 10),
+            BuildValueRow(
+              title: 'order_date',
+              value: widget.order.orderDate?.ddmmyyFormat ?? '',
+              isVisible: widget.order.orderDate != null,
+            ),
+
             BuildValueRow(
               title: 'delivery_date',
               value: widget.order.deliveryDate?.ddmmyyFormat ?? 'N/A',
@@ -174,6 +181,13 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
                 ),
               ],
             ),
+            if (widget.order.orderType == 'sari' &&
+                widget.order.matching != null &&
+                widget.order.matching!.colors != null)
+              BuildValueRow(
+                title: 'matching_colors'.tr,
+                value: (widget.order.matching!.colors ?? []).toNonNullString(),
+              ),
             const SizedBox(height: 10),
             NotesRow(notes: widget.order.note ?? 'N/A'),
             const SizedBox(height: 10),

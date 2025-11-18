@@ -16,6 +16,7 @@ class BuildValueRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('ValueRow: $title - $value - isVisible: $isVisible');
     return value.isEmpty
         ? SizedBox.shrink()
         : isVisible

@@ -150,7 +150,38 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                                   : SizedBox.shrink(),
                             ),
                             SizedBox(height: 10),
+                            //order date
+                            Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      'order_date'.tr,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.blackColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 10),
 
+                                Obx(
+                                  () => DateInputField(
+                                    selectedDate:
+                                        controller.selectedOrderDate.value,
+                                    onDateSelected: (value) {
+                                      controller.selectedOrderDate.value =
+                                          value;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+
+                            //delivery date
                             Column(
                               children: [
                                 Row(
@@ -166,6 +197,7 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
                                   ],
                                 ),
                                 SizedBox(height: 10),
+
                                 Obx(
                                   () => DateInputField(
                                     selectedDate: controller.selectedDate.value,
