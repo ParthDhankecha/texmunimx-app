@@ -163,7 +163,9 @@ class _InProcessCardState extends State<InProcessCard> {
 
             BuildValueRow(
               title: 'order_quantity',
-              value: widget.order.isJobPo
+              value: widget.order.orderType == 'sari'
+                  ? '${widget.order.matching?.colors?.quantity ?? "0"}'
+                  : widget.order.isJobPo
                   ? '${widget.order.jobUser?.quantity ?? "0"}'
                   : '${widget.order.quantity}',
             ),
@@ -172,14 +174,7 @@ class _InProcessCardState extends State<InProcessCard> {
               title: 'in_process_quantity',
               value: '${widget.order.inProcess?.quantity ?? 0}',
             ),
-            if (widget.order.orderType == 'sari' &&
-                widget.order.matching != null &&
-                widget.order.matching!.colors != null)
-              BuildValueRow(
-                title: 'matching_colors'.tr,
-                value: (widget.order.matching!.colors ?? []).toNonNullString(),
-              ),
-            const SizedBox(height: 10),
+
             NotesRow(notes: widget.order.inProcess?.remarks ?? 'N/A'),
 
             const SizedBox(height: 12),

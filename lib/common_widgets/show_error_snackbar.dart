@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void showErrorSnackbar(String title, {String? desc}) {
+  log('Showing error snackbar: $title, desc: $desc');
   final overlay = Overlay.of(Get.overlayContext!);
 
   late OverlayEntry entry;

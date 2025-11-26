@@ -6,6 +6,10 @@ class SariMatchingModel {
   String? color3;
   String? color4;
   double? rate;
+  int? color1Quantity;
+  int? color2Quantity;
+  int? color3Quantity;
+  int? color4Quantity;
   double? meter;
   int? quantity;
   bool? isLocked;
@@ -17,6 +21,10 @@ class SariMatchingModel {
     this.color2,
     this.color3,
     this.color4,
+    this.color1Quantity,
+    this.color2Quantity,
+    this.color3Quantity,
+    this.color4Quantity,
     this.rate,
     this.meter,
     this.quantity,

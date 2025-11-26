@@ -7,7 +7,7 @@ import 'package:texmunimx/controllers/purchase_order_controller.dart';
 import 'package:texmunimx/models/job_po_model.dart';
 import 'package:texmunimx/screens/purchase_order/create_po/widgets/delete_job_or_matching_dialog.dart';
 import 'package:texmunimx/screens/purchase_order/create_po/widgets/job_po_card.dart';
-import 'package:texmunimx/screens/purchase_order/create_po/widgets/job_po_garment_card.dart';
+import 'package:texmunimx/screens/purchase_order/create_po/garments/job_po_garment_card.dart';
 
 class JobPoWidget extends StatefulWidget {
   const JobPoWidget({super.key});

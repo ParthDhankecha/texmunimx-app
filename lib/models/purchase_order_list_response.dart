@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:texmunimx/models/in_process_model.dart';
+import 'package:texmunimx/models/sari_color_model.dart';
 
 PurchaseOrderListResponse purchaseOrderListResponseFromMap(String str) =>
     PurchaseOrderListResponse.fromMap(json.decode(str));
@@ -304,7 +305,7 @@ class Matching {
   int quantity;
   int pending;
   double? rate;
-  List<String>? colors;
+  SariColorModel? colors;
 
   Matching({
     required this.id,
@@ -320,11 +321,11 @@ class Matching {
     id: json["_id"],
     mid: json["mid"],
     mLabel: json["mLabel"],
-    quantity: json["quantity"],
-    pending: json["pending"],
+    quantity: json["quantity"] ?? 0,
+    pending: json["pending"] ?? 0,
     rate: json["rate"] != null ? double.parse(json["rate"].toString()) : null,
-    colors: json["colors"] != null
-        ? List<String>.from(json["colors"]!.map((x) => x))
+    colors: json["color"] != null
+        ? SariColorModel.fromMap(json["color"])
         : null,
   );
 

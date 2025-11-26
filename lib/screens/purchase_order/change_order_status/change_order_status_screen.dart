@@ -59,7 +59,11 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
         if (po.isJobPo) {
           currentQty = po.jobUser?.pending ?? 0;
         } else {
-          currentQty = po.matching?.pending ?? 0;
+          if (po.orderType == 'sari') {
+            currentQty = po.matching?.colors?.pending ?? 0;
+          } else {
+            currentQty = po.matching?.pending ?? 0;
+          }
         }
         currentLabel = 'pending'.tr;
         break;
@@ -93,6 +97,10 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
           'machineNo': _machineNoController.text.trim(),
         if (_remarksController.text.isNotEmpty)
           'remarks': _remarksController.text.trim(),
+
+        //color
+        if (po.orderType == 'sari') ...{'colorObjId': po.matching?.colors?.id},
+        //jobpo
         if (po.isJobPo) ...{
           'jobUserId': widget.po.jobUser?.id,
         } else ...{
@@ -175,6 +183,30 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                 ),
                 const SizedBox(height: 10),
 
+                po.orderType == 'sari'
+                    ? Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                'color'.tr,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const Spacer(),
+                              Text(
+                                '${(po.matching?.colors?.color ?? '').capitalizeFirst} (${(po.matching?.mLabel ?? '').capitalizeFirst})',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                    : SizedBox.shrink(),
+
                 // Quantity headers
                 Row(
                   children: [
@@ -186,6 +218,8 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                     Text(
                       po.isJobPo
                           ? '${po.jobUser?.quantity ?? 0}'
+                          : po.orderType == 'sari'
+                          ? '${po.matching?.colors?.quantity ?? 0}'
                           : '${po.matching?.quantity ?? 0}',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
@@ -312,20 +346,28 @@ class _UpdateStatusBottomSheetState extends State<UpdateStatusBottomSheet> {
                         ],
                       )
                     : SizedBox.shrink(),
+
                 // Machine No field
-                Text(
-                  'machine_no'.tr,
-                  style: TextStyle(color: Colors.grey[700]),
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                  controller: _machineNoController,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter machine no (e.g. M-01)',
-                    border: OutlineInputBorder(),
+                if (widget.currentStatus == OrderStatus.pending)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'machine_no'.tr,
+                        style: TextStyle(color: Colors.grey[700]),
+                      ),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        controller: _machineNoController,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter machine no (e.g. M-01)',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                    ],
                   ),
-                ),
-                const SizedBox(height: 10),
+
                 // Remarks field
                 Text('remarks'.tr, style: TextStyle(color: Colors.grey[700])),
                 const SizedBox(height: 8),

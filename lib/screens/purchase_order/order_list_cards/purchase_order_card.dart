@@ -126,28 +126,39 @@ class PurchaseOrderCard extends StatelessWidget {
                       Get.find<Sharedprefs>().userRole == 2),
             ),
 
-            BuildValueRow(
-              title: 'order_quantity',
-              value: order.isJobPo
-                  ? '${order.jobUser?.quantity ?? "0"}'
-                  : '${order.matching?.quantity ?? "0"}',
-              isVisible: !order.isMasterEntry,
-            ),
+            order.orderType != 'sari'
+                ? BuildValueRow(
+                    title: 'order_quantity',
+                    value: order.isJobPo
+                        ? '${order.jobUser?.quantity ?? "0"}'
+                        : '${order.matching?.quantity ?? "0"}',
 
-            BuildValueRow(
-              title: 'pending_quantity'.tr,
-              value: order.isJobPo
-                  ? '${order.jobUser?.pending ?? "0"}'
-                  : '${order.matching?.pending ?? "0"}',
-              isVisible: !order.isMasterEntry,
-            ),
-            if (order.orderType == 'sari' &&
-                order.matching != null &&
-                order.matching!.colors != null)
-              BuildValueRow(
-                title: 'matching_colors'.tr,
-                value: (order.matching!.colors ?? []).toNonNullString(),
-              ),
+                    isVisible: !order.isMasterEntry,
+                  )
+                : BuildValueRow(
+                    //if sari
+                    title: 'order_quantity',
+                    value: order.isJobPo
+                        ? '${order.jobUser?.quantity ?? "0"}'
+                        : '${order.matching?.colors?.quantity ?? "0"}',
+
+                    isVisible: !order.isMasterEntry,
+                  ),
+            order.orderType != 'sari'
+                ? BuildValueRow(
+                    title: 'pending_quantity'.tr,
+                    value: order.isJobPo
+                        ? '${order.jobUser?.pending ?? "0"}'
+                        : '${order.matching?.pending ?? "0"}',
+                    isVisible: !order.isMasterEntry,
+                  )
+                : BuildValueRow(
+                    title: 'pending_quantity'.tr,
+                    value: order.isJobPo
+                        ? '${order.jobUser?.pending ?? "0"}'
+                        : '${order.matching?.colors?.pending ?? "0"}',
+                    isVisible: !order.isMasterEntry,
+                  ),
 
             NotesRow(notes: order.note ?? 'N/A'),
             const SizedBox(height: 6),
@@ -164,7 +175,6 @@ class PurchaseOrderCard extends StatelessWidget {
                         useSafeArea: true,
                         builder: (context) => UpdateStatusBottomSheet(
                           po: order,
-
                           moveTo: OrderStatus.inProcess,
                           currentStatus: OrderStatus.pending,
                         ),

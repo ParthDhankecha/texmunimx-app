@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:texmunimx/models/sari_color_model.dart';
+
 GetPoResponse getPoResponseFromMap(String str) =>
     GetPoResponse.fromMap(json.decode(str));
 
@@ -175,7 +177,7 @@ class JobUser {
 }
 
 class Matching2 {
-  List<String> colors;
+  List<SariColorModel>? colors;
   double rate;
   int quantity;
   int pending;
@@ -196,7 +198,11 @@ class Matching2 {
   });
 
   factory Matching2.fromMap(Map<String, dynamic> json) => Matching2(
-    colors: List<String>.from(json["colors"].map((x) => x)),
+    colors: json["colors"] != null
+        ? List<SariColorModel>.from(
+            json["colors"].map((x) => SariColorModel.fromMap(x)),
+          )
+        : null,
     rate: (json["rate"] as num).toDouble(),
     quantity: json["quantity"],
     pending: json["pending"],
@@ -207,7 +213,7 @@ class Matching2 {
   );
 
   Map<String, dynamic> toMap() => {
-    "colors": List<dynamic>.from(colors.map((x) => x)),
+    "colors": List<dynamic>.from(colors?.map((x) => x.toMap()) ?? []),
     "rate": rate,
     "quantity": quantity,
     "pending": pending,

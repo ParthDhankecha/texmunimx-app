@@ -162,7 +162,9 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
 
             BuildValueRow(
               title: 'order_quantity',
-              value: widget.order.isJobPo
+              value: widget.order.orderType == 'sari'
+                  ? '${widget.order.matching?.colors?.quantity ?? "0"}'
+                  : widget.order.isJobPo
                   ? '${widget.order.jobUser?.quantity ?? "0"}'
                   : '${widget.order.quantity}',
             ),
@@ -184,11 +186,11 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
             if (widget.order.orderType == 'sari' &&
                 widget.order.matching != null &&
                 widget.order.matching!.colors != null)
-              BuildValueRow(
-                title: 'matching_colors'.tr,
-                value: (widget.order.matching!.colors ?? []).toNonNullString(),
-              ),
-            const SizedBox(height: 10),
+              // BuildValueRow(
+              //   title: 'matching_colors'.tr,
+              //   value: (widget.order.matching!.colors ?? []).toNonNullString(),
+              // ),
+              const SizedBox(height: 10),
             NotesRow(notes: widget.order.note ?? 'N/A'),
             const SizedBox(height: 10),
 

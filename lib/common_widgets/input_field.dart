@@ -30,7 +30,7 @@ class InputField extends StatelessWidget {
         // borderRadius: BorderRadius.circular(12),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 0),
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
         child: TextFormField(
           initialValue: initialValue,
           validator: onValidator,
@@ -41,7 +41,7 @@ class InputField extends StatelessWidget {
           onChanged: onTextChange,
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: TextStyle(fontSize: 14),
+            hintStyle: TextStyle(fontSize: 14, color: AppColors.hintTextColor),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(color: AppColors.mainColor),

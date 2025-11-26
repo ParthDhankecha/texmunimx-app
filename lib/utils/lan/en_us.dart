@@ -213,4 +213,6 @@ Map<String, String> get enUs => {
   'po_number': 'PO Number',
   'order_date': 'Order Date',
   'matching_colors': 'Matching Colors',
+
+  'color': 'Color',
 };

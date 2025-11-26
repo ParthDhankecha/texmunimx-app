@@ -157,20 +157,16 @@ class _DeliveredCardState extends State<DeliveredCard> {
               children: [
                 MyText('order_quantity', append: ' : '),
                 Text(
-                  widget.order.isJobPo
+                  widget.order.orderType == 'sari'
+                      ? '${widget.order.matching?.colors?.quantity ?? "0"}'
+                      : widget.order.isJobPo
                       ? '${widget.order.jobUser?.quantity ?? "0"}'
                       : '${widget.order.matching?.quantity ?? "0"}',
                   style: TextStyle(fontSize: 14),
                 ),
               ],
             ),
-            if (widget.order.orderType == 'sari' &&
-                widget.order.matching != null &&
-                widget.order.matching!.colors != null)
-              BuildValueRow(
-                title: 'matching_colors'.tr,
-                value: (widget.order.matching!.colors ?? []).toNonNullString(),
-              ),
+
             const SizedBox(height: 6),
 
             Row(

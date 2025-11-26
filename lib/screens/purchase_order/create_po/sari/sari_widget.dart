@@ -4,7 +4,7 @@ import 'package:texmunimx/common_widgets/custom_btn.dart';
 import 'package:texmunimx/controllers/purchase_order_controller.dart';
 import 'package:texmunimx/models/sari_matching_model.dart';
 import 'package:texmunimx/screens/purchase_order/create_po/widgets/delete_job_or_matching_dialog.dart';
-import 'package:texmunimx/screens/purchase_order/create_po/widgets/sari_matching_card.dart';
+import 'package:texmunimx/screens/purchase_order/create_po/sari/sari_matching_card.dart';
 
 class SariWidget extends StatefulWidget {
   const SariWidget({super.key});
@@ -64,11 +64,26 @@ class _SariWidgetState extends State<SariWidget> {
                 onColor4Change: (value) {
                   controller.updateSariColor4(index, value);
                 },
+                // getting quantity change
+                onColor1QuantityChange: (value) {
+                  int val = int.tryParse(value) ?? 0;
+                  controller.updateColorQuantity(index, 1, val);
+                },
+                onColor2QuantityChange: (value) {
+                  int val = int.tryParse(value) ?? 0;
+                  controller.updateColorQuantity(index, 2, val);
+                },
+                onColor3QuantityChange: (value) {
+                  int val = int.tryParse(value) ?? 0;
+                  controller.updateColorQuantity(index, 3, val);
+                },
+                onColor4QuantityChange: (value) {
+                  int val = int.tryParse(value) ?? 0;
+                  controller.updateColorQuantity(index, 4, val);
+                },
+                //getting rate change
                 onRateChange: (value) {
                   controller.updateSariRate(index, value);
-                },
-                onQuantityChange: (value) {
-                  controller.updateSariQuantity(index, value);
                 },
               );
             },

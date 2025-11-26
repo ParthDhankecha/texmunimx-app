@@ -56,7 +56,7 @@ class StatusTagRow extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               child: MyText(
-                order.matching?.mLabel ?? 'N/A',
+                '${(order.matching?.colors?.color ?? '').capitalizeFirst} (${(order.matching?.mLabel ?? 'N/A').capitalizeFirst})',
                 style: const TextStyle(color: Colors.white, fontSize: 12),
               ),
             ),

@@ -139,6 +139,22 @@ class PurchaseOrderController extends GetxController implements GetxService {
     sariMatchingList[index] = model;
   }
 
+  //updateing sari color quantity
+  updateColorQuantity(int index, int color, int value) {
+    var model = sariMatchingList[index];
+    if (color == 1) {
+      model.color1Quantity = value;
+    } else if (color == 2) {
+      model.color2Quantity = value;
+    } else if (color == 3) {
+      model.color3Quantity = value;
+    } else if (color == 4) {
+      model.color4Quantity = value;
+    }
+
+    sariMatchingList[index] = model;
+  }
+
   updateSariRate(int index, String value) {
     var model = sariMatchingList[index];
     model.rate = double.tryParse(value) ?? 0;
@@ -251,6 +267,98 @@ class PurchaseOrderController extends GetxController implements GetxService {
     } else {
       return true;
     }
+  }
+
+  //validate sari colors
+  validateSariColors() {
+    for (var sari in sariMatchingList) {
+      String color1 = sari.color1 ?? '';
+      String color2 = sari.color2 ?? '';
+      String color3 = sari.color3 ?? '';
+      String color4 = sari.color4 ?? '';
+
+      if (color1.isEmpty &&
+          color2.isEmpty &&
+          color3.isEmpty &&
+          color4.isEmpty) {
+        showErrorSnackbar(
+          'Please enter at least one color for ${sari.matching}',
+        );
+        return false;
+      }
+      double color1Qty =
+          double.tryParse(sari.color1Quantity?.toString() ?? '') ?? 0;
+      double color2Qty =
+          double.tryParse(sari.color2Quantity?.toString() ?? '') ?? 0;
+      double color3Qty =
+          double.tryParse(sari.color3Quantity?.toString() ?? '') ?? 0;
+      double color4Qty =
+          double.tryParse(sari.color4Quantity?.toString() ?? '') ?? 0;
+
+      double rate = double.tryParse(sari.rate?.toString() ?? '') ?? 0;
+      log(
+        'Validating color 1 for ${sari.matching} : ${sari.color1}, quantity: ${sari.color1Quantity}, condition : ${color1Qty <= 0}',
+      );
+
+      log('rate for ${sari.matching} : ${sari.rate}');
+
+      if (color1.isNotEmpty && color1Qty <= 0) {
+        showErrorSnackbar(
+          'Please assign quantity for Color 1 of ${sari.matching}',
+        );
+        return false;
+      }
+      if (color2.isNotEmpty && color2Qty <= 0) {
+        showErrorSnackbar(
+          'Please assign quantity for Color 2 of ${sari.matching}',
+        );
+        return false;
+      }
+      if (color3.isNotEmpty && color3Qty <= 0) {
+        showErrorSnackbar(
+          'Please assign quantity for Color 3 of ${sari.matching}',
+        );
+        return false;
+      }
+      if (color4.isNotEmpty && color4Qty <= 0) {
+        showErrorSnackbar(
+          'Please assign quantity for Color 4 of ${sari.matching}',
+        );
+        return false;
+      }
+
+      //if colors is empty but qty is assigned
+      if (color1.isEmpty && color1Qty > 0) {
+        showErrorSnackbar(
+          'Please assign Color 1 of ${sari.matching} for Quantity entered.',
+        );
+        return false;
+      }
+      if (color2.isEmpty && color2Qty > 0) {
+        showErrorSnackbar(
+          'Please assign Color 2 of ${sari.matching} for Quantity entered.',
+        );
+        return false;
+      }
+      if (color3.isEmpty && color3Qty > 0) {
+        showErrorSnackbar(
+          'Please assign Color 3 of ${sari.matching} for Quantity entered.',
+        );
+        return false;
+      }
+      if (color4.isEmpty && color4Qty > 0) {
+        showErrorSnackbar(
+          'Please assign Color 4 of ${sari.matching} for Quantity entered.',
+        );
+        return false;
+      }
+
+      if (rate <= 0) {
+        showErrorSnackbar('Please assign rate for ${sari.matching}');
+        return false;
+      }
+    }
+    return true;
   }
 
   //validate machine wise quantity
@@ -501,10 +609,30 @@ class PurchaseOrderController extends GetxController implements GetxService {
           matching: element.mLabel,
           rate: element.rate,
           quantity: element.quantity,
-          color1: element.colors.isNotEmpty ? element.colors[0] : '',
-          color2: element.colors.length > 1 ? element.colors[1] : '',
-          color3: element.colors.length > 2 ? element.colors[2] : '',
-          color4: element.colors.length > 3 ? element.colors[3] : '',
+          color1: element.colors?.isNotEmpty == true
+              ? element.colors![0].color
+              : '',
+          color2: element.colors != null && element.colors!.length > 1
+              ? element.colors![1].color
+              : '',
+          color3: element.colors != null && element.colors!.length > 2
+              ? element.colors![2].color
+              : '',
+          color4: element.colors != null && element.colors!.length > 3
+              ? element.colors![3].color
+              : '',
+          color1Quantity: element.colors != null && element.colors!.isNotEmpty
+              ? element.colors![0].quantity
+              : 0,
+          color2Quantity: element.colors != null && element.colors!.length > 1
+              ? element.colors![1].quantity
+              : 0,
+          color3Quantity: element.colors != null && element.colors!.length > 2
+              ? element.colors![2].quantity
+              : 0,
+          color4Quantity: element.colors != null && element.colors!.length > 3
+              ? element.colors![3].quantity
+              : 0,
           isLocked: element.isLocked,
         );
 
@@ -846,6 +974,12 @@ class PurchaseOrderController extends GetxController implements GetxService {
         return;
       }
 
+      if (selectedOrderType.value == orderTypes[1]) {
+        if (!validateSariColors()) {
+          return;
+        }
+      }
+
       if (isJobPoEnabled.value && selectedOrderType.value == orderTypes[0]) {
         // germent
         if (!validateGarmetquantity()) {
@@ -900,10 +1034,30 @@ class PurchaseOrderController extends GetxController implements GetxService {
               "rate": e.rate,
               "quantity": e.quantity ?? 0,
               "colors": [
-                e.color1 ?? '',
-                e.color2 ?? '',
-                e.color3 ?? '',
-                e.color4 ?? '',
+                if (e.color1 != null && e.color1!.isNotEmpty)
+                  {
+                    'cid': '1',
+                    'color': e.color1 ?? '',
+                    'quantity': e.color1Quantity ?? 0,
+                  },
+                if (e.color2 != null && e.color2!.isNotEmpty)
+                  {
+                    'cid': '2',
+                    'color': e.color2 ?? '',
+                    'quantity': e.color2Quantity ?? 0,
+                  },
+                if (e.color3 != null && e.color3!.isNotEmpty)
+                  {
+                    'cid': '3',
+                    'color': e.color3 ?? '',
+                    'quantity': e.color3Quantity ?? 0,
+                  },
+                if (e.color4 != null && e.color4!.isNotEmpty)
+                  {
+                    'cid': '4',
+                    'color': e.color4 ?? '',
+                    'quantity': e.color4Quantity ?? 0,
+                  },
               ],
             };
           }).toList(),
@@ -929,6 +1083,8 @@ class PurchaseOrderController extends GetxController implements GetxService {
             };
           }).toList(),
       };
+
+      log('create po body: $body');
 
       await repository.createPurchaseOrder(reqBody: body);
 
@@ -994,6 +1150,12 @@ class PurchaseOrderController extends GetxController implements GetxService {
         return;
       }
 
+      if (selectedOrderType.value == orderTypes[1]) {
+        if (!validateSariColors()) {
+          return;
+        }
+      }
+
       if (isJobPoEnabled.value && selectedOrderType.value == orderTypes[0]) {
         // germent
         if (!validateGarmetquantity()) {
@@ -1050,10 +1212,30 @@ class PurchaseOrderController extends GetxController implements GetxService {
               "rate": e.rate,
               "quantity": e.quantity ?? 0,
               "colors": [
-                e.color1 ?? '',
-                e.color2 ?? '',
-                e.color3 ?? '',
-                e.color4 ?? '',
+                if (e.color1 != null && e.color1!.isNotEmpty)
+                  {
+                    'cid': '1',
+                    'color': e.color1 ?? '',
+                    'quantity': e.color1Quantity ?? 0,
+                  },
+                if (e.color2 != null && e.color2!.isNotEmpty)
+                  {
+                    'cid': '2',
+                    'color': e.color2 ?? '',
+                    'quantity': e.color2Quantity ?? 0,
+                  },
+                if (e.color3 != null && e.color3!.isNotEmpty)
+                  {
+                    'cid': '3',
+                    'color': e.color3 ?? '',
+                    'quantity': e.color3Quantity ?? 0,
+                  },
+                if (e.color4 != null && e.color4!.isNotEmpty)
+                  {
+                    'cid': '4',
+                    'color': e.color4 ?? '',
+                    'quantity': e.color4Quantity ?? 0,
+                  },
               ],
             };
           }).toList(),
