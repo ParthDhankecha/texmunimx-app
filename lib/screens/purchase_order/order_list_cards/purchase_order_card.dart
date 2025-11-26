@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:texmunimx/common_widgets/custom_icon_btn.dart';
@@ -18,7 +16,6 @@ import 'package:texmunimx/utils/app_colors.dart';
 import 'package:texmunimx/utils/app_const.dart';
 import 'package:texmunimx/utils/date_formate_extension.dart';
 import 'package:texmunimx/utils/formate_double.dart';
-import 'package:texmunimx/utils/list_helper.dart';
 import 'package:texmunimx/utils/shared_pref.dart';
 
 class PurchaseOrderCard extends StatelessWidget {
@@ -37,7 +34,7 @@ class PurchaseOrderCard extends StatelessWidget {
     this.jobUser,
   });
 
-  PurchaseOrderController purchaseOrderController =
+  final PurchaseOrderController purchaseOrderController =
       Get.find<PurchaseOrderController>();
   @override
   Widget build(BuildContext context) {

@@ -14,7 +14,6 @@ import 'package:texmunimx/utils/app_colors.dart';
 import 'package:texmunimx/utils/app_const.dart';
 import 'package:texmunimx/utils/date_formate_extension.dart';
 import 'package:texmunimx/utils/formate_double.dart';
-import 'package:texmunimx/utils/list_helper.dart';
 import 'package:texmunimx/utils/shared_pref.dart';
 
 class DeliveredCard extends StatefulWidget {
