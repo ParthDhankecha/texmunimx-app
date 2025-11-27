@@ -42,9 +42,6 @@ class SariMatchingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log(
-      'onCard id == ${model.id}, color1 == ${model.color1}, color2 == ${model.color2}, color3 == ${model.color3}, color4 == ${model.color4}',
-    );
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Card(
