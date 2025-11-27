@@ -62,7 +62,7 @@ class _JobPoCardState extends State<JobPoCard> {
     List<SariColorModel> tempList = [];
     SariMatchingModel matchingModel = widget.matchings.firstWhere(
       (element) => element.id.toString() == widget.model.mId,
-      orElse: () => SariMatchingModel(id: 0, matching: 'Select Matching'),
+      orElse: () => SariMatchingModel(mId: 0, matching: 'Select Matching'),
     );
 
     if (matchingModel.color1 != null && matchingModel.color1!.isNotEmpty) {
@@ -214,7 +214,7 @@ class _JobPoCardState extends State<JobPoCard> {
                                   (element) =>
                                       element.matching == widget.model.matching,
                                   orElse: () => SariMatchingModel(
-                                    id: 0,
+                                    mId: 0,
                                     matching: 'Select Matching',
                                   ),
                                 ),

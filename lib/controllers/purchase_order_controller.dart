@@ -101,7 +101,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
     var list = List.generate(
       1,
       (index) =>
-          SariMatchingModel(id: index + 1, matching: 'Matching ${index + 1}'),
+          SariMatchingModel(mId: index + 1, matching: 'Matching ${index + 1}'),
     );
 
     sariMatchingList.value = list;
@@ -171,11 +171,11 @@ class PurchaseOrderController extends GetxController implements GetxService {
 
   addNewSariMatching() {
     var model = SariMatchingModel(
-      id: (sariMatchingList.isNotEmpty
-          ? (sariMatchingList.last.id ?? 0) + 1
+      mId: (sariMatchingList.isNotEmpty
+          ? (sariMatchingList.last.mId ?? 0) + 1
           : 1),
       matching:
-          'Matching ${(sariMatchingList.isNotEmpty ? (sariMatchingList.last.id ?? 0) + 1 : 1)}',
+          'Matching ${(sariMatchingList.isNotEmpty ? (sariMatchingList.last.mId ?? 0) + 1 : 1)}',
     );
     sariMatchingList.add(model);
     jobPoList.refresh();
@@ -626,8 +626,10 @@ class PurchaseOrderController extends GetxController implements GetxService {
       }
 
       for (var element in po.matchings) {
+        log('element id: ${element.id} and mid: ${element.mid}');
         SariMatchingModel model = SariMatchingModel(
-          id: (po.matchings.indexOf(element) + 1),
+          id: element.id,
+          mId: element.mid,
           matching: element.mLabel,
           rate: element.rate,
           quantity: element.quantity,
@@ -656,6 +658,18 @@ class PurchaseOrderController extends GetxController implements GetxService {
               ? element.colors![3].quantity
               : 0,
           isLocked: element.isLocked,
+          colors: element.colors != null
+              ? element.colors!
+                    .map(
+                      (e) => SariColorModel(
+                        id: e.id ?? '',
+                        cid: e.cid,
+                        color: e.color,
+                        quantity: e.quantity,
+                      ),
+                    )
+                    .toList()
+              : [],
         );
 
         addSariMatchingByModel(model);
@@ -1059,32 +1073,32 @@ class PurchaseOrderController extends GetxController implements GetxService {
           //for sari section
           "matchings": sariMatchingList.map((e) {
             return {
-              "mid": e.id,
+              "mid": e.mId,
               "mLabel": e.matching,
               "rate": e.rate,
               "quantity": e.quantity ?? 0,
               "colors": [
                 if (e.color1 != null && e.color1!.isNotEmpty)
                   {
-                    'cid': '1',
+                    'cid': 1,
                     'color': e.color1 ?? '',
                     'quantity': e.color1Quantity ?? 0,
                   },
                 if (e.color2 != null && e.color2!.isNotEmpty)
                   {
-                    'cid': '2',
+                    'cid': 2,
                     'color': e.color2 ?? '',
                     'quantity': e.color2Quantity ?? 0,
                   },
                 if (e.color3 != null && e.color3!.isNotEmpty)
                   {
-                    'cid': '3',
+                    'cid': 3,
                     'color': e.color3 ?? '',
                     'quantity': e.color3Quantity ?? 0,
                   },
                 if (e.color4 != null && e.color4!.isNotEmpty)
                   {
-                    'cid': '4',
+                    'cid': 4,
                     'color': e.color4 ?? '',
                     'quantity': e.color4Quantity ?? 0,
                   },
@@ -1241,32 +1255,41 @@ class PurchaseOrderController extends GetxController implements GetxService {
           //for sari section
           "matchings": sariMatchingList.map((e) {
             return {
-              "mid": e.id,
+              '_id': e.id,
+              "mid": e.mId,
               "mLabel": e.matching,
               "rate": e.rate,
               "quantity": e.quantity ?? 0,
               "colors": [
                 if (e.color1 != null && e.color1!.isNotEmpty)
                   {
-                    'cid': '1',
+                    if (e.id != null)
+                      '_id': e.colors.isNotEmpty ? e.colors[0].id : '',
+                    'cid': e.colors.isNotEmpty ? e.colors[0].cid : 1,
                     'color': e.color1 ?? '',
                     'quantity': e.color1Quantity ?? 0,
                   },
                 if (e.color2 != null && e.color2!.isNotEmpty)
                   {
-                    'cid': '2',
+                    if (e.id != null)
+                      '_id': e.colors.length > 1 ? e.colors[1].id : '',
+                    'cid': e.colors.length > 1 ? e.colors[1].cid : 2,
                     'color': e.color2 ?? '',
                     'quantity': e.color2Quantity ?? 0,
                   },
                 if (e.color3 != null && e.color3!.isNotEmpty)
                   {
-                    'cid': '3',
+                    if (e.id != null)
+                      '_id': e.colors.length > 2 ? e.colors[2].id : '',
+                    'cid': e.colors.length > 2 ? e.colors[2].cid : 3,
                     'color': e.color3 ?? '',
                     'quantity': e.color3Quantity ?? 0,
                   },
                 if (e.color4 != null && e.color4!.isNotEmpty)
                   {
-                    'cid': '4',
+                    if (e.id != null)
+                      '_id': e.colors.length > 3 ? e.colors[3].id : '',
+                    'cid': e.colors.length > 3 ? e.colors[3].cid : 4,
                     'color': e.color4 ?? '',
                     'quantity': e.color4Quantity ?? 0,
                   },
@@ -1293,12 +1316,15 @@ class PurchaseOrderController extends GetxController implements GetxService {
               "firmId": e.firm,
               "_id": e.jobId,
 
-              if (selectedOrderType.value == orderTypes[1]) "matchingNo": e.mId,
               if (selectedOrderType.value == orderTypes[1])
-                "colorNo": e.jobColor,
+                "matchingNo": int.tryParse(e.mId ?? '') ?? 0,
+              if (selectedOrderType.value == orderTypes[1])
+                "colorNo": int.tryParse(e.jobColor ?? '') ?? 0,
             };
           }).toList(),
       };
+
+      //log('update po body: $body');
 
       await repository.updatePurchaseOrder(reqBody: body);
       Get.back();

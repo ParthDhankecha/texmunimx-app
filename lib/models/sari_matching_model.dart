@@ -1,7 +1,8 @@
 import 'package:texmunimx/models/sari_color_model.dart';
 
 class SariMatchingModel {
-  int? id;
+  String? id;
+  int? mId;
   String? matching;
   String? color1;
   String? color2;
@@ -19,6 +20,7 @@ class SariMatchingModel {
 
   SariMatchingModel({
     this.id,
+    this.mId,
     this.matching,
     this.color1,
     this.color2,
