@@ -50,7 +50,8 @@ class POModel {
   String orderType;
   bool isJobPo;
   List<JobUser> jobUser;
-  dynamic deliveryDate;
+  DateTime? deliveryDate;
+  DateTime? orderDate;
   bool isHighPriority;
   String createdBy;
   String workspaceId;
@@ -73,7 +74,8 @@ class POModel {
     required this.orderType,
     required this.isJobPo,
     required this.jobUser,
-    required this.deliveryDate,
+    this.deliveryDate,
+    this.orderDate,
     required this.isHighPriority,
     required this.createdBy,
     required this.workspaceId,
@@ -99,7 +101,12 @@ class POModel {
     orderType: json["orderType"],
     isJobPo: json["isJobPo"],
     jobUser: List<JobUser>.from(json["jobUser"].map((x) => JobUser.fromMap(x))),
-    deliveryDate: json["deliveryDate"],
+    deliveryDate: json["deliveryDate"] != null
+        ? DateTime.parse(json["deliveryDate"])
+        : null,
+    orderDate: json["orderDate"] != null
+        ? DateTime.parse(json["orderDate"])
+        : null,
     isHighPriority: json["isHighPriority"],
     createdBy: json["createdBy"],
     workspaceId: json["workspaceId"],
@@ -124,6 +131,7 @@ class POModel {
     "isJobPo": isJobPo,
     "jobUser": List<dynamic>.from(jobUser.map((x) => x.toMap())),
     "deliveryDate": deliveryDate,
+    "orderDate": orderDate,
     "isHighPriority": isHighPriority,
     "createdBy": createdBy,
     "workspaceId": workspaceId,

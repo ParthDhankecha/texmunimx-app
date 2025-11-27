@@ -59,8 +59,6 @@ class _JobPoCardState extends State<JobPoCard> {
   List<SariColorModel> colors = [];
 
   buildColorList() {
-    log('Matching ID set to: ${widget.model.mId}');
-
     List<SariColorModel> tempList = [];
     SariMatchingModel matchingModel = widget.matchings.firstWhere(
       (element) => element.id.toString() == widget.model.mId,

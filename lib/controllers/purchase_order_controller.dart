@@ -664,12 +664,18 @@ class PurchaseOrderController extends GetxController implements GetxService {
 
     highPriority.value = po.isHighPriority;
     notesCont.text = po.note;
-    if (po.deliveryDate != null && po.deliveryDate!.isNotEmpty) {
-      selectedDate.value = DateTime.parse(po.deliveryDate!);
+    if (po.deliveryDate != null) {
+      selectedDate.value = po.deliveryDate ?? DateTime.now();
       deliveryDateCont.text = selectedDate.value!.toLocal().ddmmyyFormat;
     } else {
       selectedDate.value = null;
       deliveryDateCont.text = '';
+    }
+
+    if (po.orderDate != null) {
+      selectedOrderDate.value = po.orderDate ?? DateTime.now();
+    } else {
+      selectedOrderDate.value = null;
     }
 
     //jop po
