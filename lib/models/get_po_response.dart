@@ -141,6 +141,7 @@ class JobUser {
   int matchingNo;
   String id;
   bool isLocked;
+  int? colorNo;
 
   JobUser({
     required this.userId,
@@ -151,6 +152,7 @@ class JobUser {
     required this.matchingNo,
     required this.id,
     required this.isLocked,
+    this.colorNo,
   });
 
   factory JobUser.fromMap(Map<String, dynamic> json) => JobUser(
@@ -162,6 +164,7 @@ class JobUser {
     matchingNo: json["matchingNo"],
     id: json["_id"],
     isLocked: json["isLocked"],
+    colorNo: json["colorNo"],
   );
 
   Map<String, dynamic> toMap() => {
@@ -173,6 +176,7 @@ class JobUser {
     "matchingNo": matchingNo,
     "_id": id,
     "isLocked": isLocked,
+    "colorNo": colorNo,
   };
 }
 

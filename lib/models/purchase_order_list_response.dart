@@ -3,7 +3,6 @@
 //     final purchaseOrderListResponse = purchaseOrderListResponseFromMap(jsonString);
 
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:texmunimx/models/in_process_model.dart';
 import 'package:texmunimx/models/sari_color_model.dart';
@@ -137,10 +136,6 @@ class PurchaseOrderModel {
   });
 
   factory PurchaseOrderModel.fromMap(Map<String, dynamic> json) {
-    log('Parsing PurchaseOrderModel: ${json["_id"]}');
-    log('hideUposBtns: ${json["hideUposBtns"]}');
-    log('isMasterEntry: ${json["isMasterEntry"]}');
-    log('-----------');
     return PurchaseOrderModel(
       id: json["_id"],
       panna: double.parse(json["panna"].toString()),

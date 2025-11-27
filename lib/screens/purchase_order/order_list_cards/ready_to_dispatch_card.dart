@@ -50,6 +50,8 @@ class _ReadyToDispatchCardState extends State<ReadyToDispatchCard> {
         child: Column(
           children: [
             StatusTagRow(order: widget.order, type: 'ready_to_dispatch'),
+            SizedBox(height: 10),
+
             // Top section of the card
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,

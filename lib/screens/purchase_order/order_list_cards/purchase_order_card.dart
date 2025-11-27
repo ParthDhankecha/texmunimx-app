@@ -47,6 +47,8 @@ class PurchaseOrderCard extends StatelessWidget {
         child: Column(
           children: [
             StatusTagRow(order: order),
+            SizedBox(height: 10),
+
             // Top section of the card
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,

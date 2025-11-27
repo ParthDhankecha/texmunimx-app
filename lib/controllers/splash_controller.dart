@@ -34,7 +34,6 @@ class SplashController extends GetxController implements GetxService {
     try {
       var response = await apiClient.request(AppConst.defaultConfig);
       var data = jsonDecode(response);
-      log('default config : $data');
 
       String placeHolderImg = data['data']['placeHolderImg'] ?? '';
       String publicUrl = data['data']['s3BaseUrl'] ?? '';
@@ -45,7 +44,7 @@ class SplashController extends GetxController implements GetxService {
       sp.manager = userRoles['MANAGER'] ?? 3;
       sp.job = userRoles['JOB'] ?? 4;
       AppConst.imageSizeLimit = data['data']['designImageMaxSize'] ?? 15;
-      log('Image Size Limit: ${AppConst.imageSizeLimit} MB');
+
       AppConst.placeHolderImage = placeHolderImg;
 
       AppConst.imageBaseUrl = '$publicUrl/';

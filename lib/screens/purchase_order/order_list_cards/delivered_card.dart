@@ -49,6 +49,8 @@ class _DeliveredCardState extends State<DeliveredCard> {
         child: Column(
           children: [
             StatusTagRow(order: widget.order, type: 'delivered'),
+            SizedBox(height: 10),
+
             // Top section of the card
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,

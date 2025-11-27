@@ -84,12 +84,14 @@ class _JobPoWidgetState extends State<JobPoWidget> {
                       controller.updateJobRemarks(index, value),
                 );
               }
+              //type sari
               return JobPoCard(
                 model: model,
                 index: index,
                 users: controller.jobUserList,
                 firms: controller.firmList,
                 matchings: controller.sariMatchingList,
+                // colors: controller.jobColorsList,
                 isLocked: model.isLocked ?? false,
 
                 onRemove: () {
@@ -125,6 +127,9 @@ class _JobPoWidgetState extends State<JobPoWidget> {
                 onFirmChange: (value) => controller.updateJobFirm(index, value),
                 matchingChange: (value) =>
                     controller.updateJobMatching(index, value),
+
+                onColorChange: (value) =>
+                    controller.updateJobColor(index, value),
                 userChange: (value) => controller.updateJobUser(index, value),
                 onRemarksChange: (value) =>
                     controller.updateJobRemarks(index, value),

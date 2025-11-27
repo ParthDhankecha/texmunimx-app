@@ -12,76 +12,92 @@ class StatusTagRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        if (order.isJobPo) ...[
-          Container(
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 108, 117, 125),
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              child: MyText(
-                'job_po'.tr,
-                style: const TextStyle(color: Colors.white, fontSize: 12),
+    return Align(
+      alignment: Alignment.centerRight,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (order.isJobPo) ...[
+              Container(
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 108, 117, 125),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  child: MyText(
+                    'job_po'.tr,
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ),
+              ),
+              SizedBox(width: 8),
+            ],
+            if (order.isHighPriority ?? false) ...[
+              Container(
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 220, 53, 69),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  child: MyText(
+                    'high_priority'.tr,
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ),
+              ),
+              SizedBox(width: 8),
+            ],
+            if (order.orderType == 'sari') ...[
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.mainColor,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  child: MyText(
+                    '${(order.matching?.colors?.color ?? '').capitalizeFirst} (${(order.matching?.mLabel ?? 'N/A').capitalizeFirst})',
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ),
+              ),
+              SizedBox(width: 8),
+            ],
+            Container(
+              decoration: BoxDecoration(
+                color: order.orderType == 'sari'
+                    ? Color.fromARGB(255, 13, 202, 240)
+                    : Color.fromARGB(255, 255, 193, 7),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: MyText(
+                  order.orderType.capitalizeFirst ?? 'N/A',
+                  style: const TextStyle(color: Colors.white, fontSize: 12),
+                ),
               ),
             ),
-          ),
-          SizedBox(width: 8),
-        ],
-        if (order.isHighPriority ?? false) ...[
-          Container(
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 220, 53, 69),
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              child: MyText(
-                'high_priority'.tr,
-                style: const TextStyle(color: Colors.white, fontSize: 12),
-              ),
-            ),
-          ),
-          SizedBox(width: 8),
-        ],
-        if (order.orderType == 'sari') ...[
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.mainColor,
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              child: MyText(
-                '${(order.matching?.colors?.color ?? '').capitalizeFirst} (${(order.matching?.mLabel ?? 'N/A').capitalizeFirst})',
-                style: const TextStyle(color: Colors.white, fontSize: 12),
-              ),
-            ),
-          ),
-          SizedBox(width: 8),
-        ],
-        Container(
-          decoration: BoxDecoration(
-            color: order.orderType == 'sari'
-                ? Color.fromARGB(255, 13, 202, 240)
-                : Color.fromARGB(255, 255, 193, 7),
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            child: MyText(
-              order.orderType.capitalizeFirst ?? 'N/A',
-              style: const TextStyle(color: Colors.white, fontSize: 12),
-            ),
-          ),
-        ),
-        SizedBox(width: 8),
+            SizedBox(width: 8),
 
-        // Status tag
-      ],
+            // Status tag
+          ],
+        ),
+      ),
     );
   }
 }

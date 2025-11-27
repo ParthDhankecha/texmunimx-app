@@ -15,6 +15,7 @@ import 'package:texmunimx/models/order_status_enum.dart';
 import 'package:texmunimx/models/party_list_response.dart';
 import 'package:texmunimx/models/purchase_order_list_response.dart';
 import 'package:texmunimx/models/purchase_order_options_response.dart';
+import 'package:texmunimx/models/sari_color_model.dart';
 import 'package:texmunimx/models/sari_matching_model.dart';
 import 'package:texmunimx/repository/api_exception.dart';
 import 'package:texmunimx/repository/purchase_order_repository.dart';
@@ -79,6 +80,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
 
   RxList<SariMatchingModel> sariMatchingList = RxList();
   RxList<JobPoModel> jobPoList = RxList();
+  RxList<SariColorModel> jobColorsList = RxList();
 
   RxBool isJobPoEnabled = false.obs;
 
@@ -233,13 +235,27 @@ class PurchaseOrderController extends GetxController implements GetxService {
   updateJobMatching(int index, String value) {
     var model = jobPoList[index];
     model.matching = value;
-    model.mId = sariMatchingList
-        .firstWhere(
-          (element) => element.matching == value,
-          orElse: () => SariMatchingModel(),
-        )
-        .id
-        .toString();
+
+    SariMatchingModel matchingModel = sariMatchingList.firstWhere(
+      (element) => element.matching == value,
+      orElse: () => SariMatchingModel(),
+    );
+
+    // model.mId = sariMatchingList
+    //     .firstWhere(
+    //       (element) => element.matching == value,
+    //       orElse: () => SariMatchingModel(),
+    //     )
+    //     .id
+    //     .toString();
+    //set id
+    model.mId = matchingModel.id?.toString() ?? '';
+    jobPoList[index] = model;
+  }
+
+  updateJobColor(int index, String value) {
+    JobPoModel model = jobPoList[index];
+    model.jobColor = value;
     jobPoList[index] = model;
   }
 
@@ -296,11 +312,6 @@ class PurchaseOrderController extends GetxController implements GetxService {
           double.tryParse(sari.color4Quantity?.toString() ?? '') ?? 0;
 
       double rate = double.tryParse(sari.rate?.toString() ?? '') ?? 0;
-      log(
-        'Validating color 1 for ${sari.matching} : ${sari.color1}, quantity: ${sari.color1Quantity}, condition : ${color1Qty <= 0}',
-      );
-
-      log('rate for ${sari.matching} : ${sari.rate}');
 
       if (color1.isNotEmpty && color1Qty <= 0) {
         showErrorSnackbar(
@@ -365,26 +376,39 @@ class PurchaseOrderController extends GetxController implements GetxService {
   validateSariQuantity() {
     bool isValid = true;
     for (var element in jobPoList) {
-      var totalJobQuantity = 0;
-      var mainQuantity = 0;
+      var userQuantity = 0;
+      var colorQuantity = 0;
       var sari = sariMatchingList.firstWhere(
         (e) => e.matching == element.matching,
         orElse: () => SariMatchingModel(),
       );
-      if (sari.quantity != null) {
-        mainQuantity = sari.quantity!;
+      userQuantity = element.quantity ?? 0;
+
+      if (element.jobColor == '1') {
+        colorQuantity = sari.color1Quantity ?? 0;
+      } else if (element.jobColor == '2') {
+        colorQuantity = sari.color2Quantity ?? 0;
+      } else if (element.jobColor == '3') {
+        colorQuantity = sari.color3Quantity ?? 0;
+      } else if (element.jobColor == '4') {
+        colorQuantity = sari.color4Quantity ?? 0;
       }
 
-      if (element.matching == sari.matching) {
-        totalJobQuantity += element.quantity ?? 0;
-      }
+      if (element.matching == sari.matching) {}
 
-      if (totalJobQuantity > mainQuantity) {
+      if (userQuantity > colorQuantity) {
         showErrorSnackbar(
-          'Job PO quantity should not exceed $mainQuantity for ${sari.matching}',
+          'Job PO quantity should not exceed $colorQuantity for Color ${element.jobColor} of ${sari.matching}',
         );
         isValid = false;
       }
+
+      // if (totalJobQuantity > mainQuantity) {
+      //   showErrorSnackbar(
+      //     'Job PO quantity should not exceed $mainQuantity for ${sari.matching}',
+      //   );
+      //   isValid = false;
+      // }
     }
     return isValid;
   }
@@ -422,10 +446,6 @@ class PurchaseOrderController extends GetxController implements GetxService {
       designList.value = data.designs;
 
       partyList.value = data.parties;
-
-      for (var p in data.parties) {
-        log('party in list: ${p.partyName} with id: ${p.id}');
-      }
     } on ApiException catch (e) {
       log('error : $e');
       switch (e.statusCode) {
@@ -571,6 +591,8 @@ class PurchaseOrderController extends GetxController implements GetxService {
       brokerName: '',
     );
 
+    poNumber.value = po.poNumber;
+
     pannaCont.text = po.panna.toString();
     processCont.text = po.process;
     partyPoCont.text = po.partyPoNumber;
@@ -699,6 +721,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
                 remarks: e.remarks,
                 jobId: e.id,
                 isLocked: e.isLocked,
+                jobColor: '${e.colorNo}',
               ),
             )
             .toList();
@@ -797,7 +820,6 @@ class PurchaseOrderController extends GetxController implements GetxService {
     try {
       isLoading.value = true;
       var data = await repository.changeOrderStatus(id: id, body: body);
-      log('update status data: $data');
       if (data) {
         showSuccessSnackbar('Status Changed to ${status.displayValue}');
 
@@ -1080,6 +1102,10 @@ class PurchaseOrderController extends GetxController implements GetxService {
               "userId": e.user,
               "firmId": e.firm,
               if (selectedOrderType.value == orderTypes[1]) "matchingNo": e.mId,
+              if (selectedOrderType.value == orderTypes[1])
+                "colorNo": e.jobColor != null && e.jobColor!.isNotEmpty
+                    ? int.tryParse(e.jobColor!)
+                    : 0,
             };
           }).toList(),
       };
@@ -1258,7 +1284,10 @@ class PurchaseOrderController extends GetxController implements GetxService {
               "userId": e.user,
               "firmId": e.firm,
               "_id": e.jobId,
+
               if (selectedOrderType.value == orderTypes[1]) "matchingNo": e.mId,
+              if (selectedOrderType.value == orderTypes[1])
+                "colorNo": e.jobColor,
             };
           }).toList(),
       };

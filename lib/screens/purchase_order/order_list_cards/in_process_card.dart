@@ -50,6 +50,7 @@ class _InProcessCardState extends State<InProcessCard> {
         child: Column(
           children: [
             StatusTagRow(order: widget.order, type: 'in_progress'),
+            SizedBox(height: 10),
             // Top section of the card
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -213,16 +214,9 @@ class _InProcessCardState extends State<InProcessCard> {
                             isScrollControlled: true,
                             builder: (context) => UpdateStatusBottomSheet(
                               po: widget.order,
-                              // orderQuantity: widget.order.quantity,
-                              //   pendingQuantity:
-                              //      widget.order.inProcess?.quantity ?? 0,
+
                               moveTo: OrderStatus.readyToDispatch,
                               currentStatus: OrderStatus.inProcess,
-                              //  purchaseId: widget.order.id,
-                              //  quantityTitle: 'In Progress',
-                              //   firmId: widget.order.inProcess?.firmId ?? '',
-                              //   userId: widget.order.inProcess?.userId ?? '',
-                              //   machineNo: widget.order.inProcess?.machineNo ?? '',
                             ),
                           );
                         },

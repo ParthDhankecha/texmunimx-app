@@ -1,3 +1,5 @@
+import 'package:texmunimx/models/sari_color_model.dart';
+
 class SariMatchingModel {
   int? id;
   String? matching;
@@ -13,6 +15,7 @@ class SariMatchingModel {
   double? meter;
   int? quantity;
   bool? isLocked;
+  List<SariColorModel> colors;
 
   SariMatchingModel({
     this.id,
@@ -29,5 +32,6 @@ class SariMatchingModel {
     this.meter,
     this.quantity,
     this.isLocked,
+    this.colors = const [],
   });
 }

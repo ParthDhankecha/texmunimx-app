@@ -4,6 +4,7 @@ class JobPoModel {
   String? user;
   String? firm;
   String? matching;
+  String? jobColor;
   String? mId;
   int? quantity;
   String? remarks;
@@ -15,6 +16,7 @@ class JobPoModel {
     this.jobPo,
     this.user,
     this.firm,
+    this.jobColor,
     this.matching,
     this.quantity,
     this.remarks,

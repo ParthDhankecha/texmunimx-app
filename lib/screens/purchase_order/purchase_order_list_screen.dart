@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:texmunimx/controllers/purchase_order_controller.dart';
@@ -140,12 +138,7 @@ class _PurchaseOrderListPageState extends State<PurchaseOrderListPage>
                                 designNumber: '',
                               ),
                             );
-                            log('party id: ${order.partyId}');
-                            for (var p in controller.partyList) {
-                              log(
-                                'party in list: ${p.partyName} with id: ${p.id}',
-                              );
-                            }
+
                             final party = controller.partyList.firstWhere(
                               (p) => p.id == order.partyId,
                               orElse: () => Party(
