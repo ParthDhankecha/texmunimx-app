@@ -6,16 +6,20 @@ import 'package:texmunimx/utils/date_formate_extension.dart';
 class DateInputField extends StatelessWidget {
   final DateTime? selectedDate;
   final DateTime? initialDate;
+  final DateTime? minSelectableDate;
   final ValueChanged<DateTime> onDateSelected;
   const DateInputField({
     super.key,
     required this.selectedDate,
     this.initialDate,
     required this.onDateSelected,
+    this.minSelectableDate,
   });
 
   @override
   Widget build(BuildContext context) {
+    final DateTime effectiveFirstDate = minSelectableDate ?? DateTime(2000);
+
     return Container(
       color: Color(0xffF9F9FA),
       child: TextFormField(
@@ -23,8 +27,8 @@ class DateInputField extends StatelessWidget {
         onTap: () async {
           final DateTime? pickedDate = await showDatePicker(
             context: context,
-            initialDate: selectedDate,
-            firstDate: DateTime(2000),
+            initialDate: selectedDate ?? minSelectableDate ?? DateTime.now(),
+            firstDate: effectiveFirstDate,
             lastDate: DateTime(2101),
           );
           if (pickedDate != null && pickedDate != selectedDate) {

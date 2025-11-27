@@ -751,6 +751,8 @@ class PurchaseOrderController extends GetxController implements GetxService {
     selectedParty.value = null;
     highPriority.value = false;
     selectedDate.value = null;
+    selectedOrderDate.value = null;
+
     sariMatchingList.value = [];
     jobPoList.value = [];
     isJobPoEnabled.value = false;

@@ -169,6 +169,8 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
 
                                 Obx(
                                   () => DateInputField(
+                                    // minSelectableDate:
+                                    //     controller.selectedOrderDate.value,
                                     selectedDate:
                                         controller.selectedOrderDate.value,
                                     onDateSelected: (value) {
@@ -200,6 +202,8 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
 
                                 Obx(
                                   () => DateInputField(
+                                    minSelectableDate:
+                                        controller.selectedOrderDate.value,
                                     selectedDate: controller.selectedDate.value,
                                     onDateSelected: (value) {
                                       controller.selectedDate.value = value;
