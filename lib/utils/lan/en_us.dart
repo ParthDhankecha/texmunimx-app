@@ -202,19 +202,14 @@ Map<String, String> get enUs => {
   'garment': 'Garment',
   'sari': 'Sari',
   'select_date': 'Select Date',
-
-  //newly added
   'field_required': 'This field is required.',
   'pending_qty': 'Pending Qty',
   'quantity_cannot_exceed': 'Quantity cannot exceed @type quantity.',
   'update_po_status': 'Update PO Status',
   'move_to': 'Move To (Current Status: @status)',
-
   'po_number': 'PO Number',
   'order_date': 'Order Date',
   'matching_colors': 'Matching Colors',
-
   'color': 'Color',
-
   'created_at': 'Created At',
 };

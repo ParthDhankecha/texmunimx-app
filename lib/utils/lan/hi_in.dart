@@ -166,13 +166,10 @@ Map<String, String> get hiIn => {
   'old_password': 'पुराना पासवर्ड',
   'new_password': 'नया पासवर्ड',
   'confirm_new_password': 'नए पासवर्ड की पुष्टि करें',
-
   'exit': 'बाहर निकलें',
   'are_you_sure_you_want_to_exit_app':
       'क्या आप वाकई ऐप से बाहर निकलना चाहते हैं?',
-
   'design_updated_successfully': 'डिज़ाइन सफलतापूर्वक अपडेट किया गया।',
-
   'please_enter_party_name': 'कृपया पार्टी का नाम दर्ज करें।',
   'please_enter_party_number': 'कृपया पार्टी नंबर दर्ज करें।',
   'please_enter_gst_number': 'कृपया GST नंबर दर्ज करें।',
@@ -180,10 +177,8 @@ Map<String, String> get hiIn => {
   'garment': 'परिधान',
   'sari': 'साड़ी',
   'select_date': 'तारीख चुनें',
-  //newly added
   'field_required': 'यह फ़ील्ड आवश्यक है।',
   'remarks': 'टिप्पणियाँ',
-
   'select_order_type': 'ऑर्डर प्रकार चुनें',
   'matching': 'मिलान',
   'firm': 'फर्म',
@@ -192,4 +187,9 @@ Map<String, String> get hiIn => {
   'quantity_cannot_exceed': 'मात्रा @type मात्रा से अधिक नहीं हो सकती।',
   'update_po_status': 'पीओ स्थिति अपडेट करें',
   'move_to': 'स्थानांतरित करें (वर्तमान स्थिति: @status)',
+  'po_number': 'पीओ नंबर',
+  'order_date': 'ऑर्डर तारीख',
+  'matching_colors': 'मिलान रंग',
+  'color': 'रंग',
+  'created_at': 'बनाई गई तारीख',
 };

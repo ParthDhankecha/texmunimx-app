@@ -142,7 +142,6 @@ Map<String, String> get guIn => {
   'completed_quantity': 'પૂર્ણ જથ્થો',
   'delivered_quantity': 'પહોંચાડાયેલું જથ્થો',
   'note': 'નોંધ',
-
   'firms': 'ફર્મ',
   'add_firm': 'ફર્મ ઉમેરો',
   'edit_firm': 'ફર્મ સંપાદિત કરો',
@@ -170,7 +169,6 @@ Map<String, String> get guIn => {
   'are_you_sure_you_want_to_exit_app':
       'શું તમે ખરેખર એપ્લિકેશનમાંથી બહાર નીકળવા માંગો છો?',
   'design_updated_successfully': 'ડિઝાઇન સફળતાપૂર્વક અપડેટ થઈ ગઈ છે.',
-
   'please_enter_party_name': 'કૃપા કરીને પાર્ટીનું નામ દાખલ કરો.',
   'please_enter_party_number': 'કૃપા કરીને પાર્ટી નંબર દાખલ કરો.',
   'please_enter_gst_number': 'કૃપા કરીને GST નંબર દાખલ કરો.',
@@ -178,8 +176,6 @@ Map<String, String> get guIn => {
   'garment': 'વસ્ત્ર',
   'sari': 'સાડી',
   'select_date': 'તારીખ પસંદ કરો',
-
-  //newly added
   'field_required': 'આ ફીલ્ડ જરૂરી છે.',
   'remarks': 'ટિપ્પણીઓ',
   'select_order_type': 'ઓર્ડર પ્રકાર પસંદ કરો',
@@ -190,4 +186,9 @@ Map<String, String> get guIn => {
   'quantity_cannot_exceed': 'જથ્થો @type જથ્થા કરતાં વધુ ન હોઈ શકે.',
   'update_po_status': 'પીઓ સ્થિતિ અપડેટ કરો',
   'move_to': 'સ્થાનાંતરિત કરો (વર્તમાન સ્થિતિ: @status)',
+  'po_number': 'પીઓ નંબર',
+  'order_date': 'ઓર્ડર તારીખ',
+  'matching_colors': 'મેચિંગ કલર્સ',
+  'color': 'કલર',
+  'created_at': 'બનાવેલ તારીખ',
 };
