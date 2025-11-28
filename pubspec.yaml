@@ -4,7 +4,9 @@ description: "A new Flutter project."
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.6+6
+
+#v7 - colors model updates for sari
+version: 1.0.7+7
 
 environment:
   sdk: ^3.9.2
@@ -32,6 +34,7 @@ dependencies:
   printing:  # To save/share the PDF file
   path_provider: ^2.1.5
   package_info_plus: ^9.0.0
+  dropdown_search: ^6.0.2
 
 
 dev_dependencies:

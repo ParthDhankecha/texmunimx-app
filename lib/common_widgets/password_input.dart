@@ -42,8 +42,8 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: AppColors.mainColor),
           ),
-          hintStyle: TextStyle(color: AppColors.blackColor),
-          labelStyle: TextStyle(color: AppColors.blackColor),
+          hintStyle: TextStyle(color: AppColors.hintTextColor),
+          //  labelStyle: TextStyle(color: AppColors.blackColor),
           suffixIcon: IconButton(
             icon: Icon(
               _isPasswordVisible.value

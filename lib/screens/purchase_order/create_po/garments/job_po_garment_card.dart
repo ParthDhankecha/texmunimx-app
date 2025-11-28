@@ -67,7 +67,6 @@ class JobPoGarmentCard extends StatelessWidget {
               ),
 
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                     child: CustomDropdown<User>(
@@ -76,12 +75,6 @@ class JobPoGarmentCard extends StatelessWidget {
                       isRequired: true,
                       isEnabled: !isLocked,
                       selectedValue: model.user == '' || model.user == null
-                          // ? null
-                          // : users.firstWhere(
-                          //     (element) => element.id.toString() == model.user,
-                          //     orElse: () =>
-                          //         User(id: '', fullname: 'Select User'),
-                          //   ),
                           ? null
                           : users.any(
                               (element) => element.id.toString() == model.user,
@@ -100,39 +93,27 @@ class JobPoGarmentCard extends StatelessWidget {
                   ),
                   SizedBox(width: 8),
                   Expanded(
-                    child: Column(
-                      children: [
-                        CustomDropdown<FirmId>(
-                          title: 'firm'.tr,
-                          items: firms,
-                          isRequired: true,
-                          isEnabled: !isLocked,
-                          selectedValue: model.firm == '' || model.firm == null
-                              // ? null
-                              // : firms.firstWhere(
-                              //     (element) =>
-                              //         element.id.toString() == model.firm,
-                              //     orElse: () =>
-                              //         FirmId(id: '', firmName: 'Select Firm'),
-                              //   ),
-                              ? null
-                              : firms.any(
-                                  (element) =>
-                                      element.id.toString() == model.firm,
-                                )
-                              ? firms.firstWhere(
-                                  (element) =>
-                                      element.id.toString() == model.firm,
-                                )
-                              : null,
-                          onChanged: (value) {
-                            if (value != null) {
-                              onFirmChange?.call(value.id.toString());
-                            }
-                          },
-                          itemLabelBuilder: (FirmId item) => item.firmName,
-                        ),
-                      ],
+                    child: CustomDropdown<FirmId>(
+                      title: 'firm'.tr,
+                      items: firms,
+                      isRequired: true,
+                      isEnabled: !isLocked,
+                      selectedValue: model.firm == '' || model.firm == null
+                          // ? null
+                          ? null
+                          : firms.any(
+                              (element) => element.id.toString() == model.firm,
+                            )
+                          ? firms.firstWhere(
+                              (element) => element.id.toString() == model.firm,
+                            )
+                          : null,
+                      onChanged: (value) {
+                        if (value != null) {
+                          onFirmChange?.call(value.id.toString());
+                        }
+                      },
+                      itemLabelBuilder: (FirmId item) => item.firmName,
                     ),
                   ),
                 ],
