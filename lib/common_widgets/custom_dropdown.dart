@@ -50,7 +50,7 @@ class CustomDropdown<T> extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 0),
+          padding: const EdgeInsets.only(left: 6.0, bottom: 4.0),
           child: Row(
             children: [
               Text(
@@ -68,47 +68,48 @@ class CustomDropdown<T> extends StatelessWidget {
             ],
           ),
         ),
-
-        DropdownButtonFormField<T?>(
-          initialValue: initialValue,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8.0)),
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            contentPadding: EdgeInsets.symmetric(horizontal: 1, vertical: 8),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: Colors.black12),
+            borderRadius: BorderRadius.circular(10),
           ),
-          selectedItemBuilder: (context) {
-            return dropdownItems.map((T? value) {
-              return Text(
-                (value == null ? placeholderText.tr : itemLabelBuilder(value))
-                            .length >
-                        15
-                    ? (value == null
-                          ? placeholderText.tr
-                          : '${itemLabelBuilder(value).substring(0, 15)}...')
-                    : (value == null
-                          ? placeholderText.tr
-                          : itemLabelBuilder(value)),
-
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 14),
-              );
-            }).toList();
-          },
-          items: dropdownItems.map((T? value) {
-            return DropdownMenuItem<T?>(
-              value: value,
-
-              child: Text(
-                value == null ? placeholderText.tr : itemLabelBuilder(value),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 14),
+          child: DropdownButtonFormField<T?>(
+            initialValue: initialValue,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                borderSide: BorderSide(color: Colors.grey),
               ),
-            );
-          }).toList(),
-          onChanged: isEnabled ? onChanged : null,
+              contentPadding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+            ),
+            selectedItemBuilder: (context) {
+              return dropdownItems.map((T? value) {
+                return Text(
+                  (value == null ? placeholderText.tr : itemLabelBuilder(value))
+                              .length >
+                          15
+                      ? '${(value == null ? placeholderText.tr : itemLabelBuilder(value)).substring(0, 15)}...'
+                      : (value == null
+                            ? placeholderText.tr
+                            : itemLabelBuilder(value)),
+                  style: TextStyle(fontSize: 14),
+                );
+              }).toList();
+            },
+            items: dropdownItems.map((T? value) {
+              return DropdownMenuItem<T?>(
+                value: value,
+                // Use the placeholder text if the value is null,
+                // otherwise use the provided itemLabelBuilder function.
+                child: Text(
+                  value == null ? placeholderText.tr : itemLabelBuilder(value),
+                  style: TextStyle(fontSize: 14),
+                ),
+              );
+            }).toList(),
+            onChanged: isEnabled ? onChanged : null,
+          ),
         ),
       ],
     );

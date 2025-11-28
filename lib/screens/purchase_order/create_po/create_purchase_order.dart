@@ -39,10 +39,12 @@ class _CreatePurchaseOrderState extends State<CreatePurchaseOrder> {
   @override
   void initState() {
     super.initState();
+
     controller.fetchInitialData();
     if (po != null) {
       controller.fetchDataWithId(po!.id);
     } else {
+      controller.getNextPoNumber();
       controller.resetInputs();
     }
   }

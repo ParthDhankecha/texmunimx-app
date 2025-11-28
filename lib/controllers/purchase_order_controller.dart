@@ -249,7 +249,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
     //     .id
     //     .toString();
     //set id
-    model.mId = matchingModel.id?.toString() ?? '';
+    model.mId = matchingModel.mId?.toString() ?? '';
     jobPoList[index] = model;
   }
 
@@ -526,7 +526,7 @@ class PurchaseOrderController extends GetxController implements GetxService {
       fetchOptionsData();
 
       selectDesign(null);
-      getNextPoNumber();
+
       selectedOrderType.value = '';
       err.value = '';
     } on ApiException catch (e) {

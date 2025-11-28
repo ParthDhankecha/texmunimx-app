@@ -119,12 +119,14 @@ class Party {
   String partyName;
   String partyNumber;
   String mobile;
+  String? customerName;
 
   Party({
     required this.id,
     required this.partyName,
     required this.partyNumber,
     required this.mobile,
+    this.customerName,
   });
 
   factory Party.fromMap(Map<String, dynamic> json) => Party(
@@ -132,6 +134,7 @@ class Party {
     partyName: json["partyName"],
     partyNumber: json["partyNumber"] ?? '',
     mobile: json["mobile"] ?? '',
+    customerName: json["customerName"],
   );
 
   Map<String, dynamic> toMap() => {
@@ -139,5 +142,6 @@ class Party {
     "partyName": partyName,
     "partyNumber": partyNumber,
     "mobile": mobile,
+    "customerName": customerName,
   };
 }

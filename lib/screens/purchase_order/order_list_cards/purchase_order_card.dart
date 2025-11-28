@@ -107,7 +107,15 @@ class PurchaseOrderCard extends StatelessWidget {
 
             BuildValueRow(
               title: 'party_name',
-              value: order.partyId.isNotEmpty ? party.partyName : 'N/A',
+              value: order.partyId.isNotEmpty ? party.partyName : '',
+            ),
+            BuildValueRow(
+              title: 'customer_name',
+              value: order.partyId.isNotEmpty ? party.customerName ?? '' : '',
+            ),
+            BuildValueRow(
+              title: 'party_po_number',
+              value: order.partyPoNumber.isNotEmpty ? order.partyPoNumber : '',
             ),
 
             BuildValueRow(

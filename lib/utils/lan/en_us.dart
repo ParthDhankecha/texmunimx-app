@@ -215,4 +215,6 @@ Map<String, String> get enUs => {
   'matching_colors': 'Matching Colors',
 
   'color': 'Color',
+
+  'created_at': 'Created At',
 };

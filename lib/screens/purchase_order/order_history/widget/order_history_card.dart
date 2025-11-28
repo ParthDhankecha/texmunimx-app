@@ -22,6 +22,8 @@ class _OrderHistoryCardState extends State<OrderHistoryCard> {
   @override
   Widget build(BuildContext context) {
     log('order history: ${widget.order.status}');
+    String status = widget.order.status;
+
     return Padding(
       padding: const EdgeInsets.only(top: 2.0, left: 8.0, right: 8.0),
       child: Card(
@@ -30,7 +32,17 @@ class _OrderHistoryCardState extends State<OrderHistoryCard> {
           child: Column(
             children: [
               _buildRow(
-                title: 'updated_at',
+                title: status == 'create'
+                    ? 'created_at'
+                    : status == 'update'
+                    ? 'updated_at'
+                    : status == 'inProcess'
+                    ? 'in_progress'
+                    : status == 'readyToDispatch'
+                    ? 'ready_to_dispatch'
+                    : status == 'delivered'
+                    ? 'delivered'
+                    : '',
                 value: widget.order.eventDate.toLocal().ddMMyyyyhhmmssa,
               ),
               _buildRow(
